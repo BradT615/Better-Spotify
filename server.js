@@ -5,8 +5,6 @@ const querystring = require('querystring');
 const cookieParser = require('cookie-parser');
 
 require('dotenv').config();
-console.log(process.env.CLIENT_ID);
-
 let client_id = process.env.CLIENT_ID; // Your client id
 let client_secret = process.env.CLIENT_SECRET; // Your secret
 let redirect_uri = 'http://localhost:8888/callback'; // Your redirect uri
