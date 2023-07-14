@@ -1,0 +1,10 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+#login, #loggedin {
+    display: none;
+}
+.hidden {
+    display: none;
+}
