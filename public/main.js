@@ -10,10 +10,19 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function userProfileTemplate(data) {
-    // Replace with your own function
-    // This is just a placeholder
-    return `<h1>Logged in as ${data.display_name}</h1>`;
+    let imageUrl = data.images.length > 0 ? data.images[0].url : 'default-image.jpg';
+    
+    return `
+      <div class="flex flex-col items-center justify-center bg-white p-4 rounded-lg shadow-md">
+          <h1 class="text-2xl font-bold mb-2">Logged in as ${data.display_name}</h1>
+          <img class="w-24 h-24 rounded-full mb-2" src="${imageUrl}" alt="${data.display_name}'s profile image" />
+          <p class="text-blue-500">${data.email}</p>
+          <p class="mt-2">${data.country}</p>
+      </div>
+    `;
   }
+  
+  
 
   var stateKey = 'spotify_auth_state';
   
