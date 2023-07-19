@@ -5,7 +5,9 @@ exports.handler = async (event, context) => {
 
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
-    headers: { 'Authorization': 'Basic ' + (new Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64')) },
+    headers: {
+      'Authorization': 'Basic ' + (new Buffer.from(process.env.CLIENT_ID + ':' + process.env.CLIENT_SECRET).toString('base64'))
+    },
     form: {
       grant_type: 'refresh_token',
       refresh_token: refresh_token
@@ -13,12 +15,23 @@ exports.handler = async (event, context) => {
     json: true
   };
 
-  // Use 'request' to make the POST request
-  // Check the result and then construct the appropriate response or error
+  return new Promise((resolve, reject) => {
+    request.post(authOptions, function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        let access_token = body.access_token;
 
-  // For now, just return a placeholder response
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: "Hello, Refresh Token!" })
-  };
+        resolve({
+          statusCode: 200,
+          body: JSON.stringify({
+            'access_token': access_token
+          })
+        });
+      } else {
+        reject({
+          statusCode: 500,
+          body: JSON.stringify({ message: 'Internal Server Error: Failed to refresh access token.' })
+        });
+      }
+    });
+  });
 };

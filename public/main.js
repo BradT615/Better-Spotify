@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById('obtain-new-token').addEventListener('click', function() {
       $.ajax({
-        url: '/.netlify/functions/refresh_token', // Updated URL
+        url: '/.netlify/functions/refresh_token',
         data: {
           'refresh_token': refresh_token
         }
@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function() {
           refresh_token: refresh_token
         });
       });
-    }, false);
+    }, false);    
 
     document.getElementById('login-button').addEventListener('click', function() {
       window.location = '/.netlify/functions/login'; // Updated URL
