@@ -21,11 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
       </div>
     `;
   }
-  
-  
 
-  var stateKey = 'spotify_auth_state';
-  
   function getHashParams() {
     var hashParams = {};
     var e, r = /([^&;=]+)=?([^&;]*)/g,
@@ -74,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     document.getElementById('obtain-new-token').addEventListener('click', function() {
       $.ajax({
-        url: '/refresh_token',
+        url: '/.netlify/functions/refresh_token', // Updated URL
         data: {
           'refresh_token': refresh_token
         }
@@ -86,10 +82,9 @@ document.addEventListener("DOMContentLoaded", function() {
         });
       });
     }, false);
-  }
 
-  document.getElementById('login-button').addEventListener('click', function() {
-    // Redirect to the /login route on your server
-    window.location = '/login';
-  }, false);
+    document.getElementById('login-button').addEventListener('click', function() {
+      window.location = '/.netlify/functions/login'; // Updated URL
+    }, false);
+  }
 });
