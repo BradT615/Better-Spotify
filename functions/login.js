@@ -1,5 +1,15 @@
 const querystring = require('querystring');
 
+let generateRandomString = function(length) {
+    let text = '';
+    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  
+    for (let i = 0; i < length; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+    return text;
+};
+
 exports.handler = async (event, context) => {
   let state = generateRandomString(16);
   // Set the cookie in client-side
