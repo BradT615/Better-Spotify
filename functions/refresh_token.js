@@ -20,6 +20,8 @@ exports.handler = async (event, context) => {
       if (!error && response.statusCode === 200) {
         let access_token = body.access_token;
 
+        console.log("Received new access token from Spotify: ", access_token); // Log the new access token
+
         resolve({
           statusCode: 200,
           body: JSON.stringify({
