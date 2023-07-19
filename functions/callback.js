@@ -5,6 +5,7 @@ exports.handler = async (event, context) => {
   let code = event.queryStringParameters.code || null;
   let state = event.queryStringParameters.state || null;
   // Check the state parameter against the stored state
+  let redirectUri = 'https://bradt615spotify.netlify.app/.netlify/functions/callback';
 
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',

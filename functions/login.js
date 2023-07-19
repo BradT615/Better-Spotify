@@ -16,7 +16,7 @@ exports.handler = async (event, context) => {
 
   // your application requests authorization
   let scope = 'user-read-private user-read-email';
-  let redirectUri = 'http://localhost:8888/callback'; // Update this to your Netlify site URL
+  let redirectUri = 'https://bradt615spotify.netlify.app/.netlify/functions/callback';
   let url = 'https://accounts.spotify.com/authorize?' +
     querystring.stringify({
       response_type: 'code',
