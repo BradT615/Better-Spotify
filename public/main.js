@@ -75,13 +75,22 @@ document.addEventListener("DOMContentLoaded", function() {
           'refresh_token': refresh_token
         }
       }).done(function(data) {
-        access_token = data.access_token;
-        oauthPlaceholder.innerHTML = oauthTemplate({
-          access_token: access_token,
-          refresh_token: refresh_token
-        });
+        // Parse the returned data
+        data = JSON.parse(data);
+    
+        if (data.access_token) {
+          access_token = data.access_token;
+          oauthPlaceholder.innerHTML = oauthTemplate({
+            access_token: access_token,
+            refresh_token: refresh_token
+          });
+        } else {
+          console.error('Failed to refresh access token. Data:', data);
+        }
+      }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error('Ajax request failed. Status:', textStatus, 'Error:', errorThrown);
       });
-    }, false);    
+    }, false);           
 
     document.getElementById('login-button').addEventListener('click', function() {
       window.location = '/.netlify/functions/login'; // Updated URL
