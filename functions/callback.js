@@ -4,7 +4,7 @@ const querystring = require('querystring');
 exports.handler = async (event, context) => {
   let code = event.queryStringParameters.code || null;
   let state = event.queryStringParameters.state || null;
-  // Check the state parameter against the stored state
+
   let redirectUri = 'https://bradt615spotify.netlify.app/.netlify/functions/callback';
 
   let authOptions = {
@@ -20,12 +20,31 @@ exports.handler = async (event, context) => {
     json: true
   };
 
-  // Use 'request' to make the POST request
-  // Check the result and then construct the appropriate response or error
+  return new Promise((resolve, reject) => {
+    request.post(authOptions, function(error, response, body) {
+      if (!error && response.statusCode === 200) {
+        let access_token = body.access_token,
+            refresh_token = body.refresh_token;
 
-  // For now, just return a placeholder response
-  return {
-    statusCode: 200,
-    body: JSON.stringify({ message: "Hello, Callback!" })
-  };
+        let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
+
+        resolve({
+          statusCode: 302,
+          headers: {
+            Location: uri + '/#' +
+              querystring.stringify({
+                access_token: access_token,
+                refresh_token: refresh_token
+              })
+          },
+          body: ''
+        });
+      } else {
+        reject({
+          statusCode: 500,
+          body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve access token.' })
+        });
+      }
+    });
+  });
 };
