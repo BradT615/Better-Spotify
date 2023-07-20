@@ -60,6 +60,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
             $('#login').hide();
             $('#loggedin').show();
+
+            // Add this line to remove the parameters from the URL
+            window.history.replaceState({}, document.title, "." + window.location.pathname);
           }
       });
     } else {
