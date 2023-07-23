@@ -13,10 +13,13 @@
     <link rel="stylesheet" href="output.css">
 </head>
 <body class="h-screen flex items-center justify-center bg-gradient-to-t from-blue-700 to-blue-400 text-center">
+
     <div id="login" class="py-12 px-24 rounded shadow-lg bg-blue-300">
         <h1 class="text-2xl text-blue-900">Better Spotify</h1>
         <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
     </div>
+
+
     <div id="loggedin" class="hidden">
         <div id="user-profile">
         </div>
@@ -26,17 +29,6 @@
         <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Refresh token</button>
     </div>
 
-
-
-    <!-- <script id="oauth-template" type="text/x-handlebars-template">
-        <h2 class="text-xl">oAuth info</h2>
-        <dl class="dl-horizontal">
-            <dt>Access token</dt>
-            <dd class="clearfix">{{access_token}}</dd>
-            <dt>Refresh token</dt>
-            <dd>{{refresh_token}}</dd>
-        </dl>
-    </script> -->
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
