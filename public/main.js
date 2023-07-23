@@ -56,8 +56,13 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     } else {
         // render initial screen
+
         $('#login').show();
         $('#loggedin').hide();
+
+        // $('#login').hide();
+        // $('#loggedin').show();
+
     }
 
     document.getElementById('obtain-new-token').addEventListener('click', function() {

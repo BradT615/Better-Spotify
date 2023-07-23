@@ -2,26 +2,20 @@
 <html>
 <head>
     <title>Spotify Auth Code Flow Example</title>
-    <style>
-        #login, #loggedin {
-            display: none;
-        }
-        .hidden {
-            display: none;
-        }
-    </style>
     <link rel="stylesheet" href="output.css">
 </head>
-<body class="h-screen flex items-center justify-center bg-gradient-to-t from-blue-700 to-blue-400 text-center">
+<body class="h-screen bg-gradient-to-t from-blue-700 to-blue-400 text-center">
 
-    <div id="login" class="py-12 px-24 rounded shadow-lg bg-blue-300">
-        <h1 class="text-2xl text-blue-900">Better Spotify</h1>
-        <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
+    <div id="login" class="flex items-center justify-center h-full">
+        <div class="rounded shadow-lg bg-blue-300 p-4">
+            <h1 class="text-2xl text-blue-900">Better Spotify</h1>
+            <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
+        </div>
     </div>
 
-    <div id="loggedin" class="hidden">
-        <div id="user-profile" class="flex flex-col justify-center bg-white p-4 rounded-lg shadow-md">
-            <h1 id="user-name" class="text-2xl font-bold mb-2"></h1>
+    <div id="loggedin">
+        <div id="user-profile" class="flex flex-col bg-white p-4 rounded-lg shadow-md">
+            <h1 id="user-name" class="text-2xl font-bold mb-2">Lil_Mongoloid</h1>
             <img id="user-image" class="w-24 h-24 rounded-full mb-2">
             <p id="user-email" class="text-blue-500"></p>
             <p id="user-country" class="mt-2"></p>
