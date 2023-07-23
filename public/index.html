@@ -19,16 +19,22 @@
         <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
     </div>
 
-
     <div id="loggedin" class="hidden">
-        <div id="user-profile">
+        <div id="user-profile" class="flex flex-col justify-center bg-white p-4 rounded-lg shadow-md">
+            <h1 id="user-name" class="text-2xl font-bold mb-2"></h1>
+            <img id="user-image" class="w-24 h-24 rounded-full mb-2">
+            <p id="user-email" class="text-blue-500"></p>
+            <p id="user-country" class="mt-2"></p>
         </div>
         <div id="oauth">
-            <div id="oauth-placeholder"></div>
+            <h2>OAuth Info</h2>
+            <dl class="dl-horizontal">
+                <dt>Access token</dt><dd id="access-token" class="clearfix"></dd>
+                <dt>Refresh token</dt><dd id="refresh-token"></dd>
+            </dl>
         </div>
         <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Refresh token</button>
     </div>
-
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
