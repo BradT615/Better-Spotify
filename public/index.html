@@ -2,9 +2,10 @@
 <html>
 <head>
     <title>Spotify Auth Code Flow Example</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="output.css">
 </head>
-<body class="h-screen bg-gradient-to-t from-blue-700 to-blue-400 text-center">
+<body class="h-screen bg-black text-center text-white">
 
     <div id="login" class="flex items-center justify-center h-full">
         <div class="rounded shadow-lg bg-blue-300 p-4">
@@ -13,26 +14,27 @@
         </div>
     </div>
 
-    <div id="loggedin">
+    <div id="loggedin" class="h-full">
         <header id="user-profile" class="flex items-center justify-between bg-none p-4">
             <div class="flex items-center">
-                <img class="w-10 h-10" src="assets/logo-removebg.png" alt="logo">
-                <p class="text-2xl text-neutral-700 font-bold mx-4">Better Spotify</p>
+                <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
+                <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
             </div>
             
-            <div class="flex items-center bg-neutral-900 rounded-full text-white">
-                <p id="user-name" class="text-lg font-bold mx-2">Lil_Mongoloid</p>
+            <div class="flex items-center bg-neutral-900 rounded-full">
+                <p id="user-name" class="text-lg font-bold ml-3 mr-2 hidden sm:block">Lil_Mongoloid</p>
                 <img id="user-image" class="w-10 h-10 rounded-full m-1" src="assets/default-image.png">
             </div>
         </header>
-        <div id="oauth">
+        
+        <div id="oauth" class="bg-neutral-900 rounded-lg mx-2">
             <h2>OAuth Info</h2>
             <dl class="dl-horizontal">
                 <dt>Access token</dt><dd id="access-token" class="clearfix"></dd>
                 <dt>Refresh token</dt><dd id="refresh-token"></dd>
             </dl>
+            <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Refresh token</button>
         </div>
-        <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Refresh token</button>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
