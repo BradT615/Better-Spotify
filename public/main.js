@@ -11,12 +11,10 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function updateProfile(data) {
-    let imageUrl = data.images.length > 0 ? data.images[0].url : 'default-image.jpg';
+    let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
 
     document.getElementById('user-name').textContent = data.display_name;
     document.getElementById('user-image').src = imageUrl;
-    document.getElementById('user-email').textContent = data.email;
-    document.getElementById('user-country').textContent = data.country;
   }
 
   function updateOAuth(data) {
