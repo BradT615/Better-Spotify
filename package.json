@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@supabase/supabase-js": "^2.29.0",
     "ckey": "^1.0.3",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
