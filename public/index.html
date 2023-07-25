@@ -14,31 +14,53 @@
         </div>
     </div>
 
-    <div id="loggedin" class="h-full">
-        <header id="user-profile" class="flex items-center justify-between bg-none p-4">
+    <div id="loggedin" class="h-screen">
+        <header id="user-profile" class="flex items-center justify-between px-4 py-2">
             <div class="flex items-center">
                 <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
                 <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
             </div>
             
             <div class="flex items-center bg-neutral-900 rounded-full">
-                <p id="user-name" class="text-lg font-bold ml-3 mr-2 hidden sm:block">Lil_Mongoloid</p>
+                <p id="user-name" class="text-lg font-bold ml-3 mr-2 hidden sm:block">Test_Username</p>
                 <img id="user-image" class="w-10 h-10 rounded-full m-1" src="assets/default-image.png">
             </div>
         </header>
-        
-        <div id="oauth" class="bg-neutral-900 rounded-lg mx-2">
-            <h2>OAuth Info</h2>
-            <dl class="dl-horizontal">
-                <dt>Access token</dt><dd id="access-token" class="clearfix"></dd>
-                <dt>Refresh token</dt><dd id="refresh-token"></dd>
-            </dl>
-            <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Refresh token</button>
+
+        <div class="flex gap-2 mx-2 h-5/6 font-bold">
+            <div class="flex flex-col gap-2">
+                <div class="bg-neutral-900 rounded-lg p-2">
+                    <div class="flex items-center gap-2 p-2">
+                        <box-icon type='solid' name='home' color='#ffffff'></box-icon>
+                        <p>Home</p>
+                    </div>
+                    <div class="flex items-center gap-2 p-2">
+                        <box-icon name='search' color='#ffffff'></box-icon>
+                        <p>Search</p>
+                    </div>
+                </div>
+                <div class="bg-neutral-900 rounded-lg p-4 h-full">
+                    <div class="flex items-center gap-2">
+                        <box-icon name='library' color='#ffffff' ></box-icon>
+                        <p>Library</p>
+                    </div>
+                </div>
+            </div>
+            <div id="oauth" class="bg-neutral-900 rounded-lg p-2 w-full">
+                <h2>OAuth Info</h2>
+                <dl class="dl-horizontal">
+                    <dt>Access token</dt><dd id="access-token" class="clearfix"></dd>
+                    <dt>Refresh token</dt><dd id="refresh-token"></dd>
+                </dl>
+                <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Refresh token</button>
+            </div>
         </div>
+        
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <script src="main.js"></script>
 </body>
 </html>
