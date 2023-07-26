@@ -14,7 +14,7 @@
         </div>
     </div>
 
-    <div id="loggedin" class="h-screen">
+    <div id="loggedin" class="flex flex-col h-screen bg-black">
         
         <header id="user-profile" class="flex items-center justify-between px-4 py-2">
             <div class="flex items-center">
@@ -46,28 +46,27 @@
                     </div>
                 </div>
             </div>
-            <div id="oauth" class="bg-neutral-900 rounded-lg p-2 w-full">
+            <div id="oauth" class="flex flex-col items-center justify-center bg-neutral-900 rounded-lg p-2 w-full">
                 <h2>OAuth Info</h2>
                 <dl class="dl-horizontal">
                     <dt>Access token</dt><dd id="access-token" class="clearfix"></dd>
                     <dt>Refresh token</dt><dd id="refresh-token"></dd>
                 </dl>
-                <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Refresh token</button>
+                <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full w-60">Refresh token</button>
             </div>
         </div>
 
-        
-        <div class="flex items-center justify-between mx-4">
+        <div class="flex flex-grow items-center justify-between mx-4">
             <div class="col flex items-center">
-                <img id="user-image" class="w-12 h-12 m-1" src="assets/default-image.png">
+                <img id="user-image" class="w-16 h-16 m-1 rounded-md" src="assets/default-image.png">
                 <div class="flex flex-col ml-4 items-start">
                     <h1 class="row text-lg">Song Name</h1>
                     <h1 class="row text-sm">Artist</h1>
                 </div>
             </div>
         
-            <div class="col flex flex-col justify-center items-center">
-                <div class="row flex items-center gap-2">
+            <div class="col flex flex-col">
+                <div class="row flex gap-2">
                     <box-icon name='shuffle' color='#ffffff'></box-icon>
                     <box-icon name='arrow-to-left' color='#ffffff'></box-icon>
                     <box-icon name='play-circle' color='#ffffff' size='32px'></box-icon>
@@ -77,12 +76,12 @@
                 <div class="row">song bar</div>
             </div>
         
-            <div class="col flex items-center">
+            <div class="col flex gap-2">
                 <box-icon name='volume-low' type='solid' color='#ffffff' ></box-icon>
+                <p>volume</p>
                 <box-icon name='volume-full' type='solid' color='#ffffff' ></box-icon>
             </div>
         </div>
-         
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
