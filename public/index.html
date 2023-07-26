@@ -27,10 +27,10 @@
             </div>
         </header>
 
-        <div class="flex gap-2 mx-2 h-4/5 font-bold">
+        <div class="flex gap-2 mx-2 h-4/5 font-bold max-sm:flex-col">
 
 
-            <div class="flex flex-col gap-2">
+            <div class="flex gap-2 sm:flex-col max-sm:hidden">
                 <div class="bg-neutral-900 rounded-lg p-2">
                     <div class="flex items-center gap-2 p-2">
                         <box-icon type='solid' name='home' color='#ffffff'></box-icon>
@@ -41,20 +41,21 @@
                         <p>Search</p>
                     </div>
                 </div>
-                <div class="bg-neutral-900 rounded-lg p-4 h-full">
+
+                <div class="bg-neutral-900 rounded-lg p-4 h-full w-full">
                     <div class="flex items-center gap-2">
                         <box-icon name='library' color='#ffffff' ></box-icon>
                         <p>Library</p>
                     </div>
                 </div>
             </div>
-            <div id="oauth" class="flex flex-col items-center justify-center bg-neutral-900 rounded-lg p-2 w-full">
-                <h2>OAuth Info</h2>
+            <div id="oauth" class="flex flex-col items-center justify-center bg-neutral-900 rounded-lg p-2 w-full h-full">
+                <!-- <h2>OAuth Info</h2>
                 <dl class="dl-horizontal">
                     <dt>Access token</dt><dd id="access-token" class="clearfix"></dd>
                     <dt>Refresh token</dt><dd id="refresh-token"></dd>
                 </dl>
-                <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full w-60">Refresh token</button>
+                <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full w-60">Refresh token</button> -->
             </div>
 
 
@@ -63,10 +64,10 @@
 
         <div class="flex flex-grow items-center justify-between px-4">
             <div class="col flex items-center w-1/3">
-                <img id="user-image" class="w-16 h-16 m-1 rounded-md" src="assets/default-image.png">
+                <img id="user-image" class="w-16 h-16 m-1 rounded-md hidden sm:block" src="assets/default-image.png">
                 <div class="flex flex-col ml-4 items-start">
-                    <h1 class="row text-lg">Song Name</h1>
-                    <h1 class="row text-sm">Artist</h1>
+                    <h1 class="row text-lg hidden sm:block">Song Name</h1>
+                    <h1 class="row text-sm hidden sm:block">Artist</h1>
                 </div>
             </div>
         
@@ -82,9 +83,9 @@
             </div>
         
             <div class="col flex gap-2 w-1/3 justify-end">
-                <box-icon name='volume-low' type='solid' color='#ffffff' ></box-icon>
-                <p>volume</p>
-                <box-icon name='volume-full' type='solid' color='#ffffff' ></box-icon>
+                <box-icon name='volume-low' type='solid' color='#ffffff' class="hidden sm:block"></box-icon>
+                <p class="hidden sm:block">volume</p>
+                <box-icon name='volume-full' type='solid' color='#ffffff' class="hidden sm:block"></box-icon>
             </div>
         </div>
     </div>
