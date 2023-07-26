@@ -27,7 +27,7 @@
             </div>
         </header>
 
-        <div class="flex gap-2 mx-2 h-5/6 font-bold">
+        <div class="flex gap-2 mx-2 h-4/5 font-bold">
             <div class="flex flex-col gap-2">
                 <div class="bg-neutral-900 rounded-lg p-2">
                     <div class="flex items-center gap-2 p-2">
@@ -55,7 +55,34 @@
                 <button id="obtain-new-token" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Refresh token</button>
             </div>
         </div>
+
         
+        <div class="flex items-center justify-between mx-4">
+            <div class="col flex items-center">
+                <img id="user-image" class="w-12 h-12 m-1" src="assets/default-image.png">
+                <div class="flex flex-col ml-4 items-start">
+                    <h1 class="row text-lg">Song Name</h1>
+                    <h1 class="row text-sm">Artist</h1>
+                </div>
+            </div>
+        
+            <div class="col flex flex-col justify-center items-center">
+                <div class="row flex items-center gap-2">
+                    <box-icon name='shuffle' color='#ffffff'></box-icon>
+                    <box-icon name='arrow-to-left' color='#ffffff'></box-icon>
+                    <box-icon name='play-circle' color='#ffffff' size='32px'></box-icon>
+                    <box-icon name='arrow-to-right' color='#ffffff' ></box-icon>
+                    <box-icon name='repeat' color='#ffffff' ></box-icon>
+                </div>
+                <div class="row">song bar</div>
+            </div>
+        
+            <div class="col flex items-center">
+                <box-icon name='volume-low' type='solid' color='#ffffff' ></box-icon>
+                <box-icon name='volume-full' type='solid' color='#ffffff' ></box-icon>
+            </div>
+        </div>
+         
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
