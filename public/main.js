@@ -63,30 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
     }
 
-    document.getElementById('obtain-new-token').addEventListener('click', function() {
-      $.ajax({
-        url: '/.netlify/functions/refresh_token',
-        data: {
-          'refresh_token': refresh_token
-        }
-      }).done(function(data) {
-        // Parse the returned data
-        data = JSON.parse(data);
-    
-        if (data.access_token) {
-          access_token = data.access_token;
-          updateOAuth({
-            access_token: access_token,
-            refresh_token: refresh_token
-          });
-        } else {
-          console.error('Failed to refresh access token. Data:', data);
-        }
-      }).fail(function(jqXHR, textStatus, errorThrown) {
-        console.error('Ajax request failed. Status:', textStatus, 'Error:', errorThrown);
-      });
-    }, false);           
-
     document.getElementById('login-button').addEventListener('click', function() {
       window.location = '/.netlify/functions/login'; // Updated URL
     }, false);
