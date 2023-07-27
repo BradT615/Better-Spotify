@@ -17,10 +17,10 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('user-image').src = imageUrl;
   }
 
-  function updateOAuth(data) {
-    document.getElementById('access-token').textContent = data.access_token;
-    document.getElementById('refresh-token').textContent = data.refresh_token;
-  }
+  // function updateOAuth(data) {
+  //   document.getElementById('access-token').textContent = data.access_token;
+  //   document.getElementById('refresh-token').textContent = data.refresh_token;
+  // }
 
   var params = getHashParams();
   var access_token = params.access_token,
@@ -32,10 +32,10 @@ document.addEventListener("DOMContentLoaded", function() {
   } else {
     if (access_token) {
       // render oauth info
-      updateOAuth({
-        access_token: access_token,
-        refresh_token: refresh_token
-      });
+      // updateOAuth({
+      //   access_token: access_token,
+      //   refresh_token: refresh_token
+      // });
 
       $.ajax({
           url: 'https://api.spotify.com/v1/me',
