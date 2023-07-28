@@ -1,5 +1,6 @@
 const request = require('request');
 const querystring = require('querystring');
+const supabase = require('../utils/supabaseClient.js');
 
 exports.handler = async (event, context) => {
   let code = event.queryStringParameters.code || null;
@@ -25,6 +26,22 @@ exports.handler = async (event, context) => {
       if (!error && response.statusCode === 200) {
         let access_token = body.access_token,
             refresh_token = body.refresh_token;
+
+        // Get the user_id from the Spotify Web API
+        let user_id = body.id;
+
+        // Store the user_id, access_token, and refresh_token in Supabase
+        supabase
+          .from('users')
+          .insert([
+            { id: user_id, access_token: access_token, refresh_token: refresh_token },
+          ])
+          .then(supabaseRes => {
+            console.log('Supabase insert response:', supabaseRes);
+          })
+          .catch(supabaseErr => {
+            console.error('Supabase insert error:', supabaseErr);
+          });
 
         let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
 
