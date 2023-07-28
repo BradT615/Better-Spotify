@@ -42,7 +42,7 @@ document.addEventListener("DOMContentLoaded", function() {
       });
 
       // Fetch data from testSupabase function
-      fetch('/.netlify/functions/testSupabase')
+      fetch('/.netlify/functions/supabase_test')
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(error => console.error('Error:', error));
