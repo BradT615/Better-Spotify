@@ -27,21 +27,33 @@ exports.handler = async (event, context) => {
         let access_token = body.access_token,
             refresh_token = body.refresh_token;
 
-        // Get the user_id from the Spotify Web API
-        let user_id = body.id;
+        // Make another request to Spotify's API to get user's profile data
+        request.get({
+          url: 'https://api.spotify.com/v1/me',
+          headers: {
+            'Authorization': 'Bearer ' + access_token
+          },
+          json: true
+        }, function(error, response, body) {
+          if (!error && response.statusCode === 200) {
+            let user_id = body.id;
 
-        // Store the user_id, access_token, and refresh_token in Supabase
-        supabase
-          .from('users')
-          .insert([
-            { id: user_id, access_token: access_token, refresh_token: refresh_token },
-          ])
-          .then(supabaseRes => {
-            console.log('Supabase insert response:', supabaseRes);
-          })
-          .catch(supabaseErr => {
-            console.error('Supabase insert error:', supabaseErr);
-          });
+            // Store the user_id, access_token, and refresh_token in Supabase
+            supabase
+              .from('users')
+              .insert([
+                { id: user_id, access_token: access_token, refresh_token: refresh_token },
+              ])
+              .then(supabaseRes => {
+                console.log('Supabase insert response:', supabaseRes);
+              })
+              .catch(supabaseErr => {
+                console.error('Supabase insert error:', supabaseErr);
+              });
+          } else {
+            console.error('Failed to retrieve user id:', error);
+          }
+        });
 
         let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
 
