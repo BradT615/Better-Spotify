@@ -1,3 +1,17 @@
+import supabase from './utils/supabaseClient.js'
+
+async function testSupabase() {
+    const { data, error } = await supabase
+        .from('users')
+        .select('*')
+
+    console.log('Returned data: ', data);
+    console.log('Returned error: ', error);
+}
+
+
+testSupabase();
+
 const querystring = require('querystring');
 
 let generateRandomString = function(length) {
