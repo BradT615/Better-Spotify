@@ -1,7 +1,25 @@
 const request = require('request');
+const supabase = require('../utils/supabaseClient.js');
 
 exports.handler = async (event, context) => {
-  let refresh_token = event.queryStringParameters.refresh_token;
+  let user_id = event.queryStringParameters.user_id;
+
+  // Get the user's refresh token from the database
+  const { data: user, error } = await supabase
+    .from('users')
+    .select('refresh_token')
+    .eq('id', user_id)
+    .single();
+
+  if (error || !user) {
+    console.error('Failed to retrieve user:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user.' })
+    };
+  }
+
+  let refresh_token = user.refresh_token;
 
   let authOptions = {
     url: 'https://accounts.spotify.com/api/token',
@@ -20,7 +38,19 @@ exports.handler = async (event, context) => {
       if (!error && response.statusCode === 200) {
         let access_token = body.access_token;
 
-        console.log("Received new access token from Spotify: ", access_token); // Log the new access token
+        console.log("Received new access_token from Spotify: ", access_token); // Log the new access_token
+
+        // Update access_token in the database
+        supabase
+          .from('users')
+          .update({ access_token: access_token })
+          .eq('id', user_id)
+          .then(supabaseRes => {
+            console.log('Supabase update response:', supabaseRes);
+          })
+          .catch(supabaseErr => {
+            console.error('Supabase update error:', supabaseErr);
+          });
 
         resolve({
           statusCode: 200,
@@ -31,7 +61,7 @@ exports.handler = async (event, context) => {
       } else {
         reject({
           statusCode: 500,
-          body: JSON.stringify({ message: 'Internal Server Error: Failed to refresh access token.' })
+          body: JSON.stringify({ message: 'Internal Server Error: Failed to refresh access_token.' })
         });
       }
     });

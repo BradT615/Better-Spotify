@@ -22,7 +22,7 @@ exports.handler = async (event, context) => {
   };
 
   return new Promise((resolve, reject) => {
-    request.post(authOptions, async function(error, response, body) {
+    request.post(authOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
         let access_token = body.access_token,
             refresh_token = body.refresh_token;
@@ -39,34 +39,33 @@ exports.handler = async (event, context) => {
             let user_id = body.id;
 
             // Store the user_id, access_token, and refresh_token in Supabase
-            const { error: insertError } = await supabase
+            await supabase
               .from('users')
               .insert([
                 { id: user_id, access_token: access_token, refresh_token: refresh_token },
-              ]);
+              ], { upsert: true }) // You can use upsert to update existing users
+              .then(supabaseRes => {
+                console.log('Supabase insert response:', supabaseRes);
+              })
+              .catch(supabaseErr => {
+                console.error('Supabase insert error:', supabaseErr);
+              });
 
-            if (insertError) {
-                console.error('Supabase insert error:', insertError);
-            } else {
-                console.log('Inserted data successfully into Supabase');
-            }
+            let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
+
+            resolve({
+              statusCode: 302,
+              headers: {
+                Location: uri + '/#' +
+                  querystring.stringify({
+                    user_id: user_id
+                  })
+              },
+              body: ''
+            });
           } else {
             console.error('Failed to retrieve user id:', error);
           }
-        });
-
-        let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
-
-        resolve({
-          statusCode: 302,
-          headers: {
-            Location: uri + '/#' +
-              querystring.stringify({
-                access_token: access_token,
-                refresh_token: refresh_token
-              })
-          },
-          body: ''
         });
       } else {
         reject({

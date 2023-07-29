@@ -18,18 +18,18 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   var params = getHashParams();
-  var access_token = params.access_token,
-      refresh_token = params.refresh_token,
+  var user_id = params.user_id,
       error = params.error;
 
   if (error) {
     alert('There was an error during the authentication');
   } else {
-    if (access_token) {
+    if (user_id) {
+      // Use AJAX to call the serverless function, passing the user_id as a parameter
       $.ajax({
-          url: 'https://api.spotify.com/v1/me',
-          headers: {
-            'Authorization': 'Bearer ' + access_token
+          url: '/.netlify/functions/get_user_profile',
+          data: {
+            user_id: user_id
           },
           success: function(response) {
             updateProfile(response);
@@ -41,18 +41,13 @@ document.addEventListener("DOMContentLoaded", function() {
           }
       });
     } else {
-        // render initial screen
-
-        $('#login').show();
-        $('#loggedin').hide();
-
-        // $('#login').hide();
-        // $('#loggedin').show();
-
+      // render initial screen
+      $('#login').show();
+      $('#loggedin').hide();
     }
 
     document.getElementById('login-button').addEventListener('click', function() {
-      window.location = '/.netlify/functions/login'; // Updated URL
+      window.location = '/.netlify/functions/login';
     }, false);
   }
 });
