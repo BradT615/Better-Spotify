@@ -32,6 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
             user_id: user_id
           },
           success: function(response) {
+            console.log(response); // Add this line
             updateProfile(response);
 
             $('#login').hide();
