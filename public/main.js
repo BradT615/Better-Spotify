@@ -40,12 +40,6 @@ document.addEventListener("DOMContentLoaded", function() {
             window.history.replaceState({}, document.title, "." + window.location.pathname);
           }
       });
-
-      // Fetch data from testSupabase function
-      fetch('/.netlify/functions/supabase_test')
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
     } else {
         // render initial screen
 

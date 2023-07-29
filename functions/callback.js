@@ -22,7 +22,7 @@ exports.handler = async (event, context) => {
   };
 
   return new Promise((resolve, reject) => {
-    request.post(authOptions, function(error, response, body) {
+    request.post(authOptions, async function(error, response, body) {
       if (!error && response.statusCode === 200) {
         let access_token = body.access_token,
             refresh_token = body.refresh_token;
@@ -34,22 +34,22 @@ exports.handler = async (event, context) => {
             'Authorization': 'Bearer ' + access_token
           },
           json: true
-        }, function(error, response, body) {
+        }, async function(error, response, body) {
           if (!error && response.statusCode === 200) {
             let user_id = body.id;
 
             // Store the user_id, access_token, and refresh_token in Supabase
-            supabase
+            const { error: insertError } = await supabase
               .from('users')
               .insert([
                 { id: user_id, access_token: access_token, refresh_token: refresh_token },
-              ])
-              .then(supabaseRes => {
-                console.log('Supabase insert response:', supabaseRes);
-              })
-              .catch(supabaseErr => {
-                console.error('Supabase insert error:', supabaseErr);
-              });
+              ]);
+
+            if (insertError) {
+                console.error('Supabase insert error:', insertError);
+            } else {
+                console.log('Inserted data successfully into Supabase');
+            }
           } else {
             console.error('Failed to retrieve user id:', error);
           }
