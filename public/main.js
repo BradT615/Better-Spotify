@@ -14,7 +14,11 @@ document.addEventListener("DOMContentLoaded", function() {
     let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
 
     document.getElementById('user-name').textContent = data.display_name;
-    document.getElementById('user-image').src = imageUrl;
+
+    let userImages = document.getElementsByClassName('user-image');
+    for(let i = 0; i < userImages.length; i++) {
+        userImages[i].src = imageUrl;
+    }
   }
 
   var params = getHashParams();
@@ -32,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function() {
             user_id: user_id
           },
           success: function(response) {
-            console.log(response); // Add this line
+            console.log(response); // Log the response
             updateProfile(response);
 
             $('#login').hide();
