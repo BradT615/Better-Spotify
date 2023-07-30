@@ -51,7 +51,7 @@ exports.handler = async (event, context) => {
                 console.error('Supabase insert error:', supabaseErr);
               });
 
-            // let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
+            let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
 
             resolve({
               statusCode: 302,
