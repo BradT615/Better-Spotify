@@ -21,6 +21,11 @@ document.addEventListener("DOMContentLoaded", function() {
   var user_id = params.user_id,
       error = params.error;
 
+  // Set the user_id in a cookie
+  if (user_id) {
+    document.cookie = `user_id=${user_id}; Path=/; Secure; HttpOnly`;
+  }
+
   if (error) {
     alert('There was an error during the authentication');
   } else {
