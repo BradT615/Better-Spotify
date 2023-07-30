@@ -56,10 +56,10 @@ exports.handler = async (event, context) => {
             resolve({
               statusCode: 302,
               headers: {
-                'Set-Cookie': `user_id=${user_id}; Path=/; Secure; HttpOnly`,
-                Location: `${uri}/set-cookie#${querystring.stringify({
-                  user_id: user_id
-                })}`
+                Location: uri + '/#' +
+                  querystring.stringify({
+                    user_id: user_id
+                  })
               },
               body: ''
             });
