@@ -21,11 +21,6 @@ document.addEventListener("DOMContentLoaded", function() {
   var user_id = params.user_id,
       error = params.error;
 
-  // Set the user_id in a cookie
-  if (user_id) {
-    document.cookie = `user_id=${user_id}; Path=/; Secure; HttpOnly`;
-  }
-
   if (error) {
     alert('There was an error during the authentication');
   } else {
@@ -57,3 +52,24 @@ document.addEventListener("DOMContentLoaded", function() {
     }, false);
   }
 });
+
+// Add this function outside of the DOMContentLoaded event handler
+window.onload = function() {
+  var params = getHashParams();
+  var user_id = params.user_id;
+
+  // Set the user_id in a cookie
+  if (user_id) {
+    document.cookie = `user_id=${user_id}; Path=/; Secure; HttpOnly`;
+  }
+};
+
+function getHashParams() {
+  var hashParams = {};
+  var e, r = /([^&;=]+)=?([^&;]*)/g,
+      q = window.location.hash.substring(1);
+  while ( e = r.exec(q)) {
+     hashParams[e[1]] = decodeURIComponent(e[2]);
+  }
+  return hashParams;
+}
