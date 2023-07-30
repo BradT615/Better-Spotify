@@ -43,7 +43,7 @@ exports.handler = async (event, context) => {
               .from('users')
               .insert([
                 { id: user_id, access_token: access_token, refresh_token: refresh_token },
-              ], { upsert: true }) // You can use upsert to update existing users
+              ], { upsert: true })
               .then(supabaseRes => {
                 console.log('Supabase insert response:', supabaseRes);
               })
@@ -51,7 +51,7 @@ exports.handler = async (event, context) => {
                 console.error('Supabase insert error:', supabaseErr);
               });
 
-            let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
+            // let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
 
             resolve({
               statusCode: 302,
