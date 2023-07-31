@@ -45,15 +45,16 @@ exports.handler = async (event, context) => {
 
     let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
 
-    resolve({
+    return {
       statusCode: 302,
       headers: {
         Location: uri,
         'Set-Cookie': `session_id=${session_id}; Secure; HttpOnly; SameSite=Lax`
       },
       body: ''
-    });
-  } catch (error) {
+    };
+  } 
+  catch (error) {
     console.error(error);
     return {
       statusCode: 500,
