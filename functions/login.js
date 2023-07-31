@@ -31,7 +31,7 @@ exports.handler = async (event, context) => {
     headers: {
       Location: url,
       'Cache-Control': 'no-cache',
-      'Set-Cookie': `session_id=${session_id}; Secure; HttpOnly; SameSite=Lax`
+      'Set-Cookie': `session_id=${session_id}; Secure; SameSite=Lax`
     },
     body: JSON.stringify({})
   };
