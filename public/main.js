@@ -1,19 +1,9 @@
 document.addEventListener("DOMContentLoaded", function() {
   
-  function getCookie(cname) {
-    var name = cname + "=";
-    var decodedCookie = decodeURIComponent(document.cookie);
-    var ca = decodedCookie.split(';');
-    for(var i = 0; i <ca.length; i++) {
-      var c = ca[i];
-      while (c.charAt(0) == ' ') {
-        c = c.substring(1);
-      }
-      if (c.indexOf(name) == 0) {
-        return c.substring(name.length, c.length);
-      }
-    }
-    return "";
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
   }
 
   function updateProfile(data) {
@@ -29,8 +19,8 @@ document.addEventListener("DOMContentLoaded", function() {
     // Use AJAX to call the serverless function, passing the session_id as a parameter
     $.ajax({
         url: '/.netlify/functions/get_user_profile',
-        data: {
-          session_id: session_id
+        headers: {
+          'Cookie': `session_id=${session_id}`
         },
         success: function(response) {
           const data = JSON.parse(response); // Parse the JSON string into an object
@@ -38,8 +28,6 @@ document.addEventListener("DOMContentLoaded", function() {
 
           $('#login').hide();
           $('#loggedin').show();
-
-          window.history.replaceState({}, document.title, "." + window.location.pathname);
         }
     });
   } else {
