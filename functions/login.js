@@ -11,8 +11,7 @@ let generateRandomString = function(length) {
 };
 
 exports.handler = async (event, context) => {
-  let state = generateRandomString(16);
-  // Set the cookie in client-side
+  let session_id = generateRandomString(16);
 
   // your application requests authorization
   let scope = 'user-read-private user-read-email';
@@ -23,14 +22,15 @@ exports.handler = async (event, context) => {
       client_id: process.env.CLIENT_ID,
       scope: scope,
       redirect_uri: redirectUri,
-      state: state
+      state: session_id
     });
 
   return {
     statusCode: 302,
     headers: {
       Location: url,
-      'Cache-Control': 'no-cache'
+      'Cache-Control': 'no-cache',
+      'Set-Cookie': `session_id=${session_id}; Secure; HttpOnly; SameSite=Lax`
     },
     body: JSON.stringify({})
   };

@@ -2,13 +2,13 @@ const request = require('request');
 const supabase = require('../utils/supabaseClient.js');
 
 exports.handler = async (event, context) => {
-  let user_id = event.queryStringParameters.user_id;
+  let session_id = event.cookies.session_id;
 
   // Get the user's access token from the database
   const { data: user, error } = await supabase
     .from('users')
     .select('access_token')
-    .eq('id', user_id)
+    .eq('id', session_id)
     .single();
 
   if (error || !user) {

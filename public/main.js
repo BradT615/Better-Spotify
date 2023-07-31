@@ -1,13 +1,19 @@
 document.addEventListener("DOMContentLoaded", function() {
   
-  function getHashParams() {
-    var hashParams = {};
-    var e, r = /([^&;=]+)=?([^&;]*)/g,
-        q = window.location.hash.substring(1);
-    while ( e = r.exec(q)) {
-       hashParams[e[1]] = decodeURIComponent(e[2]);
+  function getCookie(cname) {
+    var name = cname + "=";
+    var decodedCookie = decodeURIComponent(document.cookie);
+    var ca = decodedCookie.split(';');
+    for(var i = 0; i <ca.length; i++) {
+      var c = ca[i];
+      while (c.charAt(0) == ' ') {
+        c = c.substring(1);
+      }
+      if (c.indexOf(name) == 0) {
+        return c.substring(name.length, c.length);
+      }
     }
-    return hashParams;
+    return "";
   }
 
   function updateProfile(data) {
@@ -17,35 +23,29 @@ document.addEventListener("DOMContentLoaded", function() {
     document.querySelectorAll('.user-image').forEach(img => img.src = imageUrl);
   }
 
-  var params = getHashParams();
-  var user_id = params.user_id,
-      error = params.error;
+  var session_id = getCookie('session_id');
 
-  if (error) {
-    alert('There was an error during the authentication');
+  if (session_id) {
+    // Use AJAX to call the serverless function, passing the session_id as a parameter
+    $.ajax({
+        url: '/.netlify/functions/get_user_profile',
+        data: {
+          session_id: session_id
+        },
+        success: function(response) {
+          const data = JSON.parse(response); // Parse the JSON string into an object
+          updateProfile(data);
+
+          $('#login').hide();
+          $('#loggedin').show();
+
+          window.history.replaceState({}, document.title, "." + window.location.pathname);
+        }
+    });
   } else {
-    if (user_id) {
-      // Use AJAX to call the serverless function, passing the user_id as a parameter
-      $.ajax({
-          url: '/.netlify/functions/get_user_profile',
-          data: {
-            user_id: user_id
-          },
-          success: function(response) {
-            const data = JSON.parse(response); // Parse the JSON string into an object
-            updateProfile(data);
-
-            $('#login').hide();
-            $('#loggedin').show();
-
-            window.history.replaceState({}, document.title, "." + window.location.pathname);
-          }
-      });
-    } else {
-      // render initial screen
-      $('#login').show();
-      $('#loggedin').hide();
-    }
+    // render initial screen
+    $('#login').show();
+    $('#loggedin').hide();
 
     document.getElementById('login-button').addEventListener('click', function() {
       window.location = '/.netlify/functions/login';
