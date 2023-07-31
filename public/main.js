@@ -29,8 +29,12 @@ document.addEventListener("DOMContentLoaded", function() {
   
         $('#login').hide();
         $('#loggedin').show();
+
+        // Log the session_id here
+        var session_id_after_ajax = getCookie('session_id');
+        console.log('session_id after AJAX:', session_id_after_ajax);
       }
-  });  
+    });  
   } else {
     // render initial screen
     $('#login').show();
