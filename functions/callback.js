@@ -1,11 +1,14 @@
 const request = require('request-promise');
 const querystring = require('querystring');
 const supabase = require('../utils/supabaseClient.js');
+const cookie = require('cookie');
 
 exports.handler = async (event, context) => {
   let code = event.queryStringParameters.code || null;
   let state = event.queryStringParameters.state || null;
-  let session_id = event.cookies.session_id;
+
+  let cookies = cookie.parse(event.headers.cookie || '');
+  let session_id = cookies.session_id;
 
   let redirectUri = 'https://bradt615spotify.netlify.app/.netlify/functions/callback';
 
