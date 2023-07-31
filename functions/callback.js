@@ -26,6 +26,8 @@ exports.handler = async (event, context) => {
     json: true
   };
 
+  console.log('About to send request for access token...');
+
   try {
     let body = await request.post(authOptions);
     let access_token = body.access_token,
@@ -46,17 +48,19 @@ exports.handler = async (event, context) => {
 
     let uri = process.env.FRONTEND_URI || 'https://bradt615spotify.netlify.app'
 
+    console.log('Finished handling callback.');
+
     return {
       statusCode: 302,
       headers: {
         Location: uri,
-        'Set-Cookie': `session_id=${session_id}; Secure; SameSite=None`
+        'Set-Cookie': `session_id=${session_id}; Secure; HttpOnly; SameSite=None`
       },
       body: ''
     };
   } 
   catch (error) {
-    console.error(error);
+    console.error('Failed to get access token:', error);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve access token.' })

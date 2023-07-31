@@ -38,6 +38,8 @@ document.addEventListener("DOMContentLoaded", function() {
         error: function(jqXHR, textStatus, errorThrown) {
           console.error('AJAX error:', textStatus, ', Details:', errorThrown);
           console.error('Response:', jqXHR.responseText);
+          console.error('Error object:', jqXHR);
+          console.error('session_id at error:', session_id);
         }
       });     
     } else {
