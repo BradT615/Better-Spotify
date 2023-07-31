@@ -1,8 +1,12 @@
 const request = require('request');
 const supabase = require('../utils/supabaseClient.js');
+const cookie = require('cookie');
 
 exports.handler = async (event, context) => {
-  let session_id = event.cookies.session_id;
+  // Parse the session_id from the cookies in the incoming request
+  let cookies = cookie.parse(event.headers.cookie || '');
+  let session_id = cookies.session_id;
+  console.log('session_id in refresh_token.js:', session_id);
 
   // Get the user's refresh token from the database
   const { data: user, error } = await supabase
