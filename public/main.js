@@ -14,25 +14,23 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   var session_id = getCookie('session_id');
+  console.log('session_id in main.js:', session_id);
 
   if (session_id) {
     // Use AJAX to call the serverless function, passing the session_id as a parameter
     $.ajax({
       url: '/.netlify/functions/get_user_profile',
-      headers: {
-        'Cookie': `session_id=${session_id}`
+      xhrFields: {
+        withCredentials: true
       },
       success: function(response) {
-        const data = JSON.parse(response);
+        const data = JSON.parse(response); // Parse the JSON string into an object
         updateProfile(data);
-    
+  
         $('#login').hide();
         $('#loggedin').show();
-      },
-      error: function(jqXHR, textStatus, errorThrown) {
-        console.error('AJAX error:', textStatus, errorThrown);
       }
-    });
+  });  
   } else {
     // render initial screen
     $('#login').show();

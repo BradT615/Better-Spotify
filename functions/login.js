@@ -12,6 +12,7 @@ let generateRandomString = function(length) {
 
 exports.handler = async (event, context) => {
   let session_id = generateRandomString(16);
+  console.log('session_id in login.js:', session_id);
 
   // your application requests authorization
   let scope = 'user-read-private user-read-email';

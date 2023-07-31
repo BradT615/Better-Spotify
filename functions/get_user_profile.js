@@ -3,6 +3,7 @@ const supabase = require('../utils/supabaseClient.js');
 
 exports.handler = async (event, context) => {
   let session_id = event.cookies.session_id;
+  console.log('session_id in get_user_profile.js:', session_id);
 
   // Get the user's access token from the database
   const { data: user, error } = await supabase
@@ -14,8 +15,12 @@ exports.handler = async (event, context) => {
   if (error || !user) {
     console.error('Failed to retrieve user:', error);
     return {
-      statusCode: 500,
-      body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user.' })
+      statusCode: 200,
+      headers: {
+        'Access-Control-Allow-Origin': 'https://bradt615spotify.netlify.app',
+        'Access-Control-Allow-Credentials': 'true'
+      },
+      body: JSON.stringify(data)
     };
   }
 

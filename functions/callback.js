@@ -9,6 +9,7 @@ exports.handler = async (event, context) => {
 
   let cookies = cookie.parse(event.headers.cookie || '');
   let session_id = cookies.session_id;
+  console.log('session_id in callback.js:', session_id);
 
   let redirectUri = 'https://bradt615spotify.netlify.app/.netlify/functions/callback';
 
