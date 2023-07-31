@@ -26,15 +26,19 @@ document.addEventListener("DOMContentLoaded", function() {
       success: function(response) {
         const data = JSON.parse(response); // Parse the JSON string into an object
         updateProfile(data);
-  
+      
         $('#login').hide();
         $('#loggedin').show();
-
+    
         // Log the session_id here
         var session_id_after_ajax = getCookie('session_id');
         console.log('session_id after AJAX:', session_id_after_ajax);
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error('AJAX error:', textStatus, ', Details:', errorThrown);
+        console.error('Response:', jqXHR.responseText);
       }
-    });  
+    });     
   } else {
     // render initial screen
     $('#login').show();
