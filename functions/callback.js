@@ -54,6 +54,7 @@ exports.handler = async (event, context) => {
       body: ''
     });
   } catch (error) {
+    console.error(error);
     return {
       statusCode: 500,
       body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve access token.' })
