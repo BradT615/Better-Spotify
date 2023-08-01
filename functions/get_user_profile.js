@@ -44,6 +44,23 @@ exports.handler = async (event, context) => {
           statusCode: 200,
           body: JSON.stringify(body)
         });
+      } else if (response.statusCode === 401) {
+        // Remove user session from the database
+        supabase
+          .from('users')
+          .delete()
+          .eq('id', session_id)
+          .then(supabaseRes => {
+            console.log('Supabase delete response:', supabaseRes);
+          })
+          .catch(supabaseErr => {
+            console.error('Supabase delete error:', supabaseErr);
+          });
+
+        reject({
+          statusCode: 401,
+          body: JSON.stringify({ message: 'Unauthorized: Invalid or expired access token.' })
+        });
       } else {
         reject({
           statusCode: 500,
