@@ -18,6 +18,21 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  function refreshTokenAndRetry() {
+    $.ajax({
+      url: '/.netlify/functions/refresh_token',
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function(response) {
+        checkUserSession();
+      },
+      error: function() {
+        updateUserState(false);
+      }
+    });
+  }
+  
   function checkUserSession() {
     $.ajax({
       url: '/.netlify/functions/get_user_profile',
@@ -28,8 +43,12 @@ document.addEventListener("DOMContentLoaded", function() {
         const data = JSON.parse(response);
         updateUserState(true, data);
       },
-      error: function() {
-        updateUserState(false);
+      error: function(jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status === 401) {
+          refreshTokenAndRetry();
+        } else {
+          updateUserState(false);
+        }
       }
     });
   }
@@ -44,6 +63,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }, false);
   // Check status button
   document.getElementById('check-session-button').addEventListener('click', function() {
-    checkSessionId();
+    checkUserSession();
   }, false);
 });
