@@ -37,24 +37,18 @@ exports.handler = async (event, context) => {
     json: true
   };
 
-  return new Promise((resolve, reject) => {
-    request.post(authOptions, function(error, response, body) {
+  return new Promise(async (resolve, reject) => {
+    request.post(authOptions, async function(error, response, body) {
       if (!error && response.statusCode === 200) {
         let access_token = body.access_token;
 
         console.log("Received new access_token from Spotify: ", access_token); // Log the new access_token
 
         // Update access_token in the database
-        supabase
+        await supabase
           .from('users')
           .update({ access_token: access_token })
-          .eq('id', session_id)
-          .then(supabaseRes => {
-            console.log('Supabase update response:', supabaseRes);
-          })
-          .catch(supabaseErr => {
-            console.error('Supabase update error:', supabaseErr);
-          });
+          .eq('id', session_id);
 
         resolve({
           statusCode: 200,
@@ -63,6 +57,12 @@ exports.handler = async (event, context) => {
           })
         });
       } else {
+        // Delete the user's record from the database
+        await supabase
+          .from('users')
+          .delete()
+          .eq('id', session_id);
+        
         reject({
           statusCode: 500,
           body: JSON.stringify({ message: 'Internal Server Error: Failed to refresh access_token.' })
