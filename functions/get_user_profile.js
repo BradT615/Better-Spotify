@@ -39,14 +39,35 @@ exports.handler = async (event, context) => {
         resolve({ statusCode: 200, body: JSON.stringify(body) });
       } else {
         if (response && response.statusCode === 401) {
-          // Delete the user's record from the database
-          await supabase
-            .from('users')
-            .delete()
-            .eq('id', session_id);
+          // Attempt to refresh the access token
+          let refreshResponse = await refreshAccessToken(session_id);
+          if (refreshResponse.statusCode === 200) {
+            resolve({ statusCode: 200, body: JSON.stringify(body) });
+          } else {
+            // Delete the user's record from the database
+            await supabase
+              .from('users')
+              .delete()
+              .eq('id', session_id);
+            reject({ statusCode: 500, body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user profile.' }) });
+          }
         }
-        reject({ statusCode: 500, body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user profile.' }) });
       }
     });
   });
 };
+
+async function refreshAccessToken(session_id) {
+  let requestOptions = {
+    url: '/.netlify/functions/refresh_token',
+    headers: { 'Cookie': `session_id=${session_id}` },
+    json: true
+  };
+  try {
+    let response = await request.get(requestOptions);
+    return response;
+  } catch (error) {
+    console.error('Failed to refresh access token:', error);
+    return { statusCode: 500 };
+  }
+}
