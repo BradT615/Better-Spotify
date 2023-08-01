@@ -42,4 +42,8 @@ document.addEventListener("DOMContentLoaded", function() {
     window.location = '/.netlify/functions/login';
     setTimeout(checkUserSession, 2000);
   }, false);
+  // Check status button
+  document.getElementById('check-session-button').addEventListener('click', function() {
+    checkSessionId();
+  }, false);
 });
