@@ -14,8 +14,6 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function checkSessionId() {
-    // No need to get session_id from cookie here because it's HTTP-only
-  
     // Use AJAX to call the serverless function
     $.ajax({
       url: '/.netlify/functions/get_user_profile',
@@ -31,18 +29,22 @@ document.addEventListener("DOMContentLoaded", function() {
         
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        // If the AJAX call fails, it means the user is not logged in
-        console.error('AJAX error:', textStatus, ', Details:', errorThrown);
-        console.error('Response:', jqXHR.responseText);
-        console.error('Error object:', jqXHR);
+        // If the AJAX call fails, it means the user is not logged in or the access was revoked
+        if (jqXHR.status === 401) {
+          // Access was revoked, show the login screen
+          $('#login').show();
+          $('#loggedin').hide();
+        } else {
+          console.error('AJAX error:', textStatus, ', Details:', errorThrown);
+          console.error('Response:', jqXHR.responseText);
+          console.error('Error object:', jqXHR);
   
-        $('#login').show();
-        $('#loggedin').hide();
+          $('#login').show();
+          $('#loggedin').hide();
+        }
       }
     });
   }
-  
-
   // Check session_id when page is loaded
   checkSessionId();
 
@@ -50,6 +52,6 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('login-button').addEventListener('click', function() {
     window.location = '/.netlify/functions/login';
     // Check session_id again after a delay to give the login function time to complete
-    setTimeout(checkSessionId, 2000);  // Adjust delay as needed
+    setTimeout(checkSessionId, 2000);
   }, false);
 });
