@@ -14,40 +14,34 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function checkSessionId() {
-    var session_id = getCookie('session_id');
-    console.log('session_id in main.js:', session_id);
-
-    if (session_id) {
-      // Use AJAX to call the serverless function, passing the session_id as a parameter
-      $.ajax({
-        url: '/.netlify/functions/get_user_profile',
-        xhrFields: {
-          withCredentials: true
-        },
-        success: function(response) {
-          const data = JSON.parse(response); // Parse the JSON string into an object
-          updateProfile(data);
-        
-          $('#login').hide();
-          $('#loggedin').show();
+    // No need to get session_id from cookie here because it's HTTP-only
+  
+    // Use AJAX to call the serverless function
+    $.ajax({
+      url: '/.netlify/functions/get_user_profile',
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function(response) {
+        const data = JSON.parse(response); // Parse the JSON string into an object
+        updateProfile(data);
       
-          // Log the session_id here
-          var session_id_after_ajax = getCookie('session_id');
-          console.log('session_id after AJAX:', session_id_after_ajax);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.error('AJAX error:', textStatus, ', Details:', errorThrown);
-          console.error('Response:', jqXHR.responseText);
-          console.error('Error object:', jqXHR);
-          console.error('session_id at error:', session_id);
-        }
-      });     
-    } else {
-      // render initial screen
-      $('#login').show();
-      $('#loggedin').hide();
-    }
+        $('#login').hide();
+        $('#loggedin').show();
+        
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        // If the AJAX call fails, it means the user is not logged in
+        console.error('AJAX error:', textStatus, ', Details:', errorThrown);
+        console.error('Response:', jqXHR.responseText);
+        console.error('Error object:', jqXHR);
+  
+        $('#login').show();
+        $('#loggedin').hide();
+      }
+    });
   }
+  
 
   // Check session_id when page is loaded
   checkSessionId();
