@@ -14,6 +14,9 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   function checkSessionId() {
+    // No need to get session_id from cookie here because it's HTTP-only
+  
+    // Use AJAX to call the serverless function
     $.ajax({
       url: '/.netlify/functions/get_user_profile',
       xhrFields: {
@@ -32,13 +35,16 @@ document.addEventListener("DOMContentLoaded", function() {
         console.error('AJAX error:', textStatus, ', Details:', errorThrown);
         console.error('Response:', jqXHR.responseText);
         console.error('Error object:', jqXHR);
-  
+
+        // delete any possible cookies
+        document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+        
         $('#login').show();
         $('#loggedin').hide();
       }
     });
   }
-  
+
   // Check session_id when page is loaded
   checkSessionId();
 
