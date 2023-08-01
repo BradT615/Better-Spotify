@@ -59,7 +59,7 @@ exports.handler = async (event, context) => {
 
 async function refreshAccessToken(session_id) {
   let requestOptions = {
-    url: '/.netlify/functions/refresh_token',
+    url: 'https://bradt615spotify.netlify.app/.netlify/functions/refresh_token',
     headers: { 'Cookie': `session_id=${session_id}` },
     json: true
   };
