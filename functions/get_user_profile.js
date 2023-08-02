@@ -87,10 +87,22 @@ exports.handler = async (event, context) => {
               if (!error && response.statusCode === 200) {
                 resolve({ statusCode: 200, body: JSON.stringify(body) });
               } else {
+                // Delete the user's record from the database
+                await supabase
+                  .from('users')
+                  .delete()
+                  .eq('id', session_id);
+
                 reject({ statusCode: 500, body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user profile.' }) });
               }
             });
           } else {
+            // Delete the user's record from the database
+            await supabase
+              .from('users')
+              .delete()
+              .eq('id', session_id);
+
             reject({ statusCode: 500, body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user profile.' }) });
           }
         } else {

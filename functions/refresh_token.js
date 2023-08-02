@@ -53,7 +53,7 @@ exports.handler = async (event, context) => {
         resolve({
           statusCode: 200,
           body: JSON.stringify({
-            'access_token': access_token
+            'message': 'Access token refreshed successfully'
           })
         });
       } else {
