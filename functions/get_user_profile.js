@@ -29,7 +29,7 @@ async function refreshAccessToken(session_id, refresh_token) {
 
     return new_access_token;
   } catch (error) {
-    console.error('Failed to refresh access token:', error);
+    console.error('Failed to refresh access token:', JSON.stringify(error));
     
     // Delete the user's record from the database
     await supabase
@@ -54,6 +54,7 @@ exports.handler = async (event, context) => {
     .single();
 
   if (error || !user) {
+    console.error('Failed to retrieve user:', JSON.stringify(error));
     return {
       statusCode: 401,
       headers: {
@@ -87,25 +88,16 @@ exports.handler = async (event, context) => {
               if (!error && response.statusCode === 200) {
                 resolve({ statusCode: 200, body: JSON.stringify(body) });
               } else {
-                // Delete the user's record from the database
-                await supabase
-                  .from('users')
-                  .delete()
-                  .eq('id', session_id);
-
+                console.error('Failed to retrieve user profile after token refresh:', JSON.stringify(error));
                 reject({ statusCode: 500, body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user profile.' }) });
               }
             });
           } else {
-            // Delete the user's record from the database
-            await supabase
-              .from('users')
-              .delete()
-              .eq('id', session_id);
-
+            console.error('Failed to refresh access token:', JSON.stringify(error));
             reject({ statusCode: 500, body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user profile.' }) });
           }
         } else {
+          console.error('Failed to retrieve user profile:', JSON.stringify(error));
           reject({ statusCode: 500, body: JSON.stringify({ message: 'Internal Server Error: Failed to retrieve user profile.' }) });
         }
       }
