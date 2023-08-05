@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  function checkUserSession() {
+  function checkUserSession(retryCount = 0) {
     $.ajax({
       url: '/.netlify/functions/get_user_profile',
       xhrFields: {
@@ -48,15 +48,29 @@ document.addEventListener("DOMContentLoaded", function() {
         updateUserState(true, data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        if (jqXHR.status === 401 || jqXHR.status === 502) {
-          refreshTokenAndRetry();
+        if (jqXHR.status === 401 && retryCount < 1) { // limit to 1 retry
+          // Refresh the token and retry
+          $.ajax({
+            url: '/.netlify/functions/refresh_token',
+            xhrFields: {
+              withCredentials: true
+            },
+            success: function(response) {
+              // Retry checking the user session after refreshing the token
+              checkUserSession(retryCount + 1);
+            },
+            error: function() {
+              updateUserState(false);
+              console.error("Error refreshing the token");
+            }
+          });
         } else {
           updateUserState(false);
           console.error("Error fetching user profile:", errorThrown); // Log the error
         }
       }
     });
-  }
+  }  
 
   checkUserSession(); // Check user session when page is loaded
 
