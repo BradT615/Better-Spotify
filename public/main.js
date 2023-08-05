@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updateUserState(true, data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        if (jqXHR.status === 401 && retryCount < 1) { // limit to 1 retry
+        if ((jqXHR.status === 401 || jqXHR.status === 502) && retryCount < 1) { // handle both 401 and 502, limit to 1 retry
           // Refresh the token and retry
           $.ajax({
             url: '/.netlify/functions/refresh_token',
