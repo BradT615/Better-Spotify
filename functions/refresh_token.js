@@ -10,10 +10,10 @@ exports.handler = async (event, context) => {
     console.log('session_id in refresh_token.js:', session_id);
 
     // For testing purposes, directly return the session_id
-    return {
-      statusCode: 200,
-      body: JSON.stringify({ message: 'Testing mode: session_id is', session_id: session_id })
-    };
+    // return {
+    //   statusCode: 200,
+    //   body: JSON.stringify({ message: 'Testing mode: session_id is', session_id: session_id })
+    // };
 
     // Get the user's refresh token from the database
     const { data: user, error } = await supabase
