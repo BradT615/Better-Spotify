@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function() {
         updateUserState(true, data);
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        if (jqXHR.status === 401) {
+        if (jqXHR.status === 401 || jqXHR.status === 502) {
           refreshTokenAndRetry();
         } else {
           updateUserState(false);
