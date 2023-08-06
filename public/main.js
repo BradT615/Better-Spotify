@@ -51,11 +51,11 @@ document.addEventListener("DOMContentLoaded", function() {
         checkUserSession();
       },
       error: function(jqXHR, textStatus, errorThrown) {
-        if (jqXHR.status === 401) {
+        if (jqXHR.status === 401 || jqXHR.status === 502) {
             // Handle data deletion and UI update.
             deleteUser();
             updateUserState(false);
-            console.error("User possibly revoked access or refresh token is expired.");
+            console.error("User possibly revoked access or there was an error refreshing the token.");
         } else {
             refreshTokenAndRetry(retryCount + 1);
         }
