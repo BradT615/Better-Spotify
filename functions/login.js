@@ -26,13 +26,17 @@ exports.handler = async (event, context) => {
       state: session_id
     });
 
+  let date = new Date();
+  date.setDate(date.getDate() + 7);  // Set the date 7 days from now
+  let expires = date.toUTCString();
+  
   return {
-    statusCode: 302,
-    headers: {
-      Location: url,
-      'Cache-Control': 'no-cache',
-      'Set-Cookie': `session_id=${session_id}; Secure; HttpOnly; SameSite=None`
-    },
-    body: JSON.stringify({})
-  };
+      statusCode: 302,
+      headers: {
+          Location: url,
+          'Cache-Control': 'no-cache',
+          'Set-Cookie': `session_id=${session_id}; Expires=${expires}; Secure; HttpOnly; SameSite=None`
+      },
+      body: JSON.stringify({})
+  };    
 };

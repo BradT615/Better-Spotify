@@ -50,13 +50,17 @@ exports.handler = async (event, context) => {
 
     console.log('Finished handling callback.');
 
+    let date = new Date();
+    date.setDate(date.getDate() + 7);  // Set the date 7 days from now
+    let expires = date.toUTCString();
+
     return {
-      statusCode: 302,
-      headers: {
-        Location: uri,
-        'Set-Cookie': `session_id=${session_id}; Secure; HttpOnly; SameSite=None`
-      },
-      body: ''
+        statusCode: 302,
+        headers: {
+            Location: uri,
+            'Set-Cookie': `session_id=${session_id}; Expires=${expires}; Secure; HttpOnly; SameSite=None`
+        },
+        body: ''
     };
   } 
   catch (error) {
