@@ -17,6 +17,25 @@ document.addEventListener("DOMContentLoaded", function() {
     }
   }
 
+  function deleteUser() {
+    $.ajax({
+        url: '/.netlify/functions/delete_user',
+        type: 'DELETE',
+        xhrFields: {
+            withCredentials: true
+        },
+        success: function(response) {
+            console.log("User data deleted successfully.");
+            // Clear frontend data or state
+            document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+            // Clear local storage?
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Failed to delete user data:", errorThrown);
+        }
+    });
+  }
+
   function refreshTokenAndRetry(retryCount = 1) {
     if (retryCount > 3) { // Limit to 3 retries
       updateUserState(false);
@@ -31,8 +50,15 @@ document.addEventListener("DOMContentLoaded", function() {
       success: function(response) {
         checkUserSession();
       },
-      error: function() {
-        refreshTokenAndRetry(retryCount + 1);
+      error: function(jqXHR, textStatus, errorThrown) {
+        if (jqXHR.status === 401) {
+            // Handle data deletion and UI update.
+            deleteUser();
+            updateUserState(false);
+            console.error("User possibly revoked access or refresh token is expired.");
+        } else {
+            refreshTokenAndRetry(retryCount + 1);
+        }
       }
     });
   }
@@ -50,20 +76,7 @@ document.addEventListener("DOMContentLoaded", function() {
       error: function(jqXHR, textStatus, errorThrown) {
         if ((jqXHR.status === 401 || jqXHR.status === 502) && retryCount < 1) { // handle both 401 and 502, limit to 1 retry
           // Refresh the token and retry
-          $.ajax({
-            url: '/.netlify/functions/refresh_token',
-            xhrFields: {
-              withCredentials: true
-            },
-            success: function(response) {
-              // Retry checking the user session after refreshing the token
-              checkUserSession(retryCount + 1);
-            },
-            error: function() {
-              updateUserState(false);
-              console.error("Error refreshing the token");
-            }
-          });
+          refreshTokenAndRetry();
         } else {
           updateUserState(false);
           console.error("Error fetching user profile:", errorThrown); // Log the error

@@ -9,12 +9,6 @@ exports.handler = async (event, context) => {
     let session_id = cookies.session_id;
     console.log('session_id in refresh_token.js:', session_id);
 
-    // For testing purposes, directly return the session_id
-    // return {
-    //   statusCode: 200,
-    //   body: JSON.stringify({ message: 'Testing mode: session_id is', session_id: session_id })
-    // };
-
     // Get the user's refresh token from the database
     const { data: user, error } = await supabase
       .from('users')
@@ -71,6 +65,13 @@ exports.handler = async (event, context) => {
             body: JSON.stringify({
               'message': 'Access token refreshed successfully'
             })
+          });
+        } else if (response.statusCode === 400 && body.error === "invalid_grant") {
+          // This is the case when the refresh token is invalid (might be revoked or expired)
+          console.error("Invalid refresh token, possibly user revoked access:", error);
+          reject({
+            statusCode: 401,  // Send a 401 status to indicate unauthorized
+            body: JSON.stringify({ message: 'Unauthorized: Invalid refresh token.' })
           });
         } else {
           console.error("Error refreshing access_token from Spotify:", error);
