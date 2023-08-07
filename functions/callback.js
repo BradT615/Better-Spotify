@@ -51,7 +51,7 @@ exports.handler = async (event, context) => {
     console.log('Finished handling callback.');
 
     let date = new Date();
-    date.setDate(date.getDate() + 7);  // Set the date 7 days from now
+    date.setDate(date.getDate() + 7);
     let expires = date.toUTCString();
 
     return {

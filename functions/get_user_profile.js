@@ -2,10 +2,7 @@ const request = require('request');
 const supabase = require('../utils/supabaseClient.js');
 const cookie = require('cookie');
 
-/* Removed refreshAccessToken function ... (content truncated for brevity) */
-
 exports.handler = async (event, context) => {
-  // Parse the session_id from the cookies in the incoming request
   let cookies = cookie.parse(event.headers.cookie || '');
   let session_id = cookies.session_id;
 

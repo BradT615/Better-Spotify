@@ -4,12 +4,10 @@ const cookie = require('cookie');
 
 exports.handler = async (event, context) => {
   try {
-    // Parse the session_id from the cookies in the incoming request
     let cookies = cookie.parse(event.headers.cookie || '');
     let session_id = cookies.session_id;
     console.log('session_id in refresh_token.js:', session_id);
 
-    // Get the user's refresh token from the database
     const { data: user, error } = await supabase
       .from('users')
       .select('refresh_token')
@@ -43,7 +41,7 @@ exports.handler = async (event, context) => {
         if (!error && response.statusCode === 200) {
           let access_token = body.access_token;
 
-          console.log("Received new access_token from Spotify: ", access_token); // Log the new access_token
+          console.log("Received new access_token from Spotify: ", access_token);
 
           // Update access_token in the database
           const { error: updateError } = await supabase
