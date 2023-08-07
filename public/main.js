@@ -9,13 +9,13 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateUserState(isLoggedIn, data = null) {
     if (isLoggedIn) {
       updateProfile(data);
-      $('#login').hide();
-      $('#loggedin').show();
+      document.getElementById('login').style.display = 'none';
+      document.getElementById('loggedin').style.display = 'flex';
     } else {
-      $('#login').show();
-      $('#loggedin').hide();
+      document.getElementById('login').style.display = 'flex';
+      document.getElementById('loggedin').style.display = 'none';
     }
-  }
+  }   
 
   function deleteUser() {
     $.ajax({
