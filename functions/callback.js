@@ -58,7 +58,7 @@ exports.handler = async (event, context) => {
         statusCode: 302,
         headers: {
             Location: uri,
-            'Set-Cookie': `session_id=${session_id}; Expires=${expires}; Secure; HttpOnly; SameSite=None`
+            'Set-Cookie': `session_id=${session_id}; Expires=${expires}; Secure; HttpOnly; SameSite=None; Path=/`
         },
         body: ''
     };
