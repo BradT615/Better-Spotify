@@ -89,9 +89,5 @@ document.addEventListener("DOMContentLoaded", function() {
   document.getElementById('login-button').addEventListener('click', function() {
     window.location = '/.netlify/functions/login';
   });
-
-  document.getElementById('check-session-button').addEventListener('click', function() {
-    checkUserSession();
-  });
-
+  
 });
