@@ -6,10 +6,10 @@
     <link rel="stylesheet" href="output.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
-<body class="h-screen bg-black text-center text-white">
+<body class="h-screen text-center text-white">
 
 
-    <div id="login" class="flex items-center justify-center h-full">
+    <div id="login" class="flex items-center justify-center h-full bg-slate-600">
         <div class="rounded shadow-lg bg-blue-300 p-4">
             <h1 class="text-2xl text-blue-900">Better Spotify</h1>
             <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
@@ -17,10 +17,9 @@
     </div>
 
 
-    <div id="loggedin" class="flex flex-col h-screen bg-black" style="display: none;">
-
-        <div id="mobile" class="sm:hidden">
-            <header id="user-profile" class="flex items-center justify-between px-4 py-2">
+    <div id="loggedin" class="h-screen bg-black" style="display: none;">
+        <div id="mobile" class="sm:hidden h-full  flex flex-col">
+            <header id="user-profile" class="flex items-center justify-between px-4 py-2 fixed w-full">
                 <div class="flex items-center">
                     <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
                     <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
@@ -29,9 +28,42 @@
                     <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
                 </div>
             </header>
+        
+            <div class="container flex-grow mt-16 overflow-y-auto">
+                <div class="song flex mx-10 my-5">
+                    <div class="row">
+                        <img class="h-28 w-28 rounded-lg" src="assets/default-image.png" alt="Song Image">
+                    </div>
+                    <div class="row m-2 text-left text-xl">
+                        <div class="col"><p>Song Name</p></div>
+                        <div class="col"><p>Artist</p></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="navbar fixed bottom-0 left-0 w-full flex justify-around items-center p-2 bg-gradient-to-t from-black">
+                <!-- Home Section (Left) -->
+                <div class="flex flex-col items-center p-2">
+                    <box-icon type='solid' name='home' color='#ffffff'></box-icon>
+                    <p class="text-white">Home</p>
+                </div>
+            
+                <!-- Search Section (Middle) -->
+                <div class="flex flex-col items-center p-2">
+                    <box-icon name='search' color='#ffffff'></box-icon>
+                    <p class="text-white">Search</p>
+                </div>
+            
+                <!-- Library Section (Right) -->
+                <div class="flex flex-col items-center p-2">
+                    <box-icon name='library' color='#ffffff'></box-icon>
+                    <p class="text-white">Library</p>
+                </div>
+            </div>
         </div>
         
         <div id="desktop" class="hidden sm:block">
+            
             <header id="user-profile" class="flex items-center justify-between px-4 py-2">
                 <div class="flex items-center">
                     <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
