@@ -9,7 +9,7 @@
 <body class="h-screen bg-black text-center text-white">
 
 
-    <div id="login" class="flex items-center justify-center h-full" style="display: none;">
+    <div id="login" class="flex items-center justify-center h-full">
         <div class="rounded shadow-lg bg-blue-300 p-4">
             <h1 class="text-2xl text-blue-900">Better Spotify</h1>
             <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
@@ -17,9 +17,9 @@
     </div>
 
 
-    <div id="loggedin" class="flex flex-col h-screen bg-black">
+    <div id="loggedin" class="flex flex-col h-screen bg-black" style="display: none;">
 
-        <div id="mobile" class="block sm:hidden">
+        <div id="mobile" class="sm:hidden">
             <header id="user-profile" class="flex items-center justify-between px-4 py-2">
                 <div class="flex items-center">
                     <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
@@ -29,10 +29,8 @@
                     <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
                 </div>
             </header>
-
-
         </div>
-    
+        
         <div id="desktop" class="hidden sm:block">
             <header id="user-profile" class="flex items-center justify-between px-4 py-2">
                 <div class="flex items-center">
@@ -44,8 +42,6 @@
                     <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
                 </div>
             </header>
-
-
         </div>
         
     </div>
