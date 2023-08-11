@@ -8,7 +8,8 @@
 </head>
 <body class="h-screen bg-black text-center text-white">
 
-    <div id="login" class="flex items-center justify-center h-full">
+
+    <div id="login" class="flex items-center justify-center h-full" style="display: none;">
         <div class="rounded shadow-lg bg-blue-300 p-4">
             <h1 class="text-2xl text-blue-900">Better Spotify</h1>
             <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
@@ -16,102 +17,37 @@
     </div>
 
 
-    <div id="loggedin" class="flex flex-col h-screen bg-black" style="display: none;">
+    <div id="loggedin" class="flex flex-col h-screen bg-black">
 
-        <div class="mobile">
-            <!-- header includes Better Spotify and profile image -->
+        <div id="mobile" class="block sm:hidden">
+            <header id="user-profile" class="flex items-center justify-between px-4 py-2">
+                <div class="flex items-center">
+                    <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
+                    <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
+                </div>
+                <div class="flex items-center bg-neutral-900 rounded-full">
+                    <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
+                </div>
+            </header>
 
 
         </div>
-
-        <div class="desktop">
-            <!-- header includes Better Spotify profile name and image -->
+    
+        <div id="desktop" class="hidden sm:block">
+            <header id="user-profile" class="flex items-center justify-between px-4 py-2">
+                <div class="flex items-center">
+                    <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
+                    <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
+                </div>
+                <div class="flex items-center bg-neutral-900 rounded-full">
+                    <p id="user-name" class="text-lg font-bold ml-3 mr-2 hidden sm:block">Test_Username</p>
+                    <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
+                </div>
+            </header>
 
 
         </div>
-
-
-
         
-        <header id="user-profile" class="flex items-center justify-between px-4 py-2">
-            <div class="flex items-center">
-                <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
-                <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
-            </div>
-            <div class="flex items-center bg-neutral-900 rounded-full">
-                <p id="user-name" class="text-lg font-bold ml-3 mr-2 hidden sm:block">Test_Username</p>
-                <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
-            </div>
-        </header>
-
-        <div class="flex gap-2 mx-2 h-4/5 font-bold">
-
-
-            <div class="flex gap-2 flex-col max-sm:hidden">
-                <div class="bg-neutral-900 rounded-lg p-2">
-                    <div class="flex items-center gap-2 p-2">
-                        <box-icon type='solid' name='home' color='#ffffff'></box-icon>
-                        <p>Home</p>
-                    </div>
-                    <div class="flex items-center gap-2 p-2">
-                        <box-icon name='search' color='#ffffff'></box-icon>
-                        <p>Search</p>
-                    </div>
-                </div>
-
-                <div class="bg-neutral-900 rounded-lg p-4 h-full">
-                    <div class="flex items-center gap-2">
-                        <box-icon name='library' color='#ffffff' ></box-icon>
-                        <p>Library</p>
-                    </div>
-                </div>
-            </div>
-            <div id="oauth" class="flex flex-col bg-neutral-900 rounded-lg w-full">
-                <div class="flex h-1/3 w-full justify-between">
-                    <div class="flex sm:w-1/2 p-4">
-                        <img class="user-image w-1/4 aspect-square h-fit rounded-md" src="assets/default-image.png">
-                        <div class="flex flex-col ml-4 items-start pt-4">
-                            <h1 class="row text-lg">Song Name</h1>
-                            <h1 class="row text-sm">Artist</h1>
-                        </div>
-                    </div>
-                    <div class="col w-1/2 text-right max-sm:hidden">
-                        <input type="text" class="bg-searchBar rounded-full text-center mt-8 mr-8 py-2" aria-label="Search" placeholder="Search from Playlist">
-                    </div>
-                </div>
-                <div class="row h-2/3"></div>
-            </div>
-
-
-
-        </div>
-
-        <div class="flex flex-grow items-center justify-between px-4">
-            <div class="col flex items-center w-1/3">
-                <img class="user-image w-16 h-16 m-1 rounded-md hidden sm:block" src="assets/default-image.png">
-                <div class="flex flex-col ml-4 items-start">
-                    <h1 class="row text-lg hidden sm:block">Song Name</h1>
-                    <h1 class="row text-sm hidden sm:block">Artist</h1>
-                </div>
-            </div>
-        
-            <div class="col flex flex-col w-1/3 py-2">
-                <div class="row flex gap-4 items-center justify-center">
-                    <box-icon name='shuffle' color='#ffffff' size='24px'></box-icon>
-                    <box-icon name='arrow-to-left' color='#ffffff' size='24px'></box-icon>
-                    <box-icon name='play-circle' color='#ffffff' size='32px'></box-icon>
-                    <box-icon name='arrow-to-right' color='#ffffff' size='24px'></box-icon>
-                    <box-icon name='repeat' color='#ffffff' size='24px'></box-icon>
-                </div>
-                <div class="row">song bar</div>
-            </div>
-        
-            <div class="col flex gap-2 w-1/3 justify-end">
-                <box-icon name='volume-low' type='solid' color='#ffffff' class="hidden sm:block"></box-icon>
-                <p class="hidden sm:block">volume</p>
-                <box-icon name='volume-full' type='solid' color='#ffffff' class="hidden sm:block"></box-icon>
-            </div>
-        </div>
     </div>
 
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
