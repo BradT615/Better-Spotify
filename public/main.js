@@ -26,15 +26,12 @@ document.addEventListener("DOMContentLoaded", function() {
         },
         success: function(response) {
             console.log("User data deleted successfully.");
-            // Clear frontend data or state
-            document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
-            // Clear local storage?
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Failed to delete user data:", errorThrown);
         }
     });
-  }
+}
 
   function refreshTokenAndRetry(retryCount = 1) {
     if (retryCount > 3) { // Limit to 3 retries

@@ -22,6 +22,9 @@ exports.handler = async (event, context) => {
 
     return {
         statusCode: 200,
+        headers: {
+            'Set-Cookie': `session_id=; Expires=Thu, 01 Jan 1970 00:00:00 GMT; Secure; HttpOnly; SameSite=None; Path=/`
+        },
         body: JSON.stringify({ message: 'User data deleted successfully.' })
     };
 };
