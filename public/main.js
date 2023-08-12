@@ -83,6 +83,17 @@ document.addEventListener("DOMContentLoaded", function() {
 
   checkUserSession();
 
+  document.getElementById('playPauseButton').addEventListener('click', function() {
+    var button = document.getElementById('playPauseButton');
+    if (button.src.endsWith('play.png')) {
+      button.src = 'assets/pause.png';
+      button.alt = 'Pause Button';
+    } else {
+      button.src = 'assets/play.png';
+      button.alt = 'Play Button';
+    }
+  });
+
   document.getElementById('login-button').addEventListener('click', function() {
     window.location = '/.netlify/functions/login';
   });

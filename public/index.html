@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Better Spotify</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Better Spotify</title>
     <link rel="stylesheet" href="output.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body class="h-screen text-center text-white">
 
 
-    <div id="login" class="flex items-center justify-center h-full bg-slate-600">
+    <div id="login" class="flex items-center justify-center h-full bg-slate-600" style="display: none;">
         <div class="rounded shadow-lg bg-blue-300 p-4">
             <h1 class="text-2xl text-blue-900">Better Spotify</h1>
             <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
@@ -17,8 +18,9 @@
     </div>
 
 
-    <div id="loggedin" class="h-screen bg-black" style="display: none;">
+    <div id="loggedin" class="h-screen bg-neutral-700">
         <div id="mobile" class="sm:hidden h-full  flex flex-col">
+
             <header id="user-profile" class="flex items-center justify-between px-4 py-2 fixed w-full">
                 <div class="flex items-center">
                     <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
@@ -28,7 +30,7 @@
                     <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
                 </div>
             </header>
-        
+
             <div class="container flex-grow mt-16 overflow-y-auto">
                 <div class="song flex mx-10 my-5">
                     <div class="row">
@@ -41,27 +43,44 @@
                 </div>
             </div>
 
-            <div class="navbar fixed bottom-0 left-0 w-full flex justify-around items-center p-2 bg-gradient-to-t from-black">
-                <!-- Home Section (Left) -->
-                <div class="flex flex-col items-center p-2">
-                    <box-icon type='solid' name='home' color='#ffffff'></box-icon>
-                    <p class="text-white">Home</p>
+            <!-- Show Get Current User's Playlists -->
+
+            <!-- If available display current song like spotify -->
+
+            <div class="navbar fixed bottom-0 left-0 w-full bg-gradient-to-t from-black">
+
+                <div class="songCard flex max-w-full justify-between items-center bg-sky-400 rounded-lg shadow-xl mx-2">
+                    <div class="flex items-center w-4/5">
+                        <img class="h-12 w-12 rounded-lg m-2" src="assets/default-image.png" alt="Song Image">
+                        <div class="flex flex-col text-left truncate w-full">
+                            <h1 class="truncate">Extremely Long Song Name that goes on and on</h1>
+                            <h1 class="truncate">Artist</h1>
+                        </div>
+                    </div>
+                    <div class="col flex items-center justify-center w-1/5">
+                        <img id="playPauseButton" src="assets/play.png" alt="Play Button">
+                    </div>
                 </div>
-            
-                <!-- Search Section (Middle) -->
-                <div class="flex flex-col items-center p-2">
-                    <box-icon name='search' color='#ffffff'></box-icon>
-                    <p class="text-white">Search</p>
-                </div>
-            
-                <!-- Library Section (Right) -->
-                <div class="flex flex-col items-center p-2">
-                    <box-icon name='library' color='#ffffff'></box-icon>
-                    <p class="text-white">Library</p>
-                </div>
+                
+                <div class="flex justify-around p-4">
+                    <div class="flex flex-col items-center">
+                        <box-icon type='solid' name='home' color='#ffffff'></box-icon>
+                        <p>Home</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <box-icon name='search' color='#ffffff'></box-icon>
+                        <p>Search</p>
+                    </div>
+                    <div class="flex flex-col items-center">
+                        <box-icon name='library' color='#ffffff'></box-icon>
+                        <p>Library</p>
+                    </div>
+                </div>  
             </div>
         </div>
         
+
+
         <div id="desktop" class="hidden sm:block">
             
             <header id="user-profile" class="flex items-center justify-between px-4 py-2">
