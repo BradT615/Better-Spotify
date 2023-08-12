@@ -10,7 +10,7 @@
 <body class="h-screen text-center text-white">
 
 
-    <div id="login" class="flex items-center justify-center h-full bg-slate-600" style="display: none;">
+    <div id="login" class="flex items-center justify-center h-full bg-slate-600">
         <div class="rounded shadow-lg bg-blue-300 p-4">
             <h1 class="text-2xl text-blue-900">Better Spotify</h1>
             <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
@@ -18,7 +18,7 @@
     </div>
 
 
-    <div id="loggedin" class="h-screen bg-neutral-700">
+    <div id="loggedin" class="h-screen bg-neutral-700" style="display: none;">
         <div id="mobile" class="sm:hidden h-full  flex flex-col">
 
             <div id="user-profile" class="flex items-center justify-between px-4 py-2 fixed w-full">
@@ -40,21 +40,11 @@
                     </div>
                 </div>
             </div>
-            
-            
-            
-            
-            
 
             <div class="container flex-grow mt-16 overflow-y-auto">
 
-
-
-
-
-
                 <!-- For in song display -->
-                <!-- <div class="song flex mx-10 my-5">
+                <div class="song flex mx-10 my-5">
                     <div class="row">
                         <img class="h-28 w-28 rounded-lg" src="assets/default-image.png" alt="Song Image">
                     </div>
@@ -62,7 +52,7 @@
                         <div class="col"><p>Song Name</p></div>
                         <div class="col"><p>Artist</p></div>
                     </div>
-                </div> -->
+                </div>
                 
             </div>
 

@@ -81,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // Call this function at the beginning to check the user's login state
   checkUserSession();
 
   function initializeLoggedInUser() {
@@ -107,8 +106,8 @@ document.addEventListener("DOMContentLoaded", function() {
       event.stopPropagation();
     });
 
-    var selectedColor = 'sky'; // Default color
-    var accentColor = 'bg-sky-400'; // Default accent color
+    var selectedColor = 'sky';
+    var accentColor = 'bg-sky-400';
 
     function updateThemeColor() {
       document.querySelectorAll('.theme-color').forEach(function(element) {
@@ -134,7 +133,6 @@ document.addEventListener("DOMContentLoaded", function() {
     document.getElementById('logout-button').addEventListener('click', function() {
       deleteUser();
       updateUserState(false);
-      alert("You are logged out!");
     });
 
     document.getElementById('playPauseButton').addEventListener('click', function() {
