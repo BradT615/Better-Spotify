@@ -21,18 +21,40 @@
     <div id="loggedin" class="h-screen bg-neutral-700">
         <div id="mobile" class="sm:hidden h-full  flex flex-col">
 
-            <header id="user-profile" class="flex items-center justify-between px-4 py-2 fixed w-full">
+            <div id="user-profile" class="flex items-center justify-between px-4 py-2 fixed w-full">
                 <div class="flex items-center">
                     <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
                     <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
                 </div>
-                <div class="flex items-center bg-neutral-900 rounded-full">
-                    <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
+                <div class="flex items-center bg-neutral-900 rounded-full relative" id="user-menu">
+                    <img class="user-image w-10 h-10 rounded-full m-1 cursor-pointer" src="assets/default-image.png">
+                    <div class="dropdown-menu hidden absolute right-2 mt-52 bg-neutral-900 rounded-lg shadow-lg">
+                        <div class="dropdown-item p-4 w-full" id="theme-button">
+                            Theme
+                            <div class="color-options mt-2 flex gap-1"> 
+                                <div class="color-circle bg-red-400 w-6 h-6 rounded-full cursor-pointer" data-color="red"></div>
+                                <div class="color-circle bg-blue-400 w-6 h-6 rounded-full cursor-pointer" data-color="blue"></div>
+                                <div class="color-circle bg-green-400 w-6 h-6 rounded-full cursor-pointer" data-color="green"></div>                            </div>
+                        </div>
+                        <button class="dropdown-item p-4 w-full hover:bg-neutral-800 rounded-b-lg" id="logout-button">Logout</button>
+                    </div>
                 </div>
-            </header>
+            </div>
+            
+            
+            
+            
+            
 
             <div class="container flex-grow mt-16 overflow-y-auto">
-                <div class="song flex mx-10 my-5">
+
+
+
+
+
+
+                <!-- For in song display -->
+                <!-- <div class="song flex mx-10 my-5">
                     <div class="row">
                         <img class="h-28 w-28 rounded-lg" src="assets/default-image.png" alt="Song Image">
                     </div>
@@ -40,7 +62,8 @@
                         <div class="col"><p>Song Name</p></div>
                         <div class="col"><p>Artist</p></div>
                     </div>
-                </div>
+                </div> -->
+                
             </div>
 
             <!-- Show Get Current User's Playlists -->
@@ -49,7 +72,7 @@
 
             <div class="navbar fixed bottom-0 left-0 w-full bg-gradient-to-t from-black">
 
-                <div class="songCard flex max-w-full justify-between items-center bg-sky-400 rounded-lg shadow-xl mx-2">
+                <div class="songCard flex max-w-full justify-between items-center theme-color rounded-lg shadow-xl mx-2">
                     <div class="flex items-center w-4/5">
                         <img class="h-12 w-12 rounded-lg m-2" src="assets/default-image.png" alt="Song Image">
                         <div class="flex flex-col text-left truncate w-full">

@@ -9,13 +9,14 @@ document.addEventListener("DOMContentLoaded", function() {
   function updateUserState(isLoggedIn, data = null) {
     if (isLoggedIn) {
       updateProfile(data);
+      initializeLoggedInUser();
       document.getElementById('login').style.display = 'none';
       document.getElementById('loggedin').style.display = 'flex';
     } else {
       document.getElementById('login').style.display = 'flex';
       document.getElementById('loggedin').style.display = 'none';
     }
-  }   
+  }
 
   function deleteUser() {
     $.ajax({
@@ -31,10 +32,10 @@ document.addEventListener("DOMContentLoaded", function() {
             console.error("Failed to delete user data:", errorThrown);
         }
     });
-}
+  }
 
   function refreshTokenAndRetry(retryCount = 1) {
-    if (retryCount > 3) { // Limit to 3 retries
+    if (retryCount > 3) {
       updateUserState(false);
       return;
     }
@@ -49,7 +50,6 @@ document.addEventListener("DOMContentLoaded", function() {
       },
       error: function(jqXHR, textStatus, errorThrown) {
         if (jqXHR.status === 401 || jqXHR.status === 502) {
-            // Handle data deletion and UI update.
             deleteUser();
             updateUserState(false);
             console.error("User possibly revoked access or there was an error refreshing the token.");
@@ -79,23 +79,78 @@ document.addEventListener("DOMContentLoaded", function() {
         }
       }
     });
-  }  
+  }
 
+  // Call this function at the beginning to check the user's login state
   checkUserSession();
 
-  document.getElementById('playPauseButton').addEventListener('click', function() {
-    var button = document.getElementById('playPauseButton');
-    if (button.src.endsWith('play.png')) {
-      button.src = 'assets/pause.png';
-      button.alt = 'Pause Button';
-    } else {
-      button.src = 'assets/play.png';
-      button.alt = 'Play Button';
+  function initializeLoggedInUser() {
+    function toggleDropdown() {
+      var dropdown = document.querySelector('.dropdown-menu');
+      dropdown.classList.toggle('hidden');
     }
-  });
+
+    var dropdown = document.querySelector('.dropdown-menu');
+    var userMenu = document.getElementById('user-menu');
+
+    document.querySelector('.user-image').addEventListener('click', function() {
+      dropdown.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', function(event) {
+      if (!userMenu.contains(event.target)) {
+        dropdown.classList.add('hidden');
+      }
+    });
+
+    userMenu.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+
+    var selectedColor = 'sky'; // Default color
+    var accentColor = 'bg-sky-400'; // Default accent color
+
+    function updateThemeColor() {
+      document.querySelectorAll('.theme-color').forEach(function(element) {
+        element.classList.remove(accentColor);
+        element.classList.add('bg-' + selectedColor + '-400');
+      });
+      accentColor = 'bg-' + selectedColor + '-400';
+    }
+
+    updateThemeColor();
+
+    document.querySelectorAll('.color-circle').forEach(function(circle) {
+      circle.addEventListener('click', function() {
+        document.querySelectorAll('.color-circle').forEach(function(c) {
+          c.classList.remove('active');
+        });
+        circle.classList.add('active');
+        selectedColor = circle.dataset.color;
+        updateThemeColor();
+      });
+    });
+
+    document.getElementById('logout-button').addEventListener('click', function() {
+      deleteUser();
+      updateUserState(false);
+      alert("You are logged out!");
+    });
+
+    document.getElementById('playPauseButton').addEventListener('click', function() {
+      var button = document.getElementById('playPauseButton');
+      if (button.src.endsWith('play.png')) {
+        button.src = 'assets/pause.png';
+        button.alt = 'Pause Button';
+      } else {
+        button.src = 'assets/play.png';
+        button.alt = 'Play Button';
+      }
+    });
+  }
 
   document.getElementById('login-button').addEventListener('click', function() {
     window.location = '/.netlify/functions/login';
   });
-  
+
 });
