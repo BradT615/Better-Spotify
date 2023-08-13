@@ -9,7 +9,7 @@ function updatePlayPauseButton(isPaused) {
   }
 }
 
-window.onSpotifyWebPlaybackSDKReady = () => {
+window.onSpotifyWebPlaybackSDKReady = (token) => {
   const player = new Spotify.Player({
     name: 'Better Spotify',
     getOAuthToken: cb => { cb(token); }
@@ -144,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function() {
         const token = response.access_token;
 
         // Now you can call the global function here
-        window.onSpotifyWebPlaybackSDKReady();
+        window.onSpotifyWebPlaybackSDKReady(token);
 
         // Rest of your code...
       },
