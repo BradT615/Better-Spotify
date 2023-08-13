@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function() {
       success: function(response) {
         // Initialize Spotify player
         const token = response.access_token;
-
+        console.log('Recieved token:', token);
         // Now you can call the global function here
         window.onSpotifyWebPlaybackSDKReady(token);
 
