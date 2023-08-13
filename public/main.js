@@ -140,14 +140,14 @@ document.addEventListener("DOMContentLoaded", function() {
         withCredentials: true
       },
       success: function(response) {
-        const token = response.access_token;
-        console.log("Token:", token); // Log the token
-        window.onSpotifyWebPlaybackSDKReady(token);
+        const parsedResponse = JSON.parse(response); // Parse the plain text response as JSON
+        const token = parsedResponse.access_token;
+        // Now you can use the token
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Error fetching access token:", errorThrown);
       }
-    });
+    });    
     
     
     var dropdown = document.querySelector('.dropdown-menu');
