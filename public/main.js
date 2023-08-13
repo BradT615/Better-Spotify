@@ -8,12 +8,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function updateUserState(isLoggedIn, data = null) {
     if (isLoggedIn) {
-      // Mock the user profile data if needed
-      const mockData = {
-        display_name: "Test User",
-        images: [{ url: 'assets/default-image.png' }]
-      };
-      updateProfile(mockData);
+      updateProfile(data);
       initializeLoggedInUser();
       document.getElementById('login').style.display = 'none';
       document.getElementById('loggedin').style.display = 'flex';
@@ -24,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function() {
   }
   
   // Manually trigger the logged-in state for local development
-  updateUserState(true);
+  // updateUserState(true);
   
 
 
@@ -93,7 +88,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  // checkUserSession();
+  checkUserSession();
 
   function initializeLoggedInUser() {
     function toggleDropdown() {
@@ -152,7 +147,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-    
+
 
     function getCurrentSong() {
       $.ajax({
