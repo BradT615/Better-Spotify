@@ -103,26 +103,44 @@ document.addEventListener("DOMContentLoaded", function() {
       success: function(response) {
         // Initialize Spotify player
         const token = response.access_token;
-        const player = new Spotify.Player({
-          name: 'Better Spotify',
-          getOAuthToken: cb => { cb(token); }
-        });
-        
-        // Connect to the player
-        player.connect().then(success => {
-          if (success) {
-            console.log('Connected to Spotify Player');
-          }
-        });
-        
-        // Handle playback events
-        player.addListener('player_state_changed', state => {
-          // Logic to handle play/pause state change
-          updatePlayPauseButton(state.paused);
-        });
-        
-        // Assign the player to a global variable for further usage
-        window.spotifyPlayer = player;
+
+        window.onSpotifyWebPlaybackSDKReady = () => {
+          const player = new Spotify.Player({
+            name: 'Better Spotify',
+            getOAuthToken: cb => { cb(token); }
+          });
+
+          // Error handling
+          player.addListener('initialization_error', ({ message }) => { console.error(message); });
+          player.addListener('authentication_error', ({ message }) => { console.error(message); });
+          player.addListener('account_error', ({ message }) => { console.error(message); });
+          player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+          // Playback status updates
+          player.addListener('player_state_changed', state => {
+            updatePlayPauseButton(state.paused);
+          });
+
+          // Ready
+          player.addListener('ready', ({ device_id }) => {
+            console.log('Ready with Device ID', device_id);
+          });
+
+          // Not Ready
+          player.addListener('not_ready', ({ device_id }) => {
+            console.log('Device ID has gone offline', device_id);
+          });
+
+          // Connect to the player
+          player.connect().then(success => {
+            if (success) {
+              console.log('Connected to Spotify Player');
+            }
+          });
+
+          // Assign the player to a global variable for further usage
+          window.spotifyPlayer = player;
+        };
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Error fetching access token:", errorThrown);
