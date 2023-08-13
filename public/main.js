@@ -1,3 +1,53 @@
+function updatePlayPauseButton(isPaused) {
+  var button = document.getElementById('playPauseButton');
+  if (isPaused) {
+    button.src = 'assets/play.png';
+    button.alt = 'Play Button';
+  } else {
+    button.src = 'assets/pause.png';
+    button.alt = 'Pause Button';
+  }
+}
+
+window.onSpotifyWebPlaybackSDKReady = () => {
+  const player = new Spotify.Player({
+    name: 'Better Spotify',
+    getOAuthToken: cb => { cb(token); }
+  });
+
+  // Error handling
+  player.addListener('initialization_error', ({ message }) => { console.error(message); });
+  player.addListener('authentication_error', ({ message }) => { console.error(message); });
+  player.addListener('account_error', ({ message }) => { console.error(message); });
+  player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+  // Playback status updates
+  player.addListener('player_state_changed', state => {
+    updatePlayPauseButton(state.paused);
+  });
+
+  // Ready
+  player.addListener('ready', ({ device_id }) => {
+    console.log('Ready with Device ID', device_id);
+  });
+
+  // Not Ready
+  player.addListener('not_ready', ({ device_id }) => {
+    console.log('Device ID has gone offline', device_id);
+  });
+
+  // Connect to the player
+  player.connect().then(success => {
+    if (success) {
+      console.log('Connected to Spotify Player');
+    }
+  });
+
+  // Assign the player to a global variable for further usage
+  window.spotifyPlayer = player;
+};
+
+
 document.addEventListener("DOMContentLoaded", function() {
 
   function updateProfile(data) {
@@ -81,17 +131,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  function updatePlayPauseButton(isPaused) {
-    var button = document.getElementById('playPauseButton');
-    if (isPaused) {
-      button.src = 'assets/play.png';
-      button.alt = 'Play Button';
-    } else {
-      button.src = 'assets/pause.png';
-      button.alt = 'Pause Button';
-    }
-  }
-
   function initializeLoggedInUser() {
 
     // Get the access token from your server using the Netlify function
@@ -104,55 +143,16 @@ document.addEventListener("DOMContentLoaded", function() {
         // Initialize Spotify player
         const token = response.access_token;
 
-        window.onSpotifyWebPlaybackSDKReady = () => {
-          const player = new Spotify.Player({
-            name: 'Better Spotify',
-            getOAuthToken: cb => { cb(token); }
-          });
+        // Now you can call the global function here
+        window.onSpotifyWebPlaybackSDKReady();
 
-          // Error handling
-          player.addListener('initialization_error', ({ message }) => { console.error(message); });
-          player.addListener('authentication_error', ({ message }) => { console.error(message); });
-          player.addListener('account_error', ({ message }) => { console.error(message); });
-          player.addListener('playback_error', ({ message }) => { console.error(message); });
-
-          // Playback status updates
-          player.addListener('player_state_changed', state => {
-            updatePlayPauseButton(state.paused);
-          });
-
-          // Ready
-          player.addListener('ready', ({ device_id }) => {
-            console.log('Ready with Device ID', device_id);
-          });
-
-          // Not Ready
-          player.addListener('not_ready', ({ device_id }) => {
-            console.log('Device ID has gone offline', device_id);
-          });
-
-          // Connect to the player
-          player.connect().then(success => {
-            if (success) {
-              console.log('Connected to Spotify Player');
-            }
-          });
-
-          // Assign the player to a global variable for further usage
-          window.spotifyPlayer = player;
-        };
+        // Rest of your code...
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Error fetching access token:", errorThrown);
       }
     });
-
-
-    function toggleDropdown() {
-      var dropdown = document.querySelector('.dropdown-menu');
-      dropdown.classList.toggle('hidden');
-    }
-
+    
     var dropdown = document.querySelector('.dropdown-menu');
     var userMenu = document.getElementById('user-menu');
 
@@ -237,6 +237,13 @@ document.addEventListener("DOMContentLoaded", function() {
     });    
   }
 
+
+
+
+
+
+
+
   checkUserSession();
 
   document.getElementById('login-button').addEventListener('click', function() {
@@ -250,5 +257,4 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     }
   });
-
 });
