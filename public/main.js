@@ -140,8 +140,8 @@ document.addEventListener("DOMContentLoaded", function() {
         withCredentials: true
       },
       success: function(response) {
-        console.log("Access Token Response:", response); // Add this log
         const token = response.access_token;
+        console.log("Token:", token); // Log the token
         window.onSpotifyWebPlaybackSDKReady(token);
       },
       error: function(jqXHR, textStatus, errorThrown) {
