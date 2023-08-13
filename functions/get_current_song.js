@@ -28,9 +28,11 @@ exports.handler = async (event, context) => {
     request.get(requestOptions, function(error, response, body) {
       if (!error && response.statusCode === 200) {
         resolve({ statusCode: 200, body: JSON.stringify(body) });
+      } else if (response.statusCode === 204) {
+        resolve({ statusCode: 204, body: JSON.stringify({ message: 'No content. User is not playing a song.' }) });
       } else {
         reject({ statusCode: 500, body: JSON.stringify({ message: 'Failed to retrieve current song.' }) });
       }
     });
-  });
+  });  
 };
