@@ -1,53 +1,3 @@
-function updatePlayPauseButton(isPaused) {
-  var button = document.getElementById('playPauseButton');
-  if (isPaused) {
-    button.src = 'assets/play.png';
-    button.alt = 'Play Button';
-  } else {
-    button.src = 'assets/pause.png';
-    button.alt = 'Pause Button';
-  }
-}
-
-window.onSpotifyWebPlaybackSDKReady = (token) => {
-  const player = new Spotify.Player({
-    name: 'Better Spotify',
-    getOAuthToken: cb => { cb(token); }
-  });
-
-  // Error handling
-  player.addListener('initialization_error', ({ message }) => { console.error(message); });
-  player.addListener('authentication_error', ({ message }) => { console.error(message); });
-  player.addListener('account_error', ({ message }) => { console.error(message); });
-  player.addListener('playback_error', ({ message }) => { console.error(message); });
-
-  // Playback status updates
-  player.addListener('player_state_changed', state => {
-    updatePlayPauseButton(state.paused);
-  });
-
-  // Ready
-  player.addListener('ready', ({ device_id }) => {
-    console.log('Ready with Device ID', device_id);
-  });
-
-  // Not Ready
-  player.addListener('not_ready', ({ device_id }) => {
-    console.log('Device ID has gone offline', device_id);
-  });
-
-  // Connect to the player
-  player.connect().then(success => {
-    if (success) {
-      console.log('Connected to Spotify Player');
-    }
-  });
-
-  // Assign the player to a global variable for further usage
-  window.spotifyPlayer = player;
-};
-
-
 document.addEventListener("DOMContentLoaded", function() {
 
   function updateProfile(data) {
@@ -140,8 +90,9 @@ document.addEventListener("DOMContentLoaded", function() {
         withCredentials: true
       },
       success: function(response) {
-        const parsedResponse = JSON.parse(response); // Parse the plain text response as JSON
+        const parsedResponse = JSON.parse(response);
         const token = parsedResponse.access_token;
+        console.log('Token: ', token);
         // Now you can use the token
       },
       error: function(jqXHR, textStatus, errorThrown) {
@@ -149,53 +100,6 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });    
     
-    
-    var dropdown = document.querySelector('.dropdown-menu');
-    var userMenu = document.getElementById('user-menu');
-
-    document.querySelector('.user-image').addEventListener('click', function() {
-      dropdown.classList.toggle('hidden');
-    });
-
-    document.addEventListener('click', function(event) {
-      if (!userMenu.contains(event.target)) {
-        dropdown.classList.add('hidden');
-      }
-    });
-
-    userMenu.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-
-    var selectedColor = 'sky';
-    var accentColor = 'bg-sky-400';
-
-    function updateThemeColor() {
-      document.querySelectorAll('.theme-color').forEach(function(element) {
-        element.classList.remove(accentColor);
-        element.classList.add('bg-' + selectedColor + '-400');
-      });
-      accentColor = 'bg-' + selectedColor + '-400';
-    }
-
-    updateThemeColor();
-
-    document.querySelectorAll('.color-circle').forEach(function(circle) {
-      circle.addEventListener('click', function() {
-        document.querySelectorAll('.color-circle').forEach(function(c) {
-          c.classList.remove('active');
-        });
-        circle.classList.add('active');
-        selectedColor = circle.dataset.color;
-        updateThemeColor();
-      });
-    });
-
-    document.getElementById('logout-button').addEventListener('click', function() {
-      deleteUser();
-      updateUserState(false);
-    });
-
     function getCurrentSong() {
       $.ajax({
         url: '/.netlify/functions/get_current_song',
@@ -224,34 +128,51 @@ document.addEventListener("DOMContentLoaded", function() {
     
     // Call the getCurrentSong function periodically to keep the song card updated
     setInterval(getCurrentSong, 5000);
-    
-    document.getElementById('playPauseButton').addEventListener('click', function() {
-      if (window.spotifyPlayer) {
-        window.spotifyPlayer.togglePlay().then(() => {
-          console.log('Playback toggled');
-        });
+
+    var dropdown = document.querySelector('.dropdown-menu');
+    var userMenu = document.getElementById('user-menu');
+
+    document.querySelector('.user-image').addEventListener('click', function() {
+      dropdown.classList.toggle('hidden');
+    });
+    document.addEventListener('click', function(event) {
+      if (!userMenu.contains(event.target)) {
+        dropdown.classList.add('hidden');
       }
-    });    
+    });
+    userMenu.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
+
+    var selectedColor = 'sky';
+    var accentColor = 'bg-sky-400';
+    function updateThemeColor() {
+      document.querySelectorAll('.theme-color').forEach(function(element) {
+        element.classList.remove(accentColor);
+        element.classList.add('bg-' + selectedColor + '-400');
+      });
+      accentColor = 'bg-' + selectedColor + '-400';
+    }
+    updateThemeColor();
+    document.querySelectorAll('.color-circle').forEach(function(circle) {
+      circle.addEventListener('click', function() {
+        document.querySelectorAll('.color-circle').forEach(function(c) {
+          c.classList.remove('active');
+        });
+        circle.classList.add('active');
+        selectedColor = circle.dataset.color;
+        updateThemeColor();
+      });
+    });
+    document.getElementById('logout-button').addEventListener('click', function() {
+      deleteUser();
+      updateUserState(false);
+    });
   }
-
-
-
-
-
-
-
 
   checkUserSession();
 
   document.getElementById('login-button').addEventListener('click', function() {
     window.location = '/.netlify/functions/login';
-  });
-
-  document.getElementById('playPauseButton').addEventListener('click', function() {
-    if (window.spotifyPlayer) {
-      window.spotifyPlayer.togglePlay().then(() => {
-        console.log('Playback toggled');
-      });
-    }
   });
 });
