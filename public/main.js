@@ -17,13 +17,6 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById('loggedin').style.display = 'none';
     }
   }
-  
-  // Manually trigger the logged-in state for local development
-  // updateUserState(true);
-  
-
-
-
 
   function deleteUser() {
     $.ajax({
@@ -88,9 +81,55 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  checkUserSession();
+  function updatePlayPauseButton(isPaused) {
+    var button = document.getElementById('playPauseButton');
+    if (isPaused) {
+      button.src = 'assets/play.png';
+      button.alt = 'Play Button';
+    } else {
+      button.src = 'assets/pause.png';
+      button.alt = 'Pause Button';
+    }
+  }
 
   function initializeLoggedInUser() {
+
+    // Get the access token from your server using the Netlify function
+    $.ajax({
+      url: '/.netlify/functions/get_access_token',
+      xhrFields: {
+        withCredentials: true
+      },
+      success: function(response) {
+        // Initialize Spotify player
+        const token = response.access_token;
+        const player = new Spotify.Player({
+          name: 'Better Spotify',
+          getOAuthToken: cb => { cb(token); }
+        });
+        
+        // Connect to the player
+        player.connect().then(success => {
+          if (success) {
+            console.log('Connected to Spotify Player');
+          }
+        });
+        
+        // Handle playback events
+        player.addListener('player_state_changed', state => {
+          // Logic to handle play/pause state change
+          updatePlayPauseButton(state.paused);
+        });
+        
+        // Assign the player to a global variable for further usage
+        window.spotifyPlayer = player;
+      },
+      error: function(jqXHR, textStatus, errorThrown) {
+        console.error("Error fetching access token:", errorThrown);
+      }
+    });
+
+
     function toggleDropdown() {
       var dropdown = document.querySelector('.dropdown-menu');
       dropdown.classList.toggle('hidden');
@@ -142,13 +181,6 @@ document.addEventListener("DOMContentLoaded", function() {
       updateUserState(false);
     });
 
-
-
-
-
-
-
-
     function getCurrentSong() {
       $.ajax({
         url: '/.netlify/functions/get_current_song',
@@ -178,28 +210,27 @@ document.addEventListener("DOMContentLoaded", function() {
     // Call the getCurrentSong function periodically to keep the song card updated
     setInterval(getCurrentSong, 5000);
     
-
-
-
-
-
-
-
-
     document.getElementById('playPauseButton').addEventListener('click', function() {
-      var button = document.getElementById('playPauseButton');
-      if (button.src.endsWith('play.png')) {
-        button.src = 'assets/pause.png';
-        button.alt = 'Pause Button';
-      } else {
-        button.src = 'assets/play.png';
-        button.alt = 'Play Button';
+      if (window.spotifyPlayer) {
+        window.spotifyPlayer.togglePlay().then(() => {
+          console.log('Playback toggled');
+        });
       }
-    });
+    });    
   }
+
+  checkUserSession();
 
   document.getElementById('login-button').addEventListener('click', function() {
     window.location = '/.netlify/functions/login';
+  });
+
+  document.getElementById('playPauseButton').addEventListener('click', function() {
+    if (window.spotifyPlayer) {
+      window.spotifyPlayer.togglePlay().then(() => {
+        console.log('Playback toggled');
+      });
+    }
   });
 
 });
