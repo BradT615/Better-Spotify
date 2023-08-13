@@ -8,7 +8,12 @@ document.addEventListener("DOMContentLoaded", function() {
 
   function updateUserState(isLoggedIn, data = null) {
     if (isLoggedIn) {
-      updateProfile(data);
+      // Mock the user profile data if needed
+      const mockData = {
+        display_name: "Test User",
+        images: [{ url: 'assets/default-image.png' }]
+      };
+      updateProfile(mockData);
       initializeLoggedInUser();
       document.getElementById('login').style.display = 'none';
       document.getElementById('loggedin').style.display = 'flex';
@@ -17,6 +22,13 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById('loggedin').style.display = 'none';
     }
   }
+  
+  // Manually trigger the logged-in state for local development
+  updateUserState(true);
+  
+
+
+
 
   function deleteUser() {
     $.ajax({
@@ -81,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-  checkUserSession();
+  // checkUserSession();
 
   function initializeLoggedInUser() {
     function toggleDropdown() {
@@ -134,6 +146,50 @@ document.addEventListener("DOMContentLoaded", function() {
       deleteUser();
       updateUserState(false);
     });
+
+
+
+
+
+
+    
+
+    function getCurrentSong() {
+      $.ajax({
+        url: '/.netlify/functions/get_current_song',
+        xhrFields: {
+          withCredentials: true
+        },
+        success: function(response) {
+          const data = typeof response === 'string' ? JSON.parse(response) : response;
+          updateSongCard(data);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+          console.error("Error fetching current song:", errorThrown);
+        }
+      });
+    }
+    
+    function updateSongCard(data) {
+      const songName = data.item.name;
+      const artistName = data.item.artists[0].name;
+      const songImage = data.item.album.images[0].url;
+    
+      document.querySelector('.songCard h1.truncate').textContent = songName;
+      document.querySelector('.songCard h1.truncate + h1').textContent = artistName;
+      document.querySelector('.songCard img').src = songImage;
+    }
+    
+    // Call the getCurrentSong function periodically to keep the song card updated
+    setInterval(getCurrentSong, 5000);
+    
+
+
+
+
+
+
+
 
     document.getElementById('playPauseButton').addEventListener('click', function() {
       var button = document.getElementById('playPauseButton');
