@@ -140,18 +140,15 @@ document.addEventListener("DOMContentLoaded", function() {
         withCredentials: true
       },
       success: function(response) {
-        // Initialize Spotify player
+        console.log("Access Token Response:", response); // Add this log
         const token = response.access_token;
-        console.log('Recieved token:', token);
-        // Now you can call the global function here
         window.onSpotifyWebPlaybackSDKReady(token);
-
-        // Rest of your code...
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Error fetching access token:", errorThrown);
       }
     });
+    
     
     var dropdown = document.querySelector('.dropdown-menu');
     var userMenu = document.getElementById('user-menu');
