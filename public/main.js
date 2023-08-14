@@ -92,8 +92,50 @@ document.addEventListener("DOMContentLoaded", function() {
       success: function(response) {
         const parsedResponse = JSON.parse(response);
         const token = parsedResponse.access_token;
-        console.log('Token: ', token);
-        // Now you can use the token
+        console.log("Successfully fetched access token:", token);
+
+        // Initialize the Spotify Player
+        const player = new Spotify.Player({
+            name: 'Better Spotify Player',
+            getOAuthToken: cb => { cb(token); },
+            volume: 0.5
+        });
+
+        // Add listeners to the player
+        player.addListener('ready', ({ device_id }) => {
+            console.log('Ready with Device ID', device_id);
+        });
+        player.addListener('not_ready', ({ device_id }) => {
+            console.log('Device ID has gone offline', device_id);
+        });
+        player.addListener('initialization_error', ({ message }) => {
+            console.error("Initialization Error:", message);
+        });
+        player.addListener('authentication_error', ({ message }) => {
+            console.error("Authentication Error:", message);
+        });
+        player.addListener('account_error', ({ message }) => {
+            console.error("Account Error:", message);
+        });
+        
+        // Add the play toggle functionality to your existing play/pause button
+        document.getElementById('playPauseButton').onclick = function() {
+            player.togglePlay().catch(error => {
+                console.error("Error toggling playback:", error);
+            });
+        };
+
+        // Connect the player
+        player.connect().then(success => {
+            if (success) {
+                console.log("Successfully connected to the player!");
+            } else {
+                console.warn("Failed to connect to the player.");
+            }
+        }).catch(err => {
+            console.error("Error connecting to the player:", err);
+        });
+
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Error fetching access token:", errorThrown);
