@@ -2,6 +2,8 @@ let player;  // Global reference to the Spotify player
 
 document.addEventListener("DOMContentLoaded", function() {
 
+  let token;
+
   function updateProfile(data) {
     let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
     document.getElementById('user-name').textContent = data.display_name;
@@ -132,14 +134,6 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
 
-
-  document.getElementById('playlistsDropdown').addEventListener('change', function() {
-    const playlistId = this.value;
-    if (playlistId) {
-      playPlaylist(playlistId);
-    }
-  });
-
   function playPlaylist(playlistId) {
     $.ajax({
       url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
@@ -168,7 +162,7 @@ document.addEventListener("DOMContentLoaded", function() {
       },
       success: function(response) {
         const parsedResponse = JSON.parse(response);
-        const token = parsedResponse.access_token;
+        token = parsedResponse.access_token;
 
         fetchPlaylists(token, displayPlaylists);
 
