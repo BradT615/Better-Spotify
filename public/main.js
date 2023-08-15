@@ -181,27 +181,36 @@ document.addEventListener("DOMContentLoaded", function() {
           console.error("Error connecting to the player:", err);
         });
 
+        let touchStartX;
+        const songDetails = document.getElementById('songDetails');
+
+        songDetails.addEventListener('touchstart', (e) => {
+            touchStartX = e.touches[0].clientX;
+        });
+
+        songDetails.addEventListener('touchend', (e) => {
+            let touchEndX = e.changedTouches[0].clientX;
+            let difference = touchStartX - touchEndX;
+
+            const swipeThreshold = 50;
+
+            if (difference > swipeThreshold) { // Swiped left
+              player.nextTrack().catch(error => {
+                  console.error("Error skipping to next track:", error);
+              });
+            } else if (difference < -swipeThreshold) { // Swiped right
+              player.previousTrack().catch(error => {
+                console.error("Error going to previous track:", error);
+              });
+            }
+        });
+
+
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Error fetching access token:", errorThrown);
       }
-    });    
-    
-    // function getCurrentSong() {
-    //   $.ajax({
-    //     url: '/.netlify/functions/get_current_song',
-    //     xhrFields: {
-    //       withCredentials: true
-    //     },
-    //     success: function(response) {
-    //       const data = typeof response === 'string' ? JSON.parse(response) : response;
-    //       updateSongCard(data);
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
-    //       console.error("Error fetching current song:", errorThrown);
-    //     }
-    //   });
-    // }
+    });
     
     function updateSongCard(data) {
       const songName = data.item.name;
@@ -212,9 +221,6 @@ document.addEventListener("DOMContentLoaded", function() {
       document.querySelector('.songCard h1.truncate + h1').textContent = artistName;
       document.querySelector('.songCard img').src = songImage;
     }
-    
-    // Call the getCurrentSong function periodically to keep the song card updated
-    // setInterval(getCurrentSong, 5000);
 
     var dropdown = document.querySelector('.dropdown-menu');
     var userMenu = document.getElementById('user-menu');
