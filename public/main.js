@@ -96,9 +96,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Initialize the Spotify Player
         const player = new Spotify.Player({
-          name: 'Better Spotify Player',
+          name: 'Better Spotify',
           getOAuthToken: cb => { cb(token); },
-          volume: 0.5
+          volume: 0.2
         });
 
         // Add listeners to the player
