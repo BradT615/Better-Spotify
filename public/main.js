@@ -134,6 +134,14 @@ document.addEventListener("DOMContentLoaded", function() {
           } else {
             document.getElementById('playPauseButton').src = 'assets/pause.png';
           }
+          // Update the song card
+          const songName = state.track_window.current_track.name;
+          const artistName = state.track_window.current_track.artists[0].name;
+          const songImage = state.track_window.current_track.album.images[0].url;
+
+          document.querySelector('.songCard h1.truncate').textContent = songName;
+          document.querySelector('.songCard h1.truncate + h1').textContent = artistName;
+          document.querySelector('.songCard img').src = songImage;
         });
       
         player.addListener('initialization_error', ({ message }) => {
@@ -179,21 +187,21 @@ document.addEventListener("DOMContentLoaded", function() {
       }
     });    
     
-    function getCurrentSong() {
-      $.ajax({
-        url: '/.netlify/functions/get_current_song',
-        xhrFields: {
-          withCredentials: true
-        },
-        success: function(response) {
-          const data = typeof response === 'string' ? JSON.parse(response) : response;
-          updateSongCard(data);
-        },
-        error: function(jqXHR, textStatus, errorThrown) {
-          console.error("Error fetching current song:", errorThrown);
-        }
-      });
-    }
+    // function getCurrentSong() {
+    //   $.ajax({
+    //     url: '/.netlify/functions/get_current_song',
+    //     xhrFields: {
+    //       withCredentials: true
+    //     },
+    //     success: function(response) {
+    //       const data = typeof response === 'string' ? JSON.parse(response) : response;
+    //       updateSongCard(data);
+    //     },
+    //     error: function(jqXHR, textStatus, errorThrown) {
+    //       console.error("Error fetching current song:", errorThrown);
+    //     }
+    //   });
+    // }
     
     function updateSongCard(data) {
       const songName = data.item.name;
@@ -206,7 +214,7 @@ document.addEventListener("DOMContentLoaded", function() {
     }
     
     // Call the getCurrentSong function periodically to keep the song card updated
-    setInterval(getCurrentSong, 5000);
+    // setInterval(getCurrentSong, 5000);
 
     var dropdown = document.querySelector('.dropdown-menu');
     var userMenu = document.getElementById('user-menu');
