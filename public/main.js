@@ -185,42 +185,30 @@ document.addEventListener("DOMContentLoaded", function() {
         const songDetails = document.getElementById('songDetails');
 
         songDetails.addEventListener('touchstart', (e) => {
-            touchStartX = e.touches[0].clientX;
+          touchStartX = e.touches[0].clientX;
         });
 
         songDetails.addEventListener('touchend', (e) => {
-            let touchEndX = e.changedTouches[0].clientX;
-            let difference = touchStartX - touchEndX;
+          let touchEndX = e.changedTouches[0].clientX;
+          let difference = touchStartX - touchEndX;
 
-            const swipeThreshold = 50;
+          const swipeThreshold = 50;
 
-            if (difference > swipeThreshold) { // Swiped left
-              player.nextTrack().catch(error => {
-                  console.error("Error skipping to next track:", error);
-              });
-            } else if (difference < -swipeThreshold) { // Swiped right
-              player.previousTrack().catch(error => {
-                console.error("Error going to previous track:", error);
-              });
-            }
+          if (difference > swipeThreshold) { // Swiped left
+            player.nextTrack().catch(error => {
+              console.error("Error skipping to next track:", error);
+            });
+          } else if (difference < -swipeThreshold) { // Swiped right
+            player.previousTrack().catch(error => {
+              console.error("Error going to previous track:", error);
+            });
+          }
         });
-
-
       },
       error: function(jqXHR, textStatus, errorThrown) {
         console.error("Error fetching access token:", errorThrown);
       }
     });
-    
-    function updateSongCard(data) {
-      const songName = data.item.name;
-      const artistName = data.item.artists[0].name;
-      const songImage = data.item.album.images[0].url;
-    
-      document.querySelector('.songCard h1.truncate').textContent = songName;
-      document.querySelector('.songCard h1.truncate + h1').textContent = artistName;
-      document.querySelector('.songCard img').src = songImage;
-    }
 
     var dropdown = document.querySelector('.dropdown-menu');
     var userMenu = document.getElementById('user-menu');
