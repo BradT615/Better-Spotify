@@ -104,7 +104,27 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add listeners to the player
         player.addListener('ready', ({ device_id }) => {
           console.log('Ready with Device ID', device_id);
-        });
+      
+          // For active device
+          $.ajax({
+            url: 'https://api.spotify.com/v1/me/player',
+            type: 'PUT',
+            data: JSON.stringify({
+              device_ids: [device_id],
+              play: false // auto play
+            }),
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json'
+            },
+            success: function(response) {
+              console.log("Web app is now the active Spotify playback device!");
+            },
+            error: function(error) {
+              console.error("Error setting web app as active device:", error);
+            }
+          });
+      });
         player.addListener('not_ready', ({ device_id }) => {
           console.log('Device ID has gone offline', device_id);
         });
