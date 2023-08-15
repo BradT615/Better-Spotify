@@ -1,3 +1,5 @@
+let spotifyPlayer;  // Global reference to the Spotify player
+
 document.addEventListener("DOMContentLoaded", function() {
 
   function updateProfile(data) {
@@ -95,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Successfully fetched access token:", token);
 
         // Initialize the Spotify Player
-        const player = new Spotify.Player({
+        spotifyPlayer = new Spotify.Player({
           name: 'Better Spotify',
           getOAuthToken: cb => { cb(token); },
           volume: 0.2
@@ -246,6 +248,9 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
     document.getElementById('logout-button').addEventListener('click', function() {
+      if (spotifyPlayer) {
+        spotifyPlayer.disconnect();
+      }
       deleteUser();
       updateUserState(false);
     });
