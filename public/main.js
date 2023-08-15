@@ -23,13 +23,13 @@ document.addEventListener("DOMContentLoaded", function() {
         url: '/.netlify/functions/delete_user',
         type: 'DELETE',
         xhrFields: {
-            withCredentials: true
+          withCredentials: true
         },
         success: function(response) {
-            console.log("User data deleted successfully.");
+          console.log("User data deleted successfully.");
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.error("Failed to delete user data:", errorThrown);
+          console.error("Failed to delete user data:", errorThrown);
         }
     });
   }
@@ -50,11 +50,11 @@ document.addEventListener("DOMContentLoaded", function() {
       },
       error: function(jqXHR, textStatus, errorThrown) {
         if (jqXHR.status === 401 || jqXHR.status === 502) {
-            deleteUser();
-            updateUserState(false);
-            console.error("User possibly revoked access or there was an error refreshing the token.");
+          deleteUser();
+          updateUserState(false);
+          console.error("User possibly revoked access or there was an error refreshing the token.");
         } else {
-            refreshTokenAndRetry(retryCount + 1);
+          refreshTokenAndRetry(retryCount + 1);
         }
       }
     });
@@ -96,44 +96,61 @@ document.addEventListener("DOMContentLoaded", function() {
 
         // Initialize the Spotify Player
         const player = new Spotify.Player({
-            name: 'Better Spotify Player',
-            getOAuthToken: cb => { cb(token); },
-            volume: 0.5
+          name: 'Better Spotify Player',
+          getOAuthToken: cb => { cb(token); },
+          volume: 0.5
         });
 
         // Add listeners to the player
         player.addListener('ready', ({ device_id }) => {
-            console.log('Ready with Device ID', device_id);
+          console.log('Ready with Device ID', device_id);
         });
         player.addListener('not_ready', ({ device_id }) => {
-            console.log('Device ID has gone offline', device_id);
+          console.log('Device ID has gone offline', device_id);
         });
+        player.addListener('player_state_changed', state => {
+          if (state && state.paused) {
+            document.getElementById('playPauseButton').src = 'assets/play.png';
+          } else {
+            document.getElementById('playPauseButton').src = 'assets/pause.png';
+          }
+        });
+      
         player.addListener('initialization_error', ({ message }) => {
-            console.error("Initialization Error:", message);
+          console.error("Initialization Error:", message);
         });
         player.addListener('authentication_error', ({ message }) => {
-            console.error("Authentication Error:", message);
+          console.error("Authentication Error:", message);
         });
         player.addListener('account_error', ({ message }) => {
-            console.error("Account Error:", message);
+          console.error("Account Error:", message);
         });
         
         // Add the play toggle functionality to your existing play/pause button
         document.getElementById('playPauseButton').onclick = function() {
-            player.togglePlay().catch(error => {
-                console.error("Error toggling playback:", error);
-            });
-        };
+          player.togglePlay().catch(error => {
+            console.error("Error toggling playback:", error);
+          });
+      
+          // Toggle the play/pause button image
+          var currentSrc = this.src;
+          if (currentSrc.includes('play.png')) {
+            this.src = 'assets/pause.png';
+          } else {
+            this.src = 'assets/play.png';
+          }
+      };
+      
 
         // Connect the player
         player.connect().then(success => {
-            if (success) {
-                console.log("Successfully connected to the player!");
-            } else {
-                console.warn("Failed to connect to the player.");
-            }
+          if (success) {
+            console.log("Successfully connected to the player!");
+          } else {
+            console.warn("Failed to connect to the player.");
+          }
         }).catch(err => {
-            console.error("Error connecting to the player:", err);
+          console.error("Error connecting to the player:", err);
         });
 
       },
