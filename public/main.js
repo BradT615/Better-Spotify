@@ -1,4 +1,4 @@
-let spotifyPlayer;  // Global reference to the Spotify player
+let player;  // Global reference to the Spotify player
 
 document.addEventListener("DOMContentLoaded", function() {
 
@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Successfully fetched access token:", token);
 
         // Initialize the Spotify Player
-        spotifyPlayer = new Spotify.Player({
+        player = new Spotify.Player({
           name: 'Better Spotify',
           getOAuthToken: cb => { cb(token); },
           volume: 0.2
