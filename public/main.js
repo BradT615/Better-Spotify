@@ -83,6 +83,81 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
+  function fetchPlaylists(token, callback) {
+    $.ajax({
+      url: 'https://api.spotify.com/v1/me/playlists',
+      headers: {
+        'Authorization': `Bearer ${token}`
+      },
+      success: callback,
+      error: function(error) {
+        console.error("Error fetching playlists:", error);
+      }
+    });
+  }
+
+  function displayPlaylists(playlists) {
+    const playlistsList = document.getElementById('playlistsList');
+    playlists.items.forEach(playlist => {
+      let listItem = document.createElement('li');
+      listItem.className = "flex items-center py-2 cursor-pointer hover:bg-gray-100"; // Tailwind classes
+
+      let img = document.createElement('img');
+      img.src = playlist.images[0]?.url || 'assets/default-image.png'; // Use the first image or a default one
+      img.alt = "Playlist Image";
+      img.className = "w-12 h-12 rounded mr-4"; // Tailwind classes
+
+      let span = document.createElement('span');
+      span.textContent = playlist.name;
+
+      listItem.appendChild(img);
+      listItem.appendChild(span);
+      
+      listItem.addEventListener('click', function() {
+        document.getElementById('dropdownTrigger').textContent = playlist.name;
+        playlistsList.classList.add('hidden');
+      });
+
+      playlistsList.appendChild(listItem);
+    });
+  }
+
+  document.getElementById('dropdownTrigger').addEventListener('click', function() {
+    const playlistsList = document.getElementById('playlistsList');
+    if (playlistsList.classList.contains('hidden')) {
+      playlistsList.classList.remove('hidden');
+    } else {
+      playlistsList.classList.add('hidden');
+    }
+  });
+
+
+
+  document.getElementById('playlistsDropdown').addEventListener('change', function() {
+    const playlistId = this.value;
+    if (playlistId) {
+      playPlaylist(playlistId);
+    }
+  });
+
+  function playPlaylist(playlistId) {
+    $.ajax({
+      url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+      headers: {
+          'Authorization': `Bearer ${token}`
+      },
+      success: function(response) {
+        const uris = response.items.map(track => track.track.uri);
+        player.play({ uris: uris }).catch(error => {
+          console.error("Error playing tracks:", error);
+        });
+      },
+      error: function(error) {
+        console.error("Error fetching playlist tracks:", error);
+      }
+    });
+  }
+
   function initializeLoggedInUser() {
 
     // Get the access token from your server using the Netlify function
@@ -94,7 +169,8 @@ document.addEventListener("DOMContentLoaded", function() {
       success: function(response) {
         const parsedResponse = JSON.parse(response);
         const token = parsedResponse.access_token;
-        console.log("Successfully fetched access token:", token);
+
+        fetchPlaylists(token, displayPlaylists);
 
         // Initialize the Spotify Player
         player = new Spotify.Player({
@@ -248,8 +324,8 @@ document.addEventListener("DOMContentLoaded", function() {
       });
     });
     document.getElementById('logout-button').addEventListener('click', function() {
-      if (spotifyPlayer) {
-        spotifyPlayer.disconnect();
+      if (player) {
+        player.disconnect();
       }
       deleteUser();
       updateUserState(false);
