@@ -102,27 +102,38 @@ document.addEventListener("DOMContentLoaded", function() {
     const playlistsList = document.getElementById('playlistsList');
     playlists.items.forEach(playlist => {
       let listItem = document.createElement('li');
-      listItem.className = "flex items-center py-2 cursor-pointer hover:bg-gray-100"; // Tailwind classes
+      listItem.className = "flex items-center justify-between py-2 hover:bg-gray-100 cursor-pointer rounded";
 
       let img = document.createElement('img');
-      img.src = playlist.images[0]?.url || 'assets/default-image.png'; // Use the first image or a default one
+      img.src = playlist.images[0]?.url || 'assets/default-image.png';
       img.alt = "Playlist Image";
-      img.className = "w-12 h-12 rounded mr-4"; // Tailwind classes
+      img.className = "w-12 h-12 rounded mr-4";
 
       let span = document.createElement('span');
       span.textContent = playlist.name;
 
+      let playButton = document.createElement('button');
+      playButton.textContent = '▶️';
+      playButton.className = "bg-blue-500 hover:bg-blue-700 text-white p-2 rounded";
+      playButton.addEventListener('click', function(event) {
+          playPlaylist(playlist.id);
+          event.stopPropagation();
+      });
+
       listItem.appendChild(img);
       listItem.appendChild(span);
-      
+      listItem.appendChild(playButton);
+
       listItem.addEventListener('click', function() {
-        document.getElementById('dropdownTrigger').textContent = playlist.name;
-        playlistsList.classList.add('hidden');
+          document.getElementById('dropdownTrigger').textContent = playlist.name;
+          playlistsList.classList.add('hidden');
       });
 
       playlistsList.appendChild(listItem);
     });
   }
+
+  
 
   document.getElementById('dropdownTrigger').addEventListener('click', function() {
     const playlistsList = document.getElementById('playlistsList');
@@ -164,7 +175,10 @@ document.addEventListener("DOMContentLoaded", function() {
         const parsedResponse = JSON.parse(response);
         token = parsedResponse.access_token;
 
+
         fetchPlaylists(token, displayPlaylists);
+
+
 
         // Initialize the Spotify Player
         player = new Spotify.Player({
