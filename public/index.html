@@ -19,7 +19,7 @@
 
 
     <div id="loggedin" class="h-screen bg-neutral-700" style="display: none;">
-        <div id="mobile" class="sm:hidden h-full  flex flex-col">
+        <div id="mobile" class="sm:hidden flex flex-col">
 
             <div id="user-profile" class="flex items-center justify-between px-4 py-2 fixed w-full">
                 <div class="flex items-center">
@@ -41,26 +41,16 @@
                 </div>
             </div>
 
-            <div class="container flex-grow mt-16 overflow-y-auto">
+            <div class="flex-grow w-screen mt-16 overflow-y-auto">
 
-                <!-- For in song display -->
-                <div class="song flex mx-10 my-5">
-                    <div class="row">
-                        <img class="h-28 w-28 rounded-lg" src="assets/default-image.png" alt="Song Image">
-                    </div>
-                    <div class="row m-2 text-left text-xl">
-                        <div class="col"><p>Song Name</p></div>
-                        <div class="col"><p>Artist</p></div>
-                    </div>
-                </div>
                 <div class="relative mt-4">
                     <!-- Dropdown Trigger -->
-                    <button id="dropdownTrigger" class="block w-full px-4 py-2 bg-white text-left rounded shadow border border-gray-300 text-gray-700 focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
+                    <button id="dropdownTrigger" class="block w-full px-4 py-2 bg-neutral-900 text-left rounded shadow focus:border-blue-500 focus:ring-1 focus:ring-blue-500">
                         Select a playlist
                     </button>
                 
                     <!-- Dropdown -->
-                    <ul id="playlistsList" class="absolute z-10 mt-2 w-full bg-white rounded shadow-lg border border-gray-300 divide-y divide-gray-200 hidden">
+                    <ul id="playlistsList" class="absolute z-10 mt-2 w-full bg-neutral-900 rounded shadow-lg divide-y divide-gray-200 hidden">
                         <!-- Playlist items -->
                     </ul>
                 </div>
