@@ -3,6 +3,7 @@ let player;  // Global reference to the Spotify player
 document.addEventListener("DOMContentLoaded", function() {
 
   let token;
+  let deviceId;
 
   function updateProfile(data) {
     let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
@@ -112,12 +113,13 @@ document.addEventListener("DOMContentLoaded", function() {
       let span = document.createElement('span');
       span.textContent = playlist.name;
 
-      let playButton = document.createElement('button');
-      playButton.textContent = '▶️';
-      playButton.className = "bg-blue-500 hover:bg-blue-700 text-white p-2 rounded";
+      let playButton = document.createElement('img');
+      playButton.src = 'assets/play.png';
+      playButton.alt = 'Play';
+      playButton.className = "w-6 h-6 cursor-pointer";
       playButton.addEventListener('click', function(event) {
-          playPlaylist(playlist.id);
-          event.stopPropagation();
+        playPlaylist(playlist.id);
+        event.stopPropagation();
       });
 
       listItem.appendChild(img);
@@ -125,15 +127,14 @@ document.addEventListener("DOMContentLoaded", function() {
       listItem.appendChild(playButton);
 
       listItem.addEventListener('click', function() {
-          document.getElementById('dropdownTrigger').textContent = playlist.name;
-          playlistsList.classList.add('hidden');
+        document.getElementById('dropdownTrigger').textContent = playlist.name;
+        playlistsList.classList.add('hidden');
       });
 
       playlistsList.appendChild(listItem);
     });
   }
 
-  
 
   document.getElementById('dropdownTrigger').addEventListener('click', function() {
     const playlistsList = document.getElementById('playlistsList');
@@ -149,12 +150,24 @@ document.addEventListener("DOMContentLoaded", function() {
     $.ajax({
       url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
       headers: {
-          'Authorization': `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       },
       success: function(response) {
         const uris = response.items.map(track => track.track.uri);
-        player.play({ uris: uris }).catch(error => {
-          console.error("Error playing tracks:", error);
+        $.ajax({
+          url: `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, // Use deviceId here
+          type: 'PUT',
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+          },
+          data: JSON.stringify({ uris: uris }),
+          success: function() {
+            console.log("Successfully started playback!");
+          },
+          error: function(error) {
+            console.error("Error initiating playback:", error);
+          }
         });
       },
       error: function(error) {
@@ -190,25 +203,26 @@ document.addEventListener("DOMContentLoaded", function() {
         // Add listeners to the player
         player.addListener('ready', ({ device_id }) => {
           console.log('Ready with Device ID', device_id);
-      
+          deviceId = device_id;
+  
           // For active device
           $.ajax({
-            url: 'https://api.spotify.com/v1/me/player',
-            type: 'PUT',
-            data: JSON.stringify({
-              device_ids: [device_id],
-              play: false // auto play
-            }),
-            headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json'
-            },
-            success: function(response) {
-              console.log("Web app is now the active Spotify playback device!");
-            },
-            error: function(error) {
-              console.error("Error setting web app as active device:", error);
-            }
+              url: 'https://api.spotify.com/v1/me/player',
+              type: 'PUT',
+              data: JSON.stringify({
+                  device_ids: [device_id],
+                  play: false // auto play
+              }),
+              headers: {
+                  'Authorization': `Bearer ${token}`,
+                  'Content-Type': 'application/json'
+              },
+              success: function(response) {
+                  console.log("Web app is now the active Spotify playback device!");
+              },
+              error: function(error) {
+                  console.error("Error setting web app as active device:", error);
+              }
           });
       });
         player.addListener('not_ready', ({ device_id }) => {
