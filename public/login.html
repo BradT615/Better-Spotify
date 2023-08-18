@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Better Spotify Login</title>
+    <link rel="stylesheet" href="output.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+<body class="h-screen text-center text-white">
+
+    <div class="flex items-center justify-center h-full bg-slate-600">
+        <div class="rounded shadow-lg bg-blue-300 p-4">
+            <h1 class="text-2xl text-blue-900">Better Spotify</h1>
+            <button id="login-button" class="bg-blue-500 hover:bg-blue-700 text-white p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
+    <script>
+        document.getElementById('login-button').addEventListener('click', function() {
+            window.location = '/.netlify/functions/login';
+        });
+    </script>
+</body>
+</html>

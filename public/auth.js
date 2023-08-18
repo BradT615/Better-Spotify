@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function() {
                     refreshTokenAndRetry();
                 } else {
                     console.error("Error fetching user profile:", errorThrown);
-                    deleteUser();
+                    window.location.href = 'login.html';
                 }
             }
         });
@@ -32,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 withCredentials: true
             },
             success: function(response) {
-                checkUserSession();
+                checkUserSession(retryCount);
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 if (jqXHR.status === 401 || jqXHR.status === 502) {
@@ -54,11 +54,10 @@ document.addEventListener("DOMContentLoaded", function() {
             },
             success: function(response) {
                 console.log("User data deleted successfully.");
-                // Optionally, redirect the user to a login page or display a message
+                window.location.href = 'login.html';
             },
             error: function(jqXHR, textStatus, errorThrown) {
                 console.error("Failed to delete user data:", errorThrown);
-                // Optionally, display an error message
             }
         });
     }
