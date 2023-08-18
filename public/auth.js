@@ -71,5 +71,5 @@ function loadDeviceSpecificScript() {
     let script = document.createElement('script');
     script.src = scriptFile;
     document.head.appendChild(script);
-    document.getElementById("loggedin").style.display = "block";
+    document.getElementById("loggedin").style.display = "flex";
 }
