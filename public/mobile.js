@@ -295,5 +295,13 @@ document.addEventListener("DOMContentLoaded", function() {
   }
 
   initializeLoggedInUser()
-  
+
 });
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", function() {
+    initializeLoggedInUser();
+  });
+} else {  // DOM is already loaded
+  initializeLoggedInUser();
+}
