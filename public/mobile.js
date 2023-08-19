@@ -25,10 +25,29 @@ function fetchPlaylists(token, callback) {
   });
 }
 
+function fetchTopSongs(token, callback) {
+  $.ajax({
+    url: 'https://api.spotify.com/v1/me/top/tracks?limit=3',
+    headers: {
+      'Authorization': `Bearer ${token}`
+    },
+    success: callback,
+    error: function(error) {
+      console.error("Error fetching top songs:", error);
+    }
+  });
+}
+
+function displayTopItems(playlists, songs) {
+  displayPlaylists(playlists);
+  displaySongs(songs);
+}
+
 function displayPlaylists(playlists) {
   const topPlaylistsContainer = document.querySelector('.top-playlists');
   const topThreePlaylists = playlists.items.slice(0, 3);
-
+  
+  // ... [No changes here, keep the existing code to display playlists]
   topThreePlaylists.forEach((playlist, index) => {
     let playlistDiv = document.createElement('div');
     playlistDiv.className = "songCard flex max-w-full justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3"; // Used songCard styles
@@ -65,6 +84,44 @@ function displayPlaylists(playlists) {
 
     playlistDiv.appendChild(playButton);
     topPlaylistsContainer.appendChild(playlistDiv);
+  });
+}
+
+function displaySongs(songs) {
+  const topSongsContainer = document.querySelector('.top-songs');
+  songs.items.forEach((song, index) => {
+    let songDiv = document.createElement('div');
+    songDiv.className = "songCard flex max-w-full justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3";
+
+    let detailsDiv = document.createElement('div');
+    detailsDiv.className = "flex items-center w-4/5";
+
+    let positionDiv = document.createElement('div');
+    positionDiv.textContent = (index + 1).toString();
+    positionDiv.className = "text-white text-xl mx-3";
+
+    let img = document.createElement('img');
+    img.src = song.album.images[0]?.url || 'assets/default-image.png';
+    img.alt = "Song Image";
+    img.className = "h-12 w-12 rounded-lg m-2";
+
+    let span = document.createElement('span');
+    span.textContent = song.name;
+    span.className = "text-white";
+
+    detailsDiv.appendChild(positionDiv);
+    detailsDiv.appendChild(img);
+    detailsDiv.appendChild(span);
+    songDiv.appendChild(detailsDiv);
+
+    let playButton = document.createElement('img');
+    playButton.src = 'assets/play.png';
+    playButton.alt = 'Play';
+    playButton.className = "w-6 h-6 cursor-pointer mx-4";
+    // Add an event listener if you want to play the song on click
+
+    songDiv.appendChild(playButton);
+    topSongsContainer.appendChild(songDiv);
   });
 }
 
@@ -127,7 +184,11 @@ function initializeLoggedInUser() {
       token = parsedResponse.access_token;
 
 
-      fetchPlaylists(token, displayPlaylists);
+      fetchPlaylists(token, function(playlistsData) {
+        fetchTopSongs(token, function(songsData) {
+          displayTopItems(playlistsData, songsData);
+        });
+      });
 
       // Initialize the Spotify Player
       player = new Spotify.Player({
@@ -299,39 +360,39 @@ if (document.readyState === "loading") {
   initializeLoggedInUser();
 }
 
-const mockPlaylists = {
-  items: [
-    {
-      name: "Chill Vibes",
-      images: [
-        {
-          url: "assets/default-image.png"
-        }
-      ],
-      id: "playlist1"
-    },
-    {
-      name: "Workout Jams",
-      images: [
-        {
-          url: "assets/default-image.png"
-        }
-      ],
-      id: "playlist2"
-    },
-    {
-      name: "Old Classics",
-      images: [
-        {
-          url: "assets/default-image.png"
-        },
-        {
-          url: "assets/default-image.png"
-        }
-      ],
-      id: "playlist3"
-    }
-  ]
-};
+// const mockPlaylists = {
+//   items: [
+//     {
+//       name: "Chill Vibes",
+//       images: [
+//         {
+//           url: "assets/default-image.png"
+//         }
+//       ],
+//       id: "playlist1"
+//     },
+//     {
+//       name: "Workout Jams",
+//       images: [
+//         {
+//           url: "assets/default-image.png"
+//         }
+//       ],
+//       id: "playlist2"
+//     },
+//     {
+//       name: "Old Classics",
+//       images: [
+//         {
+//           url: "assets/default-image.png"
+//         },
+//         {
+//           url: "assets/default-image.png"
+//         }
+//       ],
+//       id: "playlist3"
+//     }
+//   ]
+// };
 
 // displayPlaylists(mockPlaylists);
