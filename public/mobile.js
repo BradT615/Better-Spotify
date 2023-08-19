@@ -125,8 +125,6 @@ function displaySongs(songs) {
   });
 }
 
-
-
 function playPlaylist(playlistId) {
   $.ajax({
     url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
@@ -360,39 +358,92 @@ if (document.readyState === "loading") {
   initializeLoggedInUser();
 }
 
-// const mockPlaylists = {
-//   items: [
-//     {
-//       name: "Chill Vibes",
-//       images: [
-//         {
-//           url: "assets/default-image.png"
-//         }
-//       ],
-//       id: "playlist1"
-//     },
-//     {
-//       name: "Workout Jams",
-//       images: [
-//         {
-//           url: "assets/default-image.png"
-//         }
-//       ],
-//       id: "playlist2"
-//     },
-//     {
-//       name: "Old Classics",
-//       images: [
-//         {
-//           url: "assets/default-image.png"
+// const mockData = {
+//   topPlaylists: {
+//     items: [
+//       {
+//         name: "Chill Vibes",
+//         images: [
+//           {
+//             url: "assets/default-image.png"
+//           }
+//         ],
+//         id: "playlist1"
+//       },
+//       {
+//         name: "Workout Jams",
+//         images: [
+//           {
+//             url: "assets/default-image.png"
+//           }
+//         ],
+//         id: "playlist2"
+//       },
+//       {
+//         name: "Old Classics",
+//         images: [
+//           {
+//             url: "assets/default-image.png"
+//           }
+//         ],
+//         id: "playlist3"
+//       }
+//     ]
+//   },
+//   topSongs: {
+//     items: [
+//       {
+//         name: "Song 1",
+//         album: {
+//           images: [
+//             {
+//               url: "assets/default-image.png"
+//             }
+//           ]
 //         },
-//         {
-//           url: "assets/default-image.png"
-//         }
-//       ],
-//       id: "playlist3"
-//     }
-//   ]
+//         artists: [
+//           {
+//             name: "Artist 1"
+//           }
+//         ],
+//         id: "song1"
+//       },
+//       {
+//         name: "Song 2",
+//         album: {
+//           images: [
+//             {
+//               url: "assets/default-image.png"
+//             }
+//           ]
+//         },
+//         artists: [
+//           {
+//             name: "Artist 2"
+//           }
+//         ],
+//         id: "song2"
+//       },
+//       {
+//         name: "Song 3",
+//         album: {
+//           images: [
+//             {
+//               url: "assets/default-image.png"
+//             }
+//           ]
+//         },
+//         artists: [
+//           {
+//             name: "Artist 3"
+//           }
+//         ],
+//         id: "song3"
+//       }
+//     ]
+//   }
 // };
 
-// displayPlaylists(mockPlaylists);
+// To use the mock data:
+// displayPlaylists(mockData.topPlaylists);
+// displaySongs(mockData.topSongs);
