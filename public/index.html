@@ -14,8 +14,8 @@
 <body class="h-screen text-center text-white">
 
     <div id="loggedin" class="h-screen bg-neutral-700" style="display: none;">
-        <div id="mobile" class="sm:hidden flex flex-col">
 
+        <div id="mobile" class="sm:hidden flex flex-col h-screen">
             <div id="user-profile" class="flex items-center justify-between px-4 py-2 fixed w-full">
                 <div class="flex items-center">
                     <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
@@ -36,18 +36,22 @@
                 </div>
             </div>
 
-            <div class="w-screen mt-16">
-                <h1 class="text-2xl font-bold text-left m-4">Top Playlists</h1>
-                <div class="top-playlists mt-4">
-                    <!-- Top 3 Playlists -->
+
+            <div class="main-content overflow-y-auto">
+                <div class="w-screen mt-16">
+                    <h1 class="text-2xl font-bold text-left m-4">Top Playlists</h1>
+                    <div class="top-playlists flex flex-col">
+                        <!-- Top 3 Playlists -->
+                    </div>
+                </div>
+                <div class="w-screen">
+                    <h1 class="text-2xl font-bold text-left m-4">Top Songs</h1>
+                    <div class="top-songs flex flex-col">
+                        <!-- Top 3 Songs -->
+                    </div>
                 </div>
             </div>
-            <div class="w-screen mt-8">
-                <h1 class="text-2xl font-bold text-left m-4">Top Songs</h1>
-                <div class="top-songs mt-4">
-                    <!-- Top 3 Songs -->
-                </div>
-            </div>
+            
             
 
             <!-- Show Get Current User's Playlists -->

@@ -47,26 +47,25 @@ function displayPlaylists(playlists) {
   const topPlaylistsContainer = document.querySelector('.top-playlists');
   const topThreePlaylists = playlists.items.slice(0, 3);
   
-  // ... [No changes here, keep the existing code to display playlists]
   topThreePlaylists.forEach((playlist, index) => {
     let playlistDiv = document.createElement('div');
-    playlistDiv.className = "songCard flex max-w-full justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3"; // Used songCard styles
+    playlistDiv.className = "flex justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3 relative";
 
     let detailsDiv = document.createElement('div');
-    detailsDiv.className = "flex items-center w-4/5";
+    detailsDiv.className = "flex items-center w-5/6";
 
     let positionDiv = document.createElement('div');
     positionDiv.textContent = (index + 1).toString();
-    positionDiv.className = "text-white text-xl mx-3"; // Style for the position
+    positionDiv.className = "text-xl ml-3";
 
     let img = document.createElement('img');
     img.src = playlist.images[0]?.url || 'assets/default-image.png';
     img.alt = "Playlist Image";
-    img.className = "h-12 w-12 rounded-lg m-2";
+    img.className = "w-12 rounded-lg m-2";
 
     let span = document.createElement('span');
     span.textContent = playlist.name;
-    span.className = "text-white truncate"; // Style for the playlist name
+    span.className = "truncate";
 
     detailsDiv.appendChild(positionDiv);
     detailsDiv.appendChild(img);
@@ -76,7 +75,7 @@ function displayPlaylists(playlists) {
     let playButton = document.createElement('img');
     playButton.src = 'assets/play.png';
     playButton.alt = 'Play';
-    playButton.className = "w-6 h-6 cursor-pointer mx-4"; // Adjusted the size and margin
+    playButton.className = "w-6 h-6 cursor-pointer absolute right-4 top-1/2 transform -translate-y-1/2";
     playButton.addEventListener('click', function(event) {
       playPlaylist(playlist.id);
       event.stopPropagation();
@@ -87,27 +86,28 @@ function displayPlaylists(playlists) {
   });
 }
 
+
 function displaySongs(songs) {
   const topSongsContainer = document.querySelector('.top-songs');
   songs.items.forEach((song, index) => {
     let songDiv = document.createElement('div');
-    songDiv.className = "songCard flex max-w-full justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3";
+    songDiv.className = "flex justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3 relative";
 
     let detailsDiv = document.createElement('div');
-    detailsDiv.className = "flex items-center w-4/5";
+    detailsDiv.className = "flex items-center w-5/6";
 
     let positionDiv = document.createElement('div');
     positionDiv.textContent = (index + 1).toString();
-    positionDiv.className = "text-white text-xl mx-3";
+    positionDiv.className = "text-xl ml-3";
 
     let img = document.createElement('img');
     img.src = song.album.images[0]?.url || 'assets/default-image.png';
     img.alt = "Song Image";
-    img.className = "h-12 w-12 rounded-lg m-2";
+    img.className = "w-12 rounded-lg m-2";
 
     let span = document.createElement('span');
     span.textContent = song.name;
-    span.className = "text-white truncate";
+    span.className = "truncate";
 
     detailsDiv.appendChild(positionDiv);
     detailsDiv.appendChild(img);
@@ -117,7 +117,7 @@ function displaySongs(songs) {
     let playButton = document.createElement('img');
     playButton.src = 'assets/play.png';
     playButton.alt = 'Play';
-    playButton.className = "w-6 h-6 cursor-pointer mx-4";
+    playButton.className = "w-6 h-6 cursor-pointer absolute right-4 top-1/2 transform -translate-y-1/2";
     playButton.addEventListener('click', function(event) {
       playSong(song.uri);
       event.stopPropagation();
@@ -127,6 +127,7 @@ function displaySongs(songs) {
     topSongsContainer.appendChild(songDiv);
   });
 }
+
 
 function playPlaylist(playlistId) {
   $.ajax({
@@ -367,7 +368,6 @@ function initializeLoggedInUser() {
       player.disconnect();
     }
     deleteUser();
-    updateUserState(false);
   });
 }
 
