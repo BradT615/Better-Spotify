@@ -66,7 +66,7 @@ function displayPlaylists(playlists) {
 
     let span = document.createElement('span');
     span.textContent = playlist.name;
-    span.className = "text-white"; // Style for the playlist name
+    span.className = "text-white truncate"; // Style for the playlist name
 
     detailsDiv.appendChild(positionDiv);
     detailsDiv.appendChild(img);
@@ -107,7 +107,7 @@ function displaySongs(songs) {
 
     let span = document.createElement('span');
     span.textContent = song.name;
-    span.className = "text-white";
+    span.className = "text-white truncate";
 
     detailsDiv.appendChild(positionDiv);
     detailsDiv.appendChild(img);
@@ -118,7 +118,10 @@ function displaySongs(songs) {
     playButton.src = 'assets/play.png';
     playButton.alt = 'Play';
     playButton.className = "w-6 h-6 cursor-pointer mx-4";
-    // Add an event listener if you want to play the song on click
+    playButton.addEventListener('click', function(event) {
+      playSong(song.uri);
+      event.stopPropagation();
+    });
 
     songDiv.appendChild(playButton);
     topSongsContainer.appendChild(songDiv);
@@ -151,6 +154,24 @@ function playPlaylist(playlistId) {
     },
     error: function(error) {
       console.error("Error fetching playlist tracks:", error);
+    }
+  });
+}
+
+function playSong(songUri) {
+  $.ajax({
+    url: `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
+    type: 'PUT',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+      'Content-Type': 'application/json'
+    },
+    data: JSON.stringify({ uris: [songUri] }),
+    success: function() {
+      console.log("Successfully started song playback!");
+    },
+    error: function(error) {
+      console.error("Error initiating song playback:", error);
     }
   });
 }
@@ -362,7 +383,7 @@ if (document.readyState === "loading") {
 //   topPlaylists: {
 //     items: [
 //       {
-//         name: "Chill Vibes",
+//         name: "Chill Vibes very long name I hate n",
 //         images: [
 //           {
 //             url: "assets/default-image.png"
@@ -409,7 +430,7 @@ if (document.readyState === "loading") {
 //         id: "song1"
 //       },
 //       {
-//         name: "Song 2",
+//         name: "Song 2fjdsnfklanjkfdsanjklfsankj",
 //         album: {
 //           images: [
 //             {
@@ -444,6 +465,5 @@ if (document.readyState === "loading") {
 //   }
 // };
 
-// To use the mock data:
 // displayPlaylists(mockData.topPlaylists);
 // displaySongs(mockData.topSongs);
