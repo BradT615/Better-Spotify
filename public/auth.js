@@ -60,10 +60,6 @@ function deleteUser() {
     });
 }
 
-checkUserSession();
-
-
-
 function loadDeviceSpecificScript() {
     // Load Spotify SDK
     const spotifyScript = document.createElement('script');
@@ -77,3 +73,5 @@ function loadDeviceSpecificScript() {
     script.defer = true;
     document.head.appendChild(script);
 }
+
+checkUserSession();

@@ -12,7 +12,6 @@ function updateProfile(data) {
   document.querySelectorAll('.user-image').forEach(img => img.src = imageUrl);
 }
 
-
 function fetchPlaylists(token, callback) {
   $.ajax({
     url: 'https://api.spotify.com/v1/me/playlists',
@@ -27,10 +26,17 @@ function fetchPlaylists(token, callback) {
 }
 
 function displayPlaylists(playlists) {
-  const playlistsList = document.getElementById('playlistsList');
-  playlists.items.forEach(playlist => {
-    let listItem = document.createElement('li');
-    listItem.className = "flex items-center justify-between py-2 hover:bg-gray-100 cursor-pointer rounded";
+  const topPlaylistsContainer = document.querySelector('.top-playlists');
+  const topThreePlaylists = playlists.items.slice(0, 3);  // Get top 3 playlists
+
+  topThreePlaylists.forEach((playlist, index) => {  // Notice the added index
+    let playlistDiv = document.createElement('div');
+    playlistDiv.className = "flex items-center justify-between py-2 hover:bg-gray-100 cursor-pointer rounded mt-2";
+
+    let positionDiv = document.createElement('div');
+    positionDiv.textContent = (index + 1).toString();
+    positionDiv.className = "mr-2";
+    playlistDiv.appendChild(positionDiv);
 
     let img = document.createElement('img');
     img.src = playlist.images[0]?.url || 'assets/default-image.png';
@@ -49,28 +55,12 @@ function displayPlaylists(playlists) {
       event.stopPropagation();
     });
 
-    listItem.appendChild(img);
-    listItem.appendChild(span);
-    listItem.appendChild(playButton);
-
-    listItem.addEventListener('click', function() {
-      document.getElementById('dropdownTrigger').textContent = playlist.name;
-      playlistsList.classList.add('hidden');
-    });
-
-    playlistsList.appendChild(listItem);
+    playlistDiv.appendChild(img);
+    playlistDiv.appendChild(span);
+    playlistDiv.appendChild(playButton);
+    topPlaylistsContainer.appendChild(playlistDiv);
   });
 }
-
-
-document.getElementById('dropdownTrigger').addEventListener('click', function() {
-  const playlistsList = document.getElementById('playlistsList');
-  if (playlistsList.classList.contains('hidden')) {
-    playlistsList.classList.remove('hidden');
-  } else {
-    playlistsList.classList.add('hidden');
-  }
-});
 
 
 function playPlaylist(playlistId) {
@@ -248,9 +238,6 @@ function initializeLoggedInUser() {
       console.error("Error fetching access token:", errorThrown);
     }
   });
-
-  var dropdown = document.querySelector('.dropdown-menu');
-  var userMenu = document.getElementById('user-menu');
 
   document.querySelector('.user-image').addEventListener('click', function() {
     dropdown.classList.toggle('hidden');
