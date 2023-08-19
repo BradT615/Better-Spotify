@@ -27,40 +27,47 @@ function fetchPlaylists(token, callback) {
 
 function displayPlaylists(playlists) {
   const topPlaylistsContainer = document.querySelector('.top-playlists');
-  const topThreePlaylists = playlists.items.slice(0, 3);  // Get top 3 playlists
+  const topThreePlaylists = playlists.items.slice(0, 3);
 
-  topThreePlaylists.forEach((playlist, index) => {  // Notice the added index
+  topThreePlaylists.forEach((playlist, index) => {
     let playlistDiv = document.createElement('div');
-    playlistDiv.className = "flex items-center justify-between py-2 hover:bg-gray-100 cursor-pointer rounded mt-2";
+    playlistDiv.className = "songCard flex max-w-full justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3"; // Used songCard styles
+
+    let detailsDiv = document.createElement('div');
+    detailsDiv.className = "flex items-center w-4/5";
 
     let positionDiv = document.createElement('div');
     positionDiv.textContent = (index + 1).toString();
-    positionDiv.className = "mr-2";
-    playlistDiv.appendChild(positionDiv);
+    positionDiv.className = "text-white text-xl mx-3"; // Style for the position
 
     let img = document.createElement('img');
     img.src = playlist.images[0]?.url || 'assets/default-image.png';
     img.alt = "Playlist Image";
-    img.className = "w-12 h-12 rounded mr-4";
+    img.className = "h-12 w-12 rounded-lg m-2";
 
     let span = document.createElement('span');
     span.textContent = playlist.name;
+    span.className = "text-white"; // Style for the playlist name
+
+    detailsDiv.appendChild(positionDiv);
+    detailsDiv.appendChild(img);
+    detailsDiv.appendChild(span);
+    playlistDiv.appendChild(detailsDiv);
 
     let playButton = document.createElement('img');
     playButton.src = 'assets/play.png';
     playButton.alt = 'Play';
-    playButton.className = "w-6 h-6 cursor-pointer";
+    playButton.className = "w-6 h-6 cursor-pointer mx-4"; // Adjusted the size and margin
     playButton.addEventListener('click', function(event) {
       playPlaylist(playlist.id);
       event.stopPropagation();
     });
 
-    playlistDiv.appendChild(img);
-    playlistDiv.appendChild(span);
     playlistDiv.appendChild(playButton);
     topPlaylistsContainer.appendChild(playlistDiv);
   });
 }
+
 
 
 function playPlaylist(playlistId) {
@@ -239,6 +246,10 @@ function initializeLoggedInUser() {
     }
   });
 
+
+  var userMenu = document.getElementById('user-menu');
+  var dropdown = document.querySelector('.dropdown-menu');
+
   document.querySelector('.user-image').addEventListener('click', function() {
     dropdown.classList.toggle('hidden');
   });
@@ -287,3 +298,40 @@ if (document.readyState === "loading") {
 } else {  // DOM is already loaded
   initializeLoggedInUser();
 }
+
+const mockPlaylists = {
+  items: [
+    {
+      name: "Chill Vibes",
+      images: [
+        {
+          url: "assets/default-image.png"
+        }
+      ],
+      id: "playlist1"
+    },
+    {
+      name: "Workout Jams",
+      images: [
+        {
+          url: "assets/default-image.png"
+        }
+      ],
+      id: "playlist2"
+    },
+    {
+      name: "Old Classics",
+      images: [
+        {
+          url: "assets/default-image.png"
+        },
+        {
+          url: "assets/default-image.png"
+        }
+      ],
+      id: "playlist3"
+    }
+  ]
+};
+
+// displayPlaylists(mockPlaylists);
