@@ -45,12 +45,15 @@ function displayTopTracksAndArtists(tracks, artists) {
 }
 
 function displayArtists(artists) {
-  const topArtistsContainer = document.querySelector('.top-artists'); // Assuming you have a container with class 'top-artists'
+  const topArtistsContainer = document.querySelector('.top-artists');
   
   artists.items.forEach((artist) => {
     let artistDiv = document.createElement('div');
     artistDiv.className = "flex bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3";
     
+    let detailsDiv = document.createElement('div');
+    detailsDiv.className = "flex items-center w-full";
+
     let img = document.createElement('img');
     img.src = artist.images[0]?.url || 'assets/default-image.png';
     img.alt = "Artist Image";
@@ -59,12 +62,15 @@ function displayArtists(artists) {
     let span = document.createElement('span');
     span.textContent = artist.name;
     span.className = "truncate px-3";
+
+    detailsDiv.appendChild(img);
+    detailsDiv.appendChild(span);
+    artistDiv.appendChild(detailsDiv);
     
-    artistDiv.appendChild(img);
-    artistDiv.appendChild(span);
     topArtistsContainer.appendChild(artistDiv);
   });
 }
+
 
 function displaySongs(songs) {
   const topSongsContainer = document.querySelector('.top-songs');
