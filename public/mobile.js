@@ -15,7 +15,7 @@ function updateProfile(data) {
 
 function fetchTopArtists(token, callback) {
   $.ajax({
-    url: 'https://api.spotify.com/v1/me/top/artists?limit=3',
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=3',
     headers: {
       'Authorization': `Bearer ${token}`
     },
@@ -26,10 +26,9 @@ function fetchTopArtists(token, callback) {
   });
 }
 
-
 function fetchTopSongs(token, callback) {
   $.ajax({
-    url: 'https://api.spotify.com/v1/me/top/tracks?limit=3',
+    url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=3',
     headers: {
       'Authorization': `Bearer ${token}`
     },
@@ -71,7 +70,6 @@ function displayArtists(artists) {
     topArtistsContainer.appendChild(artistDiv);
   });
 }
-
 
 function displaySongs(songs) {
   const topSongsContainer = document.querySelector('.top-songs');
