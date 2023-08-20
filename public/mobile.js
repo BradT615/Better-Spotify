@@ -12,18 +12,19 @@ function updateProfile(data) {
   document.querySelectorAll('.user-image').forEach(img => img.src = imageUrl);
 }
 
-function fetchPlaylists(token, callback) {
+function fetchTopArtists(token, callback) {
   $.ajax({
-    url: 'https://api.spotify.com/v1/me/playlists',
+    url: 'https://api.spotify.com/v1/me/top/artists?limit=3',
     headers: {
       'Authorization': `Bearer ${token}`
     },
     success: callback,
     error: function(error) {
-      console.error("Error fetching playlists:", error);
+      console.error("Error fetching top artists:", error);
     }
   });
 }
+
 
 function fetchTopSongs(token, callback) {
   $.ajax({
@@ -38,96 +39,64 @@ function fetchTopSongs(token, callback) {
   });
 }
 
-function displayTopItems(playlists, songs) {
-  displayPlaylists(playlists);
-  displaySongs(songs);
+function displayTopTracksAndArtists(tracks, artists) {
+  displaySongs(tracks);
+  displayArtists(artists);
 }
 
-function displayPlaylists(playlists) {
-  const topPlaylistsContainer = document.querySelector('.top-playlists');
-  const topThreePlaylists = playlists.items.slice(0, 3);
+function displayArtists(artists) {
+  const topArtistsContainer = document.querySelector('.top-artists'); // Assuming you have a container with class 'top-artists'
   
-  topThreePlaylists.forEach((playlist, index) => {
-    let playlistDiv = document.createElement('div');
-    playlistDiv.className = "flex justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3 relative";
-
-    let detailsDiv = document.createElement('div');
-    detailsDiv.className = "flex items-center w-5/6";
-
-    let positionDiv = document.createElement('div');
-    positionDiv.textContent = (index + 1).toString();
-    positionDiv.className = "text-xl ml-3";
-
+  artists.items.forEach((artist) => {
+    let artistDiv = document.createElement('div');
+    artistDiv.className = "flex bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3";
+    
     let img = document.createElement('img');
-    img.src = playlist.images[0]?.url || 'assets/default-image.png';
-    img.alt = "Playlist Image";
-    img.className = "w-12 rounded-lg m-2";
+    img.src = artist.images[0]?.url || 'assets/default-image.png';
+    img.alt = "Artist Image";
+    img.className = "h-14 w-14 rounded-l-lg";
 
     let span = document.createElement('span');
-    span.textContent = playlist.name;
-    span.className = "truncate";
-
-    detailsDiv.appendChild(positionDiv);
-    detailsDiv.appendChild(img);
-    detailsDiv.appendChild(span);
-    playlistDiv.appendChild(detailsDiv);
-
-    let playButton = document.createElement('img');
-    playButton.src = 'assets/play.png';
-    playButton.alt = 'Play';
-    playButton.className = "w-6 h-6 cursor-pointer absolute right-4 top-1/2 transform -translate-y-1/2";
-    playButton.addEventListener('click', function(event) {
-      playPlaylist(playlist.id);
-      event.stopPropagation();
-    });
-
-    playlistDiv.appendChild(playButton);
-    topPlaylistsContainer.appendChild(playlistDiv);
+    span.textContent = artist.name;
+    span.className = "truncate px-3";
+    
+    artistDiv.appendChild(img);
+    artistDiv.appendChild(span);
+    topArtistsContainer.appendChild(artistDiv);
   });
 }
-
 
 function displaySongs(songs) {
   const topSongsContainer = document.querySelector('.top-songs');
   songs.items.forEach((song, index) => {
     let songDiv = document.createElement('div');
-    songDiv.className = "flex justify-between items-center bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3 relative";
+    songDiv.className = "flex bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3";
+    
+    songDiv.addEventListener('click', function() {
+      playSong(song.uri);
+    });
 
     let detailsDiv = document.createElement('div');
-    detailsDiv.className = "flex items-center w-5/6";
+    detailsDiv.className = "flex items-center w-full";
 
     let positionDiv = document.createElement('div');
-    positionDiv.textContent = (index + 1).toString();
-    positionDiv.className = "text-xl ml-3";
 
     let img = document.createElement('img');
     img.src = song.album.images[0]?.url || 'assets/default-image.png';
     img.alt = "Song Image";
-    img.className = "w-12 rounded-lg m-2";
+    img.className = "h-14 w-14 rounded-l-lg";
 
     let span = document.createElement('span');
     span.textContent = song.name;
-    span.className = "truncate";
-
-    detailsDiv.appendChild(positionDiv);
+    span.className = "truncate px-3";
+    
     detailsDiv.appendChild(img);
     detailsDiv.appendChild(span);
     songDiv.appendChild(detailsDiv);
-
-    let playButton = document.createElement('img');
-    playButton.src = 'assets/play.png';
-    playButton.alt = 'Play';
-    playButton.className = "w-6 h-6 cursor-pointer absolute right-4 top-1/2 transform -translate-y-1/2";
-    playButton.addEventListener('click', function(event) {
-      playSong(song.uri);
-      event.stopPropagation();
-    });
-
-    songDiv.appendChild(playButton);
+    
     topSongsContainer.appendChild(songDiv);
   });
 }
-
 
 function playPlaylist(playlistId) {
   $.ajax({
@@ -204,10 +173,21 @@ function initializeLoggedInUser() {
       token = parsedResponse.access_token;
 
 
-      fetchPlaylists(token, function(playlistsData) {
-        fetchTopSongs(token, function(songsData) {
-          displayTopItems(playlistsData, songsData);
-        });
+      // Fetch top songs and top artists simultaneously
+      let songsData, artistsData;
+
+      fetchTopSongs(token, function(data) {
+        songsData = data;
+        if (artistsData) {
+          displayTopTracksAndArtists(songsData, artistsData);
+        }
+      });
+
+      fetchTopArtists(token, function(data) {
+        artistsData = data;
+        if (songsData) {
+          displayTopTracksAndArtists(songsData, artistsData);
+        }
       });
 
       // Initialize the Spotify Player
@@ -379,91 +359,4 @@ if (document.readyState === "loading") {
   initializeLoggedInUser();
 }
 
-// const mockData = {
-//   topPlaylists: {
-//     items: [
-//       {
-//         name: "Chill Vibes very long name I hate n",
-//         images: [
-//           {
-//             url: "assets/default-image.png"
-//           }
-//         ],
-//         id: "playlist1"
-//       },
-//       {
-//         name: "Workout Jams",
-//         images: [
-//           {
-//             url: "assets/default-image.png"
-//           }
-//         ],
-//         id: "playlist2"
-//       },
-//       {
-//         name: "Old Classics",
-//         images: [
-//           {
-//             url: "assets/default-image.png"
-//           }
-//         ],
-//         id: "playlist3"
-//       }
-//     ]
-//   },
-//   topSongs: {
-//     items: [
-//       {
-//         name: "Song 1",
-//         album: {
-//           images: [
-//             {
-//               url: "assets/default-image.png"
-//             }
-//           ]
-//         },
-//         artists: [
-//           {
-//             name: "Artist 1"
-//           }
-//         ],
-//         id: "song1"
-//       },
-//       {
-//         name: "Song 2fjdsnfklanjkfdsanjklfsankj",
-//         album: {
-//           images: [
-//             {
-//               url: "assets/default-image.png"
-//             }
-//           ]
-//         },
-//         artists: [
-//           {
-//             name: "Artist 2"
-//           }
-//         ],
-//         id: "song2"
-//       },
-//       {
-//         name: "Song 3",
-//         album: {
-//           images: [
-//             {
-//               url: "assets/default-image.png"
-//             }
-//           ]
-//         },
-//         artists: [
-//           {
-//             name: "Artist 3"
-//           }
-//         ],
-//         id: "song3"
-//       }
-//     ]
-//   }
-// };
-
-// displayPlaylists(mockData.topPlaylists);
 // displaySongs(mockData.topSongs);
