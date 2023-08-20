@@ -4,6 +4,7 @@ let player;
 let token;
 let deviceId;
 
+document.getElementById("loading-screen").style.display = "none";
 document.getElementById("loggedin").style.display = "flex";
 
 function updateProfile(data) {
