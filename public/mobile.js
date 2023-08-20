@@ -15,7 +15,7 @@ function updateProfile(data) {
 
 function fetchTopArtists(token, callback) {
   $.ajax({
-    url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=3',
+    url: 'https://api.spotify.com/v1/me/top/artists?limit=3',
     headers: {
       'Authorization': `Bearer ${token}`
     },
@@ -28,7 +28,7 @@ function fetchTopArtists(token, callback) {
 
 function fetchTopSongs(token, callback) {
   $.ajax({
-    url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=3',
+    url: 'https://api.spotify.com/v1/me/top/tracks?time_range=short_term&limit=3',
     headers: {
       'Authorization': `Bearer ${token}`
     },
@@ -55,7 +55,7 @@ function displayArtists(artists) {
     detailsDiv.className = "flex items-center w-full";
 
     let img = document.createElement('img');
-    img.src = (artist.images && artist.images[0]) ? artist.images[0].url : 'assets/default-image.png';
+    img.src = artist.images[0]?.url || 'assets/default-image.png';
     img.alt = "Artist Image";
     img.className = "h-14 w-14 rounded-l-lg";
 
@@ -73,7 +73,6 @@ function displayArtists(artists) {
 
 function displaySongs(songs) {
   const topSongsContainer = document.querySelector('.top-songs');
-  
   songs.items.forEach((song, index) => {
     let songDiv = document.createElement('div');
     songDiv.className = "flex bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3";
@@ -85,8 +84,10 @@ function displaySongs(songs) {
     let detailsDiv = document.createElement('div');
     detailsDiv.className = "flex items-center w-full";
 
+    let positionDiv = document.createElement('div');
+
     let img = document.createElement('img');
-    img.src = (song.album.images && song.album.images[0]) ? song.album.images[0].url : 'assets/default-image.png';
+    img.src = song.album.images[0]?.url || 'assets/default-image.png';
     img.alt = "Song Image";
     img.className = "h-14 w-14 rounded-l-lg";
 
@@ -101,7 +102,6 @@ function displaySongs(songs) {
     topSongsContainer.appendChild(songDiv);
   });
 }
-
 
 function playSong(songUri) {
   $.ajax({
