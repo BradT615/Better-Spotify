@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="output.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="auth.js"></script>
+    <!-- <script src="auth.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js" defer></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js" defer></script>
 </head>    
@@ -88,7 +88,7 @@
             </div>
         </div>
         
-        <div id="desktop" class="hidden sm:block">
+        <div id="desktop" class="hidden sm:flex flex-col w-screen bg-black">
             
             <header id="user-profile" class="flex items-center justify-between px-4 py-2">
                 <div class="flex items-center">
@@ -100,10 +100,74 @@
                     <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
                 </div>
             </header>
+    
+            <div class="flex gap-2 mx-2 grow font-bold">
+                <div class="flex gap-2 flex-col w-1/4">
+                    <div class="bg-neutral-900 rounded-lg p-2">
+                        <div class="flex items-center gap-2 p-2">
+                            <box-icon type='solid' name='home' color='#ffffff'></box-icon>
+                            <p>Home</p>
+                        </div>
+                        <div class="flex items-center gap-2 p-2">
+                            <box-icon name='search' color='#ffffff'></box-icon>
+                            <p>Search</p>
+                        </div>
+                    </div>
+    
+                    <div class="bg-neutral-900 rounded-lg p-4 h-full">
+                        <div class="flex items-center gap-2">
+                            <box-icon name='library' color='#ffffff' ></box-icon>
+                            <p>Library</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex flex-col bg-neutral-900 rounded-lg w-full">
+                    <div class="flex h-1/3 w-full justify-end">
+                        <!-- <div class="flex p-4">
+                            <img class="h-full max-h-48 aspect-square rounded-md" src="assets/default-image.png">
+                            <h1 class="row text-lg">Playlist Name</h1>
+                        </div> -->
+                        <div class="col">
+                            <input type="text" class="bg-searchBar rounded-full text-center mt-8 mr-8 py-2" aria-label="Search" placeholder="Search from Playlist">
+                        </div>
+                    </div>
+                    <div class="row h-2/3 border-2">
+                        <!-- Visualizer -->
+                    </div>
+                </div>
+            </div>
+    
+            <div class="flex flex-shrink-0 items-center justify-between px-4">
+                <div class="col flex items-center w-1/3">
+                    <img class="user-image w-16 h-16 m-1 rounded-md hidden sm:block" src="assets/default-image.png">
+                    <div class="flex flex-col ml-4 items-start">
+                        <h1 class="row text-lg hidden sm:block">Song Name</h1>
+                        <h1 class="row text-sm hidden sm:block">Artist</h1>
+                    </div>
+                </div>
+            
+                <div class="col flex flex-col w-1/3 py-2">
+                    <div class="row flex gap-4 items-center justify-center">
+                        <box-icon name='shuffle' color='#ffffff' size='24px'></box-icon>
+                        <box-icon name='arrow-to-left' color='#ffffff' size='24px'></box-icon>
+                        <box-icon id="playPauseButton" name='play-circle' color='#ffffff' size='32px'></box-icon>
+                        <box-icon name='arrow-to-right' color='#ffffff' size='24px'></box-icon>
+                        <box-icon name='repeat' color='#ffffff' size='24px'></box-icon>
+                    </div>
+                    <div class="row">song bar</div>
+                </div>
+            
+                <div class="col flex gap-2 w-1/3 justify-end">
+                    <box-icon name='volume-low' type='solid' color='#ffffff' class="hidden sm:block"></box-icon>
+                    <p class="hidden sm:block">volume</p>
+                    <box-icon name='volume-full' type='solid' color='#ffffff' class="hidden sm:block"></box-icon>
+                </div>
+            </div>
         </div>
         
     </div>
 
     <!-- <script src="mobile.js"></script> -->
+    <script src="desktop.js"></script>
 </body>
 </html>
