@@ -55,7 +55,7 @@ function displayArtists(artists) {
     detailsDiv.className = "flex items-center w-full";
 
     let img = document.createElement('img');
-    img.src = artist.images[0]?.url || 'assets/default-image.png';
+    img.src = (artist.images && artist.images[0]) ? artist.images[0].url : 'assets/default-image.png';
     img.alt = "Artist Image";
     img.className = "h-14 w-14 rounded-l-lg";
 
@@ -73,6 +73,7 @@ function displayArtists(artists) {
 
 function displaySongs(songs) {
   const topSongsContainer = document.querySelector('.top-songs');
+  
   songs.items.forEach((song, index) => {
     let songDiv = document.createElement('div');
     songDiv.className = "flex bg-neutral-800 rounded-lg shadow-xl mx-2 mt-3";
@@ -84,10 +85,8 @@ function displaySongs(songs) {
     let detailsDiv = document.createElement('div');
     detailsDiv.className = "flex items-center w-full";
 
-    let positionDiv = document.createElement('div');
-
     let img = document.createElement('img');
-    img.src = song.album.images[0]?.url || 'assets/default-image.png';
+    img.src = (song.album.images && song.album.images[0]) ? song.album.images[0].url : 'assets/default-image.png';
     img.alt = "Song Image";
     img.className = "h-14 w-14 rounded-l-lg";
 
@@ -103,35 +102,6 @@ function displaySongs(songs) {
   });
 }
 
-function playPlaylist(playlistId) {
-  $.ajax({
-    url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
-    headers: {
-      'Authorization': `Bearer ${token}`
-    },
-    success: function(response) {
-      const uris = response.items.map(track => track.track.uri);
-      $.ajax({
-        url: `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`, // Use deviceId here
-        type: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        data: JSON.stringify({ uris: uris }),
-        success: function() {
-          console.log("Successfully started playback!");
-        },
-        error: function(error) {
-          console.error("Error initiating playback:", error);
-        }
-      });
-    },
-    error: function(error) {
-      console.error("Error fetching playlist tracks:", error);
-    }
-  });
-}
 
 function playSong(songUri) {
   $.ajax({
