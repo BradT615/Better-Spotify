@@ -703,6 +703,14 @@ video {
   height: 3.5rem;
 }
 
+.h-20 {
+  height: 5rem;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
 .w-1\/5 {
   width: 20%;
 }
@@ -745,6 +753,14 @@ video {
 
 .w-14 {
   width: 3.5rem;
+}
+
+.w-20 {
+  width: 5rem;
+}
+
+.w-16 {
+  width: 4rem;
 }
 
 .max-w-full {
@@ -881,6 +897,10 @@ video {
 .bg-neutral-600 {
   --tw-bg-opacity: 1;
   background-color: rgb(82 82 82 / var(--tw-bg-opacity));
+}
+
+.bg-transparent {
+  background-color: transparent;
 }
 
 .bg-gradient-to-t {
