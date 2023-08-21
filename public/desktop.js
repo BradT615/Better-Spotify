@@ -9,6 +9,66 @@ function updateProfile(data) {
     document.querySelectorAll('.user-image').forEach(img => img.src = imageUrl);
 }
 
+function updateVolumeIcon(volumeValue) {
+    const volumeLowIcon = document.getElementById('volumeLowIcon');
+    const volumeMuteIcon = document.getElementById('volumeMuteIcon');
+    const volumeFullIcon = document.getElementById('volumeFullIcon');
+
+    if (volumeValue == 0) {
+        volumeMuteIcon.classList.remove('hidden');
+        volumeLowIcon.classList.add('hidden');
+        volumeFullIcon.classList.add('hidden');
+    } else if (volumeValue < 50) {
+        volumeLowIcon.classList.remove('hidden');
+        volumeMuteIcon.classList.add('hidden');
+        volumeFullIcon.classList.add('hidden');
+    } else {
+        volumeFullIcon.classList.remove('hidden');
+        volumeMuteIcon.classList.add('hidden');
+        volumeLowIcon.classList.add('hidden');
+    }
+}
+
+function setVolumeFromSlider() {
+    const slider = document.getElementById('volumeSlider');
+    slider.addEventListener('input', function(e) {
+        let volume = e.target.value / 100; // Convert the range from 0-100 to 0-1
+        if (player) {
+            player.setVolume(volume).catch(error => {
+                console.error("Error adjusting volume:", error);
+            });
+        }
+        updateVolumeIcon(e.target.value);
+    });
+    updateVolumeIcon(slider.value);
+}
+
+let lastVolumeBeforeMute = 0.2; // default value
+
+function muteOrRestoreVolume() {
+    if (player) {
+        player.getVolume().then(volume => {
+            if (volume > 0) {
+                lastVolumeBeforeMute = volume;
+                player.setVolume(0).then(() => {
+                    updateVolumeIcon(0);
+                    document.getElementById('volumeSlider').value = 0;
+                });
+            } else {
+                player.setVolume(lastVolumeBeforeMute).then(() => {
+                    updateVolumeIcon(lastVolumeBeforeMute * 100);
+                    document.getElementById('volumeSlider').value = lastVolumeBeforeMute * 100;
+                });
+            }
+        }).catch(error => {
+            console.error("Error getting or setting volume:", error);
+        });
+    }
+}
+
+document.getElementById('volumeLowIcon').addEventListener('click', muteOrRestoreVolume);
+document.getElementById('volumeFullIcon').addEventListener('click', muteOrRestoreVolume);
+document.getElementById('volumeMuteIcon').addEventListener('click', muteOrRestoreVolume);
 
 function playSong(songUri) {
     $.ajax({
@@ -61,6 +121,13 @@ function initializeLoggedInUser() {
                 volume: 0.2
             });
 
+                // Initialize the volume icon state
+                const slider = document.getElementById('volumeSlider');
+                updateVolumeIcon(slider.value);
+
+                // Set volume from slider (and set up the event listener)
+                setVolumeFromSlider();
+
             // Add listeners to the player
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
@@ -91,10 +158,11 @@ function initializeLoggedInUser() {
             });
             player.addListener('player_state_changed', state => {
                 if (state && state.paused) {
-                    document.getElementById('playPauseButton').src = 'assets/play.png';
+                    document.getElementById('playPauseButton').setAttribute('name', 'play-circle');
                 } else {
-                    document.getElementById('playPauseButton').src = 'assets/pause.png';
+                    document.getElementById('playPauseButton').setAttribute('name', 'pause-circle');
                 }
+
                 // Update the song card
                 const songName = state.track_window.current_track.name;
                 const artistName = state.track_window.current_track.artists[0].name;
@@ -116,19 +184,20 @@ function initializeLoggedInUser() {
             });
             
             // Add the play toggle functionality to your existing play/pause button
-            document.getElementById('playPauseButton').onclick = function() {
-                player.togglePlay().catch(error => {
-                console.error("Error toggling playback:", error);
-                });
-            
-                // Toggle the play/pause button image
-                var currentSrc = this.src;
-                if (currentSrc.includes('play.png')) {
-                this.src = 'assets/pause.png';
-                } else {
-                this.src = 'assets/play.png';
+            document.getElementById('playPauseButton').addEventListener('click', function() {
+                if (player) {
+                    player.togglePlay().then(playbackState => {
+                        if (playbackState && playbackState.paused) {
+                            this.setAttribute('name', 'play-circle');
+                        } else {
+                            this.setAttribute('name', 'pause-circle');
+                        }
+                    }).catch(error => {
+                        console.error("Error toggling playback:", error);
+                    });
                 }
-            };
+            });
+            
             
 
             // Connect the player
@@ -149,9 +218,9 @@ function initializeLoggedInUser() {
 }
 
 if (document.readyState === "loading") {
-document.addEventListener("DOMContentLoaded", function() {
-    initializeLoggedInUser();
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        initializeLoggedInUser();
+    });
 } else {  // DOM is already loaded
-initializeLoggedInUser();
+    initializeLoggedInUser();
 }

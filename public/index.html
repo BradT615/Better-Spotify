@@ -157,11 +157,12 @@
                     <div class="row">song bar</div>
                 </div>
             
-                <div class="col flex gap-2 w-1/3 justify-end">
-                    <box-icon name='volume-low' type='solid' color='#ffffff' class="hidden sm:block"></box-icon>
-                    <p class="hidden sm:block">volume</p>
-                    <box-icon name='volume-full' type='solid' color='#ffffff' class="hidden sm:block"></box-icon>
-                </div>
+                <div class="col flex gap-1 w-1/3 justify-end items-center">
+                    <box-icon id="volumeLowIcon" name='volume-low' color='#ffffff'></box-icon>
+                    <box-icon id="volumeMuteIcon" name='volume-mute' color='#ffffff' class="hidden"></box-icon>
+                    <box-icon id="volumeFullIcon" name='volume-full' color='#ffffff' class="hidden"></box-icon>
+                    <input id="volumeSlider" type="range" min="0" max="100" value="20" class="slider w-24 h-1.5 bg-gray-600 rounded-full accent-accent-cyan cursor-pointer">
+                </div>                
             </div>
         </div>
         

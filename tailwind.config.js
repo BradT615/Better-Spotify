@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         searchBar: '#242424',
+        'accent-cyan': '#34fcff',
       },
     },
   },
