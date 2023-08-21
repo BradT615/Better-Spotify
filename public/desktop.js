@@ -191,14 +191,12 @@ function initializeLoggedInUser() {
             
                 // Toggle the play/pause button image
                 var currentSrc = this.src;
-                if (currentSrc.includes('play.png')) {
+                if (currentSrc.includes('playCirlce.png')) {
                   this.src = 'assets/pauseCircle.png';
                 } else {
                   this.src = 'assets/playCirlce.png';
                 }
               };
-            
-            
 
             // Connect the player
             player.connect().then(success => {
