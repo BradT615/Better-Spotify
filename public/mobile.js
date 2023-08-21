@@ -239,7 +239,7 @@ function initializeLoggedInUser() {
         } else {
           this.src = 'assets/play.png';
         }
-    };
+      };
     
 
       // Connect the player

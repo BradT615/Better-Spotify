@@ -158,9 +158,9 @@ function initializeLoggedInUser() {
             });
             player.addListener('player_state_changed', state => {
                 if (state && state.paused) {
-                    document.getElementById('playPauseButton').setAttribute('name', 'play-circle');
+                  document.getElementById('playPauseCircle').src = 'assets/playCircle.png';
                 } else {
-                    document.getElementById('playPauseButton').setAttribute('name', 'pause-circle');
+                  document.getElementById('playPauseCircle').src = 'assets/pauseCircle.png';
                 }
 
                 // Update the song card
@@ -184,19 +184,19 @@ function initializeLoggedInUser() {
             });
             
             // Add the play toggle functionality to your existing play/pause button
-            document.getElementById('playPauseButton').addEventListener('click', function() {
-                if (player) {
-                    player.togglePlay().then(playbackState => {
-                        if (playbackState && playbackState.paused) {
-                            this.setAttribute('name', 'play-circle');
-                        } else {
-                            this.setAttribute('name', 'pause-circle');
-                        }
-                    }).catch(error => {
-                        console.error("Error toggling playback:", error);
-                    });
+            document.getElementById('playPauseCircle').onclick = function() {
+                player.togglePlay().catch(error => {
+                  console.error("Error toggling playback:", error);
+                });
+            
+                // Toggle the play/pause button image
+                var currentSrc = this.src;
+                if (currentSrc.includes('play.png')) {
+                  this.src = 'assets/pauseCircle.png';
+                } else {
+                  this.src = 'assets/playCirlce.png';
                 }
-            });
+              };
             
             
 
