@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="output.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="auth.js"></script>
+    <!-- <script src="auth.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js" defer></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js" defer></script>
 </head>    
@@ -131,18 +131,18 @@
                             <input type="text" class="bg-searchBar rounded-full text-center mt-8 mr-8 py-2" aria-label="Search" placeholder="Search from Playlist">
                         </div>
                     </div>
-                    <div class="row h-2/3 border-2">
+                    <div class="row h-2/3">
                         <!-- Visualizer -->
                     </div>
                 </div>
             </div>
     
-            <div class="flex flex-shrink-0 items-center justify-between px-4">
+            <div class="flex flex-shrink-0 items-center justify-between px-4 my-2">
                 <div class="col flex items-center w-1/3">
-                    <img class="user-image w-16 h-16 m-1 rounded-md hidden sm:block" src="assets/default-image.png">
-                    <div class="flex flex-col ml-4 items-start">
-                        <h1 class="row text-lg hidden sm:block">Song Name</h1>
-                        <h1 class="row text-sm hidden sm:block">Artist</h1>
+                    <img class="song-image w-16 h-16 m-1 rounded-md" src="assets/default-image.png">
+                    <div class="flex flex-col ml-3 gap-1 items-start">
+                        <h1 class="song-name row text-lg">Song Name</h1>
+                        <h1 class="song-artist row text-sm">Artist</h1>
                     </div>
                 </div>
             
@@ -168,6 +168,6 @@
     </div>
 
     <!-- <script src="mobile.js"></script> -->
-    <!-- <script src="desktop.js"></script> -->
+    <script src="desktop.js"></script>
 </body>
 </html>

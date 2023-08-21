@@ -91,18 +91,18 @@ function initializeLoggedInUser() {
             });
             player.addListener('player_state_changed', state => {
                 if (state && state.paused) {
-                document.getElementById('playPauseButton').src = 'assets/play.png';
+                    document.getElementById('playPauseButton').src = 'assets/play.png';
                 } else {
-                document.getElementById('playPauseButton').src = 'assets/pause.png';
+                    document.getElementById('playPauseButton').src = 'assets/pause.png';
                 }
                 // Update the song card
                 const songName = state.track_window.current_track.name;
                 const artistName = state.track_window.current_track.artists[0].name;
                 const songImage = state.track_window.current_track.album.images[0].url;
-
-                document.querySelector('.songCard h1.truncate').textContent = songName;
-                document.querySelector('.songCard h1.truncate + h1').textContent = artistName;
-                document.querySelector('.songCard img').src = songImage;
+            
+                document.querySelector('.song-name').textContent = songName;
+                document.querySelector('.song-artist').textContent = artistName;
+                document.querySelector('.song-image').src = songImage;
             });
             
             player.addListener('initialization_error', ({ message }) => {
