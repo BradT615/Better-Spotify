@@ -20,3 +20,29 @@ input[type="range"]:hover::-webkit-slider-thumb {
 input[type="range"]:hover::-moz-range-thumb {
     opacity: 1;
 }
+
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 10px;
+}
+::-webkit-scrollbar-track {
+    background: none;
+}
+::-webkit-scrollbar-thumb {
+    background: transparent;
+    border-radius: 5px;
+}
+/* When the #library container is hovered, show the scrollbar thumb */
+#library:hover::-webkit-scrollbar-thumb,
+::-webkit-scrollbar-thumb:active {
+    background: #555;
+}
+
+/* For Firefox */
+#library {
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+}
+#library:hover {
+    scrollbar-color: #555 transparent;
+}

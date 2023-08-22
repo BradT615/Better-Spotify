@@ -97,14 +97,15 @@ function displayUserLibrary(playlists) {
 
         playlistDiv.innerHTML = `
             <img src="${imageUrl}" alt="Playlist Cover" class="w-12 h-12 rounded-md"> 
-            <div class="flex flex-col max-w-xs truncate">
+            <div class="flex flex-col max-w-sm truncate">
                 <h1 class="text-lg truncate">${playlist.name}</h1>
-                <small class="text-gray-500 truncate">${playlist.owner.display_name}</small> <!-- Display the playlist's owner -->
+                <small class="text-gray-500 truncate">${playlist.owner.display_name}</small>
             </div>
         `;
         libraryDiv.appendChild(playlistDiv);
     });
 }
+
 
 function playSong(songUri) {
     $.ajax({
