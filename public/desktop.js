@@ -70,6 +70,41 @@ document.getElementById('volumeLowIcon').addEventListener('click', muteOrRestore
 document.getElementById('volumeFullIcon').addEventListener('click', muteOrRestoreVolume);
 document.getElementById('volumeMuteIcon').addEventListener('click', muteOrRestoreVolume);
 
+function fetchUserLibrary() {
+    $.ajax({
+        url: 'https://api.spotify.com/v1/me/tracks',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        success: function(response) {
+            displayUserLibrary(response.items);
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching user library:", errorThrown);
+        }
+    });
+}
+
+function displayUserLibrary(tracks) {
+    const libraryDiv = document.getElementById('library');
+    tracks.forEach(track => {
+        const trackDiv = document.createElement('div');
+        trackDiv.className = 'flex text-left gap-2 mt-2'; 
+
+        const imageUrl = track.track.album.images[0].url;
+
+        trackDiv.innerHTML = `
+            <img src="${imageUrl}" alt="Playlist Cover" class="w-12 h-12 rounded-md"> 
+            <div class="flex flex-col max-w-xs truncate"> <!-- Note the added max-w-xs and truncate here -->
+                <h1 class="text-lg truncate">${track.track.name}</h1>
+                <small class="text-gray-500 truncate">${track.track.artists[0].name}</small>
+            </div>
+        `;
+        libraryDiv.appendChild(trackDiv);
+    });
+}
+
+
 function playSong(songUri) {
     $.ajax({
       url: `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
@@ -99,6 +134,7 @@ function initializeLoggedInUser() {
         success: function(response) {
             const data = typeof response === 'string' ? JSON.parse(response) : response;
             updateProfile(data);
+            fetchUserLibrary();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Error fetching user profile:", errorThrown);
