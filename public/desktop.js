@@ -330,7 +330,6 @@ function initializeLoggedInUser() {
             player.connect().then(success => {
                 if (success) {
                     console.log("Successfully connected to the player!");
-                    initializeVisualizer();
                 } else {
                     console.warn("Failed to connect to the player.");
                 }
