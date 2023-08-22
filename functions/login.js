@@ -15,7 +15,7 @@ exports.handler = async (event, context) => {
   console.log('session_id in login.js:', session_id);
 
   // your application requests authorization
-  let scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming app-remote-control playlist-read-private playlist-read-collaborative user-top-read';
+  let scope = 'user-read-private user-read-email user-read-playback-state user-modify-playback-state streaming app-remote-control playlist-read-private playlist-read-collaborative user-top-read user-library-read';
   let redirectUri = 'https://bradt615spotify.netlify.app/.netlify/functions/callback';
   let url = 'https://accounts.spotify.com/authorize?' +
     querystring.stringify({
