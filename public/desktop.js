@@ -5,6 +5,79 @@ document.getElementById("loggedin").style.display = "flex";
 
 let token;
 
+let audioCtx;
+let analyzer;
+let dataArray;
+let bufferLength;
+let canvas;
+let canvasCtx;
+let animationId;
+
+
+function resizeCanvasToDisplaySize(canvas) {
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+
+    if (canvas.width !== width || canvas.height !== height) {
+        canvas.width = width;
+        canvas.height = height;
+        return true;  // Indicate the size has changed
+    }
+
+    return false;  // Indicate no size change
+}
+
+window.addEventListener('resize', () => {
+    if (resizeCanvasToDisplaySize(canvas)) {
+        barWidth = (canvas.width / bufferLength) * 2.5;
+    }
+});
+
+
+
+function initializeVisualizer() {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    analyzer = audioCtx.createAnalyser();
+    player._options.getOAuthToken(token => {
+        player._audio._audioElement.crossOrigin = "anonymous"; // Get audio data
+        let source = audioCtx.createMediaElementSource(player._audio._audioElement);
+        source.connect(analyzer);
+        analyzer.connect(audioCtx.destination);
+    });
+
+    analyzer.fftSize = 256; // Number of data values you will have to play with for the visualization
+    bufferLength = analyzer.frequencyBinCount; // half the FFT value
+    dataArray = new Uint8Array(bufferLength); // create an array to store the data
+
+    canvas = document.getElementById("visualizer");
+    canvasCtx = canvas.getContext("2d");
+
+    resizeCanvasToDisplaySize(canvas);
+    
+    drawVisualizer();
+}
+
+function drawVisualizer() {
+    animationId = requestAnimationFrame(drawVisualizer);
+
+    analyzer.getByteFrequencyData(dataArray);
+
+    let barWidth = (canvas.width / bufferLength) * 2.5;
+    let x = 0;
+
+    canvasCtx.fillStyle = `rgb(52, 252, 255)`; // Make theme color
+
+    for (let i = 0; i < bufferLength; i++) {
+        let barHeight = dataArray[i];
+        canvasCtx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
+        x += barWidth + 1; // space between bars
+    }
+}
+
+
+
+
+
 function updateProfile(data) {
     let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
     document.getElementById('user-name').textContent = data.display_name;
@@ -196,9 +269,15 @@ function initializeLoggedInUser() {
             });
             player.addListener('player_state_changed', state => {
                 if (state && state.paused) {
-                  document.getElementById('playPauseCircle').src = 'assets/playCircle.png';
+                    document.getElementById('playPauseCircle').src = 'assets/playCircle.png';
+                    if (animationId) {
+                        cancelAnimationFrame(animationId);
+                    }
                 } else {
-                  document.getElementById('playPauseCircle').src = 'assets/pauseCircle.png';
+                    document.getElementById('playPauseCircle').src = 'assets/pauseCircle.png';
+                    if (!animationId) {
+                        drawVisualizer();
+                    }
                 }
 
                 // Update the song card
@@ -239,9 +318,10 @@ function initializeLoggedInUser() {
             // Connect the player
             player.connect().then(success => {
                 if (success) {
-                console.log("Successfully connected to the player!");
+                    console.log("Successfully connected to the player!");
+                    initializeVisualizer();
                 } else {
-                console.warn("Failed to connect to the player.");
+                    console.warn("Failed to connect to the player.");
                 }
             }).catch(err => {
                 console.error("Error connecting to the player:", err);
