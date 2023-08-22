@@ -272,13 +272,17 @@ function initializeLoggedInUser() {
                 if (state && state.paused) {
                     document.getElementById('playPauseCircle').src = 'assets/playCircle.png';
                     if (animationId) {
-                        cancelAnimationFrame(animationId);
+                        cancelAnimationFrame(animationId);  // Stop the visualizer
                     }
                 } else {
                     document.getElementById('playPauseCircle').src = 'assets/pauseCircle.png';
                     if (!isVisualizerInitialized) {
-                        initializeVisualizer();
-                        isVisualizerInitialized = true;
+                        if (player && player._audio && player._audio._audioElement) {
+                            initializeVisualizer();
+                            isVisualizerInitialized = true;
+                        } else {
+                            console.error("Player or its properties are not defined. Visualizer can't be initialized.");
+                        }
                     }
                     if (!animationId) {
                         drawVisualizer();
