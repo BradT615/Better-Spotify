@@ -74,7 +74,7 @@ document.getElementById('volumeMuteIcon').addEventListener('click', muteOrRestor
 
 function fetchUserLibrary() {
     $.ajax({
-        url: 'https://api.spotify.com/v1/me/tracks',
+        url: 'https://api.spotify.com/v1/me/playlists',
         headers: {
             'Authorization': `Bearer ${token}`
         },
@@ -82,30 +82,29 @@ function fetchUserLibrary() {
             displayUserLibrary(response.items);
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.error("Error fetching user library:", errorThrown);
+            console.error("Error fetching user playlists:", errorThrown);
         }
     });
 }
 
-function displayUserLibrary(tracks) {
+function displayUserLibrary(playlists) {
     const libraryDiv = document.getElementById('library');
-    tracks.forEach(track => {
-        const trackDiv = document.createElement('div');
-        trackDiv.className = 'flex text-left gap-2 mt-2'; 
+    playlists.forEach(playlist => {
+        const playlistDiv = document.createElement('div');
+        playlistDiv.className = 'flex text-left gap-2 mt-2'; 
 
-        const imageUrl = track.track.album.images[0].url;
+        const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png'; // Use a default image if there's no playlist cover
 
-        trackDiv.innerHTML = `
+        playlistDiv.innerHTML = `
             <img src="${imageUrl}" alt="Playlist Cover" class="w-12 h-12 rounded-md"> 
-            <div class="flex flex-col max-w-xs truncate"> <!-- Note the added max-w-xs and truncate here -->
-                <h1 class="text-lg truncate">${track.track.name}</h1>
-                <small class="text-gray-500 truncate">${track.track.artists[0].name}</small>
+            <div class="flex flex-col max-w-xs truncate">
+                <h1 class="text-lg truncate">${playlist.name}</h1>
+                <small class="text-gray-500 truncate">${playlist.owner.display_name}</small> <!-- Display the playlist's owner -->
             </div>
         `;
-        libraryDiv.appendChild(trackDiv);
+        libraryDiv.appendChild(playlistDiv);
     });
 }
-
 
 function playSong(songUri) {
     $.ajax({
