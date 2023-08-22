@@ -5,6 +5,7 @@ document.getElementById("loggedin").style.display = "flex";
 
 let token;
 
+let isVisualizerInitialized = false;
 let audioCtx;
 let analyzer;
 let dataArray;
@@ -275,6 +276,10 @@ function initializeLoggedInUser() {
                     }
                 } else {
                     document.getElementById('playPauseCircle').src = 'assets/pauseCircle.png';
+                    if (!isVisualizerInitialized) {
+                        initializeVisualizer();
+                        isVisualizerInitialized = true;
+                    }
                     if (!animationId) {
                         drawVisualizer();
                     }
@@ -300,20 +305,26 @@ function initializeLoggedInUser() {
                 console.error("Account Error:", message);
             });
             
-            // Add the play toggle functionality to your existing play/pause button
             document.getElementById('playPauseCircle').onclick = function() {
                 player.togglePlay().catch(error => {
-                  console.error("Error toggling playback:", error);
+                    console.error("Error toggling playback:", error);
                 });
             
                 // Toggle the play/pause button image
                 var currentSrc = this.src;
                 if (currentSrc.includes('playCirlce.png')) {
-                  this.src = 'assets/pauseCircle.png';
+                    this.src = 'assets/pauseCircle.png';
+            
+                    // Initialize the visualizer only if it hasn't been initialized before
+                    if (!isVisualizerInitialized) {
+                        initializeVisualizer();
+                        isVisualizerInitialized = true;
+                    }
                 } else {
-                  this.src = 'assets/playCirlce.png';
+                    this.src = 'assets/playCirlce.png';
                 }
-              };
+            };
+            
 
             // Connect the player
             player.connect().then(success => {
