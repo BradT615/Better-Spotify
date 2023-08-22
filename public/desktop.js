@@ -5,6 +5,7 @@ document.getElementById("loggedin").style.display = "flex";
 
 let token;
 
+let isPlayerReady = false;
 let isVisualizerInitialized = false;
 let audioCtx;
 let analyzer;
@@ -252,6 +253,7 @@ function initializeLoggedInUser() {
             player.addListener('ready', ({ device_id }) => {
                 console.log('Ready with Device ID', device_id);
                 deviceId = device_id;
+                isPlayerReady = true;
 
                 // For active device
                 $.ajax({
@@ -284,7 +286,7 @@ function initializeLoggedInUser() {
                     }
                 } else {
                     document.getElementById('playPauseCircle').src = 'assets/pauseCircle.png';
-                    if (!isVisualizerInitialized) {
+                    if (!isVisualizerInitialized && isPlayerReady) {
                         if (player && player._audio && player._audio._audioElement) {
                             initializeVisualizer();
                             isVisualizerInitialized = true;
