@@ -65,11 +65,16 @@ function initializeVisualizer() {
 }
 
 function drawVisualizer() {
+    if (!analyzer || !canvas || !canvasCtx || !dataArray) {
+        console.error("One or more required elements are not initialized.");
+        return;
+    }
+
     animationId = requestAnimationFrame(drawVisualizer);
 
     analyzer.getByteFrequencyData(dataArray);
 
-    let barWidth = (canvas.width / bufferLength) * 2.5;
+    let barWidth = (bufferLength > 0) ? (canvas.width / bufferLength) * 2.5 : 0; // Ensure bufferLength is non-zero
     let x = 0;
 
     canvasCtx.fillStyle = `rgb(52, 252, 255)`; // Make theme color
