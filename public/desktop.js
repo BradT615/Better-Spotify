@@ -93,7 +93,7 @@ function displayUserLibrary(playlists) {
         const playlistDiv = document.createElement('div');
         playlistDiv.className = 'flex text-left gap-2 mt-2'; 
 
-        const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png'; // Use a default image if there's no playlist cover
+        const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
 
         playlistDiv.innerHTML = `
             <img src="${imageUrl}" alt="Playlist Cover" class="w-12 h-12 rounded-md"> 
