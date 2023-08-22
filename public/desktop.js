@@ -15,6 +15,13 @@ let canvasCtx;
 let animationId;
 
 
+window.addEventListener('resize', () => {
+    if (resizeCanvasToDisplaySize(canvas)) {
+        barWidth = (canvas.width / bufferLength) * 2.5;
+    }
+});
+
+
 function resizeCanvasToDisplaySize(canvas) {
     const width = canvas.clientWidth;
     const height = canvas.clientHeight;
@@ -28,17 +35,16 @@ function resizeCanvasToDisplaySize(canvas) {
     return false;  // Indicate no size change
 }
 
-window.addEventListener('resize', () => {
-    if (resizeCanvasToDisplaySize(canvas)) {
-        barWidth = (canvas.width / bufferLength) * 2.5;
-    }
-});
-
-
-
 function initializeVisualizer() {
+    if (!player || !player._audio || !player._audio._audioElement) {
+        console.warn("Waiting for the Spotify player to be ready...");
+        setTimeout(initializeVisualizer, 500); // Retry after half a second
+        return;
+    }
+    
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     analyzer = audioCtx.createAnalyser();
+    
     player._options.getOAuthToken(token => {
         player._audio._audioElement.crossOrigin = "anonymous"; // Get audio data
         let source = audioCtx.createMediaElementSource(player._audio._audioElement);
@@ -74,9 +80,6 @@ function drawVisualizer() {
         x += barWidth + 1; // space between bars
     }
 }
-
-
-
 
 
 function updateProfile(data) {
