@@ -3,6 +3,8 @@
 document.getElementById("loading-screen").style.display = "none";
 document.getElementById("loggedin").style.display = "flex";
 
+let token;
+
 function updateProfile(data) {
     let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
     document.getElementById('user-name').textContent = data.display_name;
