@@ -16,12 +16,17 @@ let canvasCtx;
 let animationId;
 
 
+function updateProfile(data) {
+    let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
+    document.getElementById('user-name').textContent = data.display_name;
+    document.querySelectorAll('.user-image').forEach(img => img.src = imageUrl);
+}
+
 window.addEventListener('resize', () => {
     if (resizeCanvasToDisplaySize(canvas)) {
         barWidth = (canvas.width / bufferLength) * 2.5;
     }
 });
-
 
 function resizeCanvasToDisplaySize(canvas) {
     const width = canvas.clientWidth;
@@ -85,13 +90,6 @@ function drawVisualizer() {
         canvasCtx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
         x += barWidth + 1; // space between bars
     }
-}
-
-
-function updateProfile(data) {
-    let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
-    document.getElementById('user-name').textContent = data.display_name;
-    document.querySelectorAll('.user-image').forEach(img => img.src = imageUrl);
 }
 
 function updateVolumeIcon(volumeValue) {
@@ -291,7 +289,13 @@ function initializeLoggedInUser() {
                             initializeVisualizer();
                             isVisualizerInitialized = true;
                         } else {
-                            console.error("Player or its properties are not defined. Visualizer can't be initialized.");
+                            if (!player) {
+                                console.warn("Player is not defined.");
+                            } else if (!player._audio) {
+                                console.warn("Player._audio is not defined.");
+                            } else if (!player._audio._audioElement) {
+                                console.warn("Player._audio._audioElement is not defined.");
+                            }                            
                         }
                     }
                     if (!animationId) {
