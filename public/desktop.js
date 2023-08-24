@@ -22,76 +22,6 @@ function updateProfile(data) {
     document.querySelectorAll('.user-image').forEach(img => img.src = imageUrl);
 }
 
-window.addEventListener('resize', () => {
-    if (resizeCanvasToDisplaySize(canvas)) {
-        barWidth = (canvas.width / bufferLength) * 2.5;
-    }
-});
-
-function resizeCanvasToDisplaySize(canvas) {
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-
-    if (canvas.width !== width || canvas.height !== height) {
-        canvas.width = width;
-        canvas.height = height;
-        return true;  // Indicate the size has changed
-    }
-
-    return false;  // Indicate no size change
-}
-
-function initializeVisualizer() {
-    if (!player || !player._audio || !player._audio._audioElement) {
-        console.warn("Waiting for the Spotify player to be ready...");
-        setTimeout(initializeVisualizer, 500); // Retry after half a second
-        return;
-    }
-    
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    analyzer = audioCtx.createAnalyser();
-    
-    player._options.getOAuthToken(token => {
-        player._audio._audioElement.crossOrigin = "anonymous"; // Get audio data
-        let source = audioCtx.createMediaElementSource(player._audio._audioElement);
-        source.connect(analyzer);
-        analyzer.connect(audioCtx.destination);
-    });
-
-    analyzer.fftSize = 256; // Number of data values you will have to play with for the visualization
-    bufferLength = analyzer.frequencyBinCount; // half the FFT value
-    dataArray = new Uint8Array(bufferLength); // create an array to store the data
-
-    canvas = document.getElementById("visualizer");
-    canvasCtx = canvas.getContext("2d");
-
-    resizeCanvasToDisplaySize(canvas);
-    
-    drawVisualizer();
-}
-
-function drawVisualizer() {
-    if (!analyzer || !canvas || !canvasCtx || !dataArray) {
-        console.error("One or more required elements are not initialized.");
-        return;
-    }
-
-    animationId = requestAnimationFrame(drawVisualizer);
-
-    analyzer.getByteFrequencyData(dataArray);
-
-    let barWidth = (bufferLength > 0) ? (canvas.width / bufferLength) * 2.5 : 0; // Ensure bufferLength is non-zero
-    let x = 0;
-
-    canvasCtx.fillStyle = `rgb(52, 252, 255)`; // Make theme color
-
-    for (let i = 0; i < bufferLength; i++) {
-        let barHeight = dataArray[i];
-        canvasCtx.fillRect(x, canvas.height - barHeight / 2, barWidth, barHeight / 2);
-        x += barWidth + 1; // space between bars
-    }
-}
-
 function updateVolumeIcon(volumeValue) {
     const volumeLowIcon = document.getElementById('volumeLowIcon');
     const volumeMuteIcon = document.getElementById('volumeMuteIcon');
@@ -187,7 +117,6 @@ function displayUserLibrary(playlists) {
     });
 }
 
-
 function playSong(songUri) {
     $.ajax({
       url: `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
@@ -279,28 +208,8 @@ function initializeLoggedInUser() {
             player.addListener('player_state_changed', state => {
                 if (state && state.paused) {
                     document.getElementById('playPauseCircle').src = 'assets/playCircle.png';
-                    if (animationId) {
-                        cancelAnimationFrame(animationId);  // Stop the visualizer
-                    }
                 } else {
                     document.getElementById('playPauseCircle').src = 'assets/pauseCircle.png';
-                    if (!isVisualizerInitialized && isPlayerReady) {
-                        if (player && player._audio && player._audio._audioElement) {
-                            initializeVisualizer();
-                            isVisualizerInitialized = true;
-                        } else {
-                            if (!player) {
-                                console.warn("Player is not defined.");
-                            } else if (!player._audio) {
-                                console.warn("Player._audio is not defined.");
-                            } else if (!player._audio._audioElement) {
-                                console.warn("Player._audio._audioElement is not defined.");
-                            }                            
-                        }
-                    }
-                    if (!animationId) {
-                        drawVisualizer();
-                    }
                 }
 
                 // Update the song card
@@ -332,12 +241,6 @@ function initializeLoggedInUser() {
                 var currentSrc = this.src;
                 if (currentSrc.includes('playCirlce.png')) {
                     this.src = 'assets/pauseCircle.png';
-            
-                    // Initialize the visualizer only if it hasn't been initialized before
-                    if (!isVisualizerInitialized) {
-                        initializeVisualizer();
-                        isVisualizerInitialized = true;
-                    }
                 } else {
                     this.src = 'assets/playCirlce.png';
                 }
