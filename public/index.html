@@ -4,17 +4,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Better Spotify</title>
-    <link rel="stylesheet" href="output.css">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        /* Inline styles for the loading screen */
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #2D3748;
+            z-index: 50;
+        }
+        #loading-screen img {
+            width: 64px;
+            height: 64px;
+        }
+    </style>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script src="auth.js"></script>
+    <link rel="stylesheet" href="output.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js" defer></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js" defer></script>
 </head>    
 <body class="h-screen text-center text-white">
 
-    <div id="loading-screen" class="fixed top-0 left-0 w-full h-screen flex justify-center items-center bg-neutral-700 z-50">
-        <img src="assets/loading.gif" class="h-16 w-16" alt="Loading..."/>
+    <div id="loading-screen">
+        <img src="assets/loading.gif" alt="Loading..."/>
     </div>
 
     <div id="loggedin" class="max-h-screen bg-neutral-700" style="display: none;">
