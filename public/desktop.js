@@ -104,41 +104,42 @@ function displayUserLibrary(playlists) {
     const libraryDiv = document.getElementById('library');
     playlists.forEach(playlist => {
         const playlistDiv = document.createElement('div');
-        playlistDiv.className = 'flex text-left gap-2 mt-2 p-2 hover:bg-neutral-800 cursor-pointer rounded items-center'; 
+        playlistDiv.className = 'flex justify-between items-center text-left gap-2 mt-2 p-2 hover:bg-neutral-800 cursor-pointer rounded'; 
 
         const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
 
         playlistDiv.innerHTML = `
-            <img src="${imageUrl}" alt="Playlist Cover" class="w-12 h-12 rounded-md"> 
-            <div class="flex flex-col max-w-sm truncate flex-grow">
-                <h1 class="text-lg truncate">${playlist.name}</h1>
-                <small class="text-gray-500 truncate">${playlist.owner.display_name}</small>
+            <div class="flex items-center gap-2">
+                <img src="${imageUrl}" alt="Playlist Cover" class="w-12 h-12 rounded-md"> 
+                <div class="flex flex-col max-w-sm truncate">
+                    <h1 class="text-lg truncate">${playlist.name}</h1>
+                    <small class="text-gray-500 truncate">${playlist.owner.display_name}</small>
+                </div>
             </div>
-            <img src="path_to_volumeFullIcon_image" alt="Volume Full Icon" class="hidden" id="volumeFullIconFor${playlist.id}">
+            <box-icon id="volumeFullIconFor${playlist.id}" name='volume-full' color='#34fcff' class="hidden"></box-icon>
         `;
 
         playlistDiv.addEventListener('click', () => {
             playPlaylist(playlist.id);
 
-            // Remove the selected style and hide the volumeFullIcon from the previously selected playlist
             if (selectedPlaylistDiv) {
                 selectedPlaylistDiv.classList.remove('bg-neutral-800');
                 const previousIcon = document.getElementById(`volumeFullIconFor${selectedPlaylistDiv.dataset.playlistId}`);
                 if (previousIcon) previousIcon.classList.add('hidden');
             }
 
-            // Add the selected style to the clicked playlist and show the volumeFullIcon
             playlistDiv.classList.add('bg-neutral-800');
             const currentIcon = document.getElementById(`volumeFullIconFor${playlist.id}`);
             if (currentIcon) currentIcon.classList.remove('hidden');
 
-            // Update the reference to the selected playlist
             selectedPlaylistDiv = playlistDiv;
         });
 
         libraryDiv.appendChild(playlistDiv);
     });
 }
+
+
 
 
 function playPlaylist(playlistId) {
