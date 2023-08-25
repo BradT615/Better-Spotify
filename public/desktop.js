@@ -98,11 +98,13 @@ function fetchUserLibrary() {
     });
 }
 
+let selectedPlaylistDiv = null;
+
 function displayUserLibrary(playlists) {
     const libraryDiv = document.getElementById('library');
     playlists.forEach(playlist => {
         const playlistDiv = document.createElement('div');
-        playlistDiv.className = 'flex text-left gap-2 mt-2'; 
+        playlistDiv.className = 'flex text-left gap-2 mt-2 p-2 hover:bg-neutral-800 cursor-pointer rounded'; 
 
         const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
 
@@ -113,9 +115,43 @@ function displayUserLibrary(playlists) {
                 <small class="text-gray-500 truncate">${playlist.owner.display_name}</small>
             </div>
         `;
+
+        playlistDiv.addEventListener('click', () => {
+            playPlaylist(playlist.id);
+
+            if (selectedPlaylistDiv) {
+                selectedPlaylistDiv.classList.remove('bg-neutral-800');
+            }
+
+            playlistDiv.classList.add('bg-neutral-800');
+
+            selectedPlaylistDiv = playlistDiv;
+        });
+
         libraryDiv.appendChild(playlistDiv);
     });
 }
+
+
+function playPlaylist(playlistId) {
+    $.ajax({
+        url: `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
+        type: 'PUT',
+        headers: {
+            'Authorization': `Bearer ${token}`,
+            'Content-Type': 'application/json'
+        },
+        data: JSON.stringify({ context_uri: `spotify:playlist:${playlistId}` }),
+        success: function() {
+            console.log("Successfully started playlist playback!");
+        },
+        error: function(error) {
+            console.error("Error initiating playlist playback:", error);
+        }
+    });
+}
+
+
 
 function playSong(songUri) {
     $.ajax({
@@ -271,3 +307,69 @@ if (document.readyState === "loading") {
 } else {  // DOM is already loaded
     initializeLoggedInUser();
 }
+
+
+const mockPlaylists = [
+    {
+        name: "Ed's Hits",
+        owner: { display_name: "John Doe" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d0000485182b243023b937fd579a35533" }]
+    },
+    {
+        name: "Billie's Ballads",
+        owner: { display_name: "Jane Smith" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d0000485197b3b4d69a0e254c3f3f1466" }]
+    },
+    {
+        name: "Weekend Vibes",
+        owner: { display_name: "Alice" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851e727b4e450ba24cc5163de4e" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Heartbreak Anthems fnjsdflsdn",
+        owner: { display_name: "Charlie" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f4631e319f6f7e1f7b65a8e0" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Heartbreak Anthems",
+        owner: { display_name: "Charlie" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f4631e319f6f7e1f7b65a8e0" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+];
+
+displayUserLibrary(mockPlaylists);
