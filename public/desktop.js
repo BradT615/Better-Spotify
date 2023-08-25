@@ -99,48 +99,52 @@ function fetchUserLibrary() {
 }
 
 let selectedPlaylistDiv = null;
+let previousIcon = null;
 
 function displayUserLibrary(playlists) {
     const libraryDiv = document.getElementById('library');
     playlists.forEach(playlist => {
         const playlistDiv = document.createElement('div');
-        playlistDiv.className = 'flex justify-between items-center text-left gap-2 mt-2 p-2 hover:bg-neutral-800 cursor-pointer rounded'; 
+        playlistDiv.className = 'flex justify-between items-center text-left w-full gap-2 mt-2 p-2 hover:bg-neutral-800 cursor-pointer rounded'; 
 
         const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
 
         playlistDiv.innerHTML = `
-            <div class="flex items-center gap-2">
-                <img src="${imageUrl}" alt="Playlist Cover" class="w-12 h-12 rounded-md"> 
-                <div class="flex flex-col max-w-sm truncate">
+            <div class="flex items-center w-full gap-2">
+                <img src="${imageUrl}" alt="Playlist Cover" class="w-14 h-14 rounded-md"> 
+                <div class="flex flex-col w-11/12 truncate">
                     <h1 class="text-lg truncate">${playlist.name}</h1>
                     <small class="text-gray-500 truncate">${playlist.owner.display_name}</small>
                 </div>
+                <box-icon class="playlist-icon hidden" name='volume-full' color='#34fcff' size='28px'></box-icon>
             </div>
-            <box-icon id="volumeFullIconFor${playlist.id}" name='volume-full' color='#34fcff' class="hidden"></box-icon>
         `;
 
         playlistDiv.addEventListener('click', () => {
             playPlaylist(playlist.id);
 
+            // Hide all box-icons
+            document.querySelectorAll('.playlist-icon').forEach(icon => {
+                icon.classList.add('hidden');
+            });
+
+            // Show the box-icon for the clicked playlist
+            const clickedIcon = playlistDiv.querySelector('.playlist-icon');
+            clickedIcon.classList.remove('hidden');
+
             if (selectedPlaylistDiv) {
                 selectedPlaylistDiv.classList.remove('bg-neutral-800');
-                const previousIcon = document.getElementById(`volumeFullIconFor${selectedPlaylistDiv.dataset.playlistId}`);
-                if (previousIcon) previousIcon.classList.add('hidden');
             }
 
             playlistDiv.classList.add('bg-neutral-800');
-            const currentIcon = document.getElementById(`volumeFullIconFor${playlist.id}`);
-            if (currentIcon) currentIcon.classList.remove('hidden');
 
             selectedPlaylistDiv = playlistDiv;
+            previousIcon = clickedIcon;
         });
 
         libraryDiv.appendChild(playlistDiv);
     });
 }
-
-
-
 
 function playPlaylist(playlistId) {
     $.ajax({
@@ -316,3 +320,68 @@ if (document.readyState === "loading") {
 } else {  // DOM is already loaded
     initializeLoggedInUser();
 }
+
+const mockPlaylists = [
+    {
+        name: "Ed's Hits",
+        owner: { display_name: "John Doe" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d0000485182b243023b937fd579a35533" }]
+    },
+    {
+        name: "Billie's Ballads",
+        owner: { display_name: "Jane Smith" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d0000485197b3b4d69a0e254c3f3f1466" }]
+    },
+    {
+        name: "Weekend Vibes",
+        owner: { display_name: "Alice" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851e727b4e450ba24cc5163de4e" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Heartbreak Anthems fnjsdflsdn",
+        owner: { display_name: "Charlie" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f4631e319f6f7e1f7b65a8e0" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Heartbreak Anthems",
+        owner: { display_name: "Charlie" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f4631e319f6f7e1f7b65a8e0" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+];
+
+displayUserLibrary(mockPlaylists);

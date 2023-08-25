@@ -721,6 +721,10 @@ video {
   width: 83.333333%;
 }
 
+.w-11\/12 {
+  width: 91.666667%;
+}
+
 .w-12 {
   width: 3rem;
 }
@@ -757,12 +761,12 @@ video {
   width: 100vw;
 }
 
-.max-w-full {
-  max-width: 100%;
+.w-7 {
+  width: 1.75rem;
 }
 
-.max-w-sm {
-  max-width: 24rem;
+.max-w-full {
+  max-width: 100%;
 }
 
 .flex-shrink-0 {
@@ -859,6 +863,10 @@ video {
 .rounded-l-lg {
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
+}
+
+.border-2 {
+  border-width: 2px;
 }
 
 .bg-black {
