@@ -284,6 +284,21 @@ function initializeLoggedInUser() {
                         });
                     }
                 });
+
+                document.getElementById('playPauseCircle').onclick = function() {
+                    player.togglePlay().catch(error => {
+                        console.error("Error toggling playback:", error);
+                    });
+                
+                    // Toggle the play/pause button image
+                    var currentSrc = this.src;
+                    if (currentSrc.includes('playCircle.png')) {
+                        this.src = 'assets/pauseCircle.png';
+                    } else {
+                        this.src = 'assets/playCircle.png';
+                    }
+                };
+                
                 
                 document.getElementById('forwardButton').addEventListener('click', function() {
                     if (player) {
@@ -294,36 +309,66 @@ function initializeLoggedInUser() {
                 });
                 
 
-                document.getElementById('RepeatButton').addEventListener('click', function() {
-                    if (player) {
-                        player.getRepeatMode().then(repeatMode => {
-                            let newRepeatMode;
-                            if (repeatMode === 'off') {
-                                newRepeatMode = 'context';
-                            } else if (repeatMode === 'context') {
-                                newRepeatMode = 'track';
-                            } else {
-                                newRepeatMode = 'off';
-                            }
-                
-                            player.setRepeatMode(newRepeatMode).then(() => {
-                                // Update the repeat button image based on the new mode
-                                if (newRepeatMode === 'off') {
-                                    document.getElementById('RepeatButton').src = 'assets/repeat.png';
-                                } else {
-                                    document.getElementById('RepeatButton').src = 'assets/repeatActive.png';
-                                }
-                            }).catch(error => {
-                                console.error("Error setting repeat mode:", error);
-                            });
-                
-                        }).catch(error => {
-                            console.error("Error getting repeat mode:", error);
+                let repeatMode = 'off';  // initial state
+
+                // Named function for "repeat once" behavior
+                function handleRepeatOnce(state) {
+                    if (state && state.position === 0 && state.paused && repeatMode === 'once') {
+                        player.seek(0).then(function() {
+                            player.resume();
+                        }).catch(function(error) {
+                            console.error("Error seeking to start of track:", error);
                         });
+                    }
+                }
+
+                document.getElementById('RepeatButton').addEventListener('click', function() {
+                    // Cycle through the repeat modes
+                    if (repeatMode === 'off') {
+                        repeatMode = 'context';
+                    } else if (repeatMode === 'context') {
+                        repeatMode = 'track';
+                    } else if (repeatMode === 'track') {
+                        repeatMode = 'once';
+                    } else {
+                        repeatMode = 'off';
+                    }
+
+                    // Update the repeat button image based on the local state
+                    if (repeatMode === 'off') {
+                        document.getElementById('RepeatButton').src = 'assets/repeat.png';
+                    } else if (repeatMode === 'once') {
+                        document.getElementById('RepeatButton').src = 'assets/repeatOne.png';
+                    } else {
+                        document.getElementById('RepeatButton').src = 'assets/repeatActive.png';
+                    }
+
+                    if (repeatMode !== 'once') {
+                        // Remove the "repeat once" listener
+                        player.removeListener('player_state_changed', handleRepeatOnce);
+
+                        // Use the Spotify Web API to set the repeat mode
+                        $.ajax({
+                            url: `https://api.spotify.com/v1/me/player/repeat?state=${repeatMode}&device_id=${deviceId}`,
+                            type: 'PUT',
+                            headers: {
+                                'Authorization': `Bearer ${token}`
+                            },
+                            success: function() {
+                                console.log("Successfully updated repeat mode!");
+                            },
+                            error: function(error) {
+                                console.error("Error setting repeat mode:", error);
+                            }
+                        });
+                    } else {
+                        // Add the "repeat once" listener
+                        player.addListener('player_state_changed', handleRepeatOnce);
                     }
                 });
 
             });
+
             player.addListener('not_ready', ({ device_id }) => {
                 console.log('Device ID has gone offline', device_id);
             });
@@ -354,21 +399,6 @@ function initializeLoggedInUser() {
                 console.error("Account Error:", message);
             });
             
-            document.getElementById('playPauseCircle').onclick = function() {
-                player.togglePlay().catch(error => {
-                    console.error("Error toggling playback:", error);
-                });
-            
-                // Toggle the play/pause button image
-                var currentSrc = this.src;
-                if (currentSrc.includes('playCirlce.png')) {
-                    this.src = 'assets/pauseCircle.png';
-                } else {
-                    this.src = 'assets/playCirlce.png';
-                }
-            };
-            
-
             // Connect the player
             player.connect().then(success => {
                 if (success) {
