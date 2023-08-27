@@ -252,21 +252,30 @@ function initializeLoggedInUser() {
                 });
 
 
+                let isShuffled = false;
+
                 document.getElementById('shuffleButton').addEventListener('click', function() {
-                    if (player) {
-                        player.getShuffle().then(shuffleState => {
-                            // Toggle the shuffle state
-                            player.setShuffle(!shuffleState).then(() => {
-                                // Update the shuffle button image based on the new state
-                                document.getElementById('shuffleButton').src = shuffleState ? 'assets/shuffle.png' : 'assets/shuffleActive.png';
-                            }).catch(error => {
-                                console.error("Error toggling shuffle:", error);
-                            });
-                        }).catch(error => {
-                            console.error("Error getting shuffle state:", error);
-                        });
-                    }
+                    isShuffled = !isShuffled;  // toggle the state
+
+                    // Update the shuffle button image based on the local state
+                    document.getElementById('shuffleButton').src = isShuffled ? 'assets/shuffleActive.png' : 'assets/shuffle.png';
+
+                    // Use the Spotify Web API to set the shuffle state
+                    $.ajax({
+                        url: `https://api.spotify.com/v1/me/player/shuffle?state=${isShuffled}&device_id=${deviceId}`,
+                        type: 'PUT',
+                        headers: {
+                            'Authorization': `Bearer ${token}`
+                        },
+                        success: function() {
+                            console.log("Successfully updated shuffle state!");
+                        },
+                        error: function(error) {
+                            console.error("Error setting shuffle state:", error);
+                        }
+                    });
                 });
+
 
                 document.getElementById('backButton').addEventListener('click', function() {
                     if (player) {
@@ -313,7 +322,7 @@ function initializeLoggedInUser() {
                         });
                     }
                 });
-                
+
             });
             player.addListener('not_ready', ({ device_id }) => {
                 console.log('Device ID has gone offline', device_id);
