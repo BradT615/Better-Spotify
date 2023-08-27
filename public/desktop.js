@@ -250,6 +250,70 @@ function initializeLoggedInUser() {
                         console.error("Error setting web app as active device:", error);
                     }
                 });
+
+
+                document.getElementById('shuffleButton').addEventListener('click', function() {
+                    if (player) {
+                        player.getShuffle().then(shuffleState => {
+                            // Toggle the shuffle state
+                            player.setShuffle(!shuffleState).then(() => {
+                                // Update the shuffle button image based on the new state
+                                document.getElementById('shuffleButton').src = shuffleState ? 'assets/shuffle.png' : 'assets/shuffleActive.png';
+                            }).catch(error => {
+                                console.error("Error toggling shuffle:", error);
+                            });
+                        }).catch(error => {
+                            console.error("Error getting shuffle state:", error);
+                        });
+                    }
+                });
+
+                document.getElementById('backButton').addEventListener('click', function() {
+                    if (player) {
+                        player.previousTrack().catch(error => {
+                            console.error("Error playing previous track:", error);
+                        });
+                    }
+                });
+                
+                document.getElementById('forwardButton').addEventListener('click', function() {
+                    if (player) {
+                        player.nextTrack().catch(error => {
+                            console.error("Error playing next track:", error);
+                        });
+                    }
+                });
+                
+
+                document.getElementById('RepeatButton').addEventListener('click', function() {
+                    if (player) {
+                        player.getRepeatMode().then(repeatMode => {
+                            let newRepeatMode;
+                            if (repeatMode === 'off') {
+                                newRepeatMode = 'context';
+                            } else if (repeatMode === 'context') {
+                                newRepeatMode = 'track';
+                            } else {
+                                newRepeatMode = 'off';
+                            }
+                
+                            player.setRepeatMode(newRepeatMode).then(() => {
+                                // Update the repeat button image based on the new mode
+                                if (newRepeatMode === 'off') {
+                                    document.getElementById('RepeatButton').src = 'assets/repeat.png';
+                                } else {
+                                    document.getElementById('RepeatButton').src = 'assets/repeatActive.png';
+                                }
+                            }).catch(error => {
+                                console.error("Error setting repeat mode:", error);
+                            });
+                
+                        }).catch(error => {
+                            console.error("Error getting repeat mode:", error);
+                        });
+                    }
+                });
+                
             });
             player.addListener('not_ready', ({ device_id }) => {
                 console.log('Device ID has gone offline', device_id);
