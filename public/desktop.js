@@ -164,8 +164,6 @@ function playPlaylist(playlistId) {
     });
 }
 
-
-
 function playSong(songUri) {
     $.ajax({
       url: `https://api.spotify.com/v1/me/player/play?device_id=${deviceId}`,
@@ -195,7 +193,6 @@ function initializeLoggedInUser() {
         success: function(response) {
             const data = typeof response === 'string' ? JSON.parse(response) : response;
             updateProfile(data);
-            fetchUserLibrary();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Error fetching user profile:", errorThrown);
@@ -211,6 +208,7 @@ function initializeLoggedInUser() {
             const parsedResponse = JSON.parse(response);
             token = parsedResponse.access_token;
 
+            fetchUserLibrary();
             // Initialize the Spotify Player
             player = new Spotify.Player({
                 name: 'Better Spotify',
