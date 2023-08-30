@@ -4,16 +4,8 @@ document.getElementById("loading-screen").style.display = "none";
 document.getElementById("loggedin").style.display = "flex";
 
 let token;
-
 let isPlayerReady = false;
-let isVisualizerInitialized = false;
-let audioCtx;
-let analyzer;
-let dataArray;
-let bufferLength;
-let canvas;
-let canvasCtx;
-let animationId;
+
 
 
 function updateProfile(data) {
@@ -182,17 +174,20 @@ function playSong(songUri) {
     });
 }
 
-function updateProgressBar(currentPosition, songDuration) {
-    const progressBar = document.querySelector('.progress-bar');
-    const currentTimeDisplay = document.querySelector('.current-time');
-    const totalTimeDisplay = document.querySelector('.total-time');
+let animationId;
 
-    const progressPercentage = (currentPosition / songDuration) * 100;
-    progressBar.style.width = `${progressPercentage}%`;
-
-    currentTimeDisplay.textContent = formatTime(currentPosition);
-    totalTimeDisplay.textContent = formatTime(songDuration);
+function updateProgressBar() {
+    player.getCurrentState().then(state => {
+        if (state) {
+            const percentage = (state.position / state.duration) * 100;
+            document.querySelector('.progress-bar').style.width = `${percentage}%`;
+            
+            // Call the next frame
+            animationId = requestAnimationFrame(updateProgressBar);
+        }
+    });
 }
+
 
 function formatTime(ms) {
     const totalSeconds = Math.floor(ms / 1000);
@@ -417,9 +412,14 @@ function initializeLoggedInUser() {
                 document.querySelector('.song-image').src = songImage;
 
                 // Update the progress bar
-                if(state) {
-                    const {position, duration} = state;
-                    updateProgressBar(position, duration);
+                if (state) {
+                    if (!state.paused) {
+                        // Start the loop when the song is playing
+                        updateProgressBar();
+                    } else {
+                        // Stop the loop when the song is paused
+                        cancelAnimationFrame(animationId);
+                    }
                 }
             });
             
