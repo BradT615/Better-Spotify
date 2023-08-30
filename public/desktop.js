@@ -175,6 +175,9 @@ function playSong(songUri) {
 }
 
 let animationId;
+const currentTimeElement = document.querySelector('.current-time');
+const totalTimeElement = document.querySelector('.total-time');
+
 
 function updateProgressBar() {
     player.getCurrentState().then(state => {
@@ -182,12 +185,16 @@ function updateProgressBar() {
             const percentage = (state.position / state.duration) * 100;
             document.querySelector('.progress-bar').style.width = `${percentage}%`;
             
+            const formattedCurrentTime = formatTime(state.position);
+            const formattedTotalTime = formatTime(state.duration);
+            currentTimeElement.textContent = formattedCurrentTime;
+            totalTimeElement.textContent = formattedTotalTime;
+
             // Call the next frame
             animationId = requestAnimationFrame(updateProgressBar);
         }
     });
 }
-
 
 function formatTime(ms) {
     const totalSeconds = Math.floor(ms / 1000);
