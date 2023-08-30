@@ -182,6 +182,36 @@ function playSong(songUri) {
     });
 }
 
+function updateProgressBar(currentPosition, songDuration) {
+    const progressBar = document.querySelector('.progress-bar');
+    const currentTimeDisplay = document.querySelector('.current-time');
+    const totalTimeDisplay = document.querySelector('.total-time');
+
+    const progressPercentage = (currentPosition / songDuration) * 100;
+    progressBar.style.width = `${progressPercentage}%`;
+
+    currentTimeDisplay.textContent = formatTime(currentPosition);
+    totalTimeDisplay.textContent = formatTime(songDuration);
+}
+
+function formatTime(ms) {
+    const totalSeconds = Math.floor(ms / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+}
+
+document.querySelector('.progress-container').addEventListener('click', (e) => {
+    const clickX = e.offsetX;
+    const width = e.currentTarget.offsetWidth;
+    const percentage = clickX / width;
+    const duration = player._options.initial_state.duration;
+
+    const seekPosition = duration * percentage;
+
+    player.seek(seekPosition);
+});
+
 function initializeLoggedInUser() {
 
     // Fetch user profile and update display
@@ -274,7 +304,6 @@ function initializeLoggedInUser() {
                     });
                 });
 
-
                 document.getElementById('backButton').addEventListener('click', function() {
                     if (player) {
                         player.previousTrack().catch(error => {
@@ -297,7 +326,6 @@ function initializeLoggedInUser() {
                     }
                 };
                 
-                
                 document.getElementById('forwardButton').addEventListener('click', function() {
                     if (player) {
                         player.nextTrack().catch(error => {
@@ -306,7 +334,6 @@ function initializeLoggedInUser() {
                     }
                 });
                 
-
                 let repeatMode = 'off';  // initial state
 
                 // Named function for "repeat once" behavior
@@ -385,6 +412,12 @@ function initializeLoggedInUser() {
                 document.querySelector('.song-name').textContent = songName;
                 document.querySelector('.song-artist').textContent = artistName;
                 document.querySelector('.song-image').src = songImage;
+
+                // Update the progress bar
+                if(state) {
+                    const {position, duration} = state;
+                    updateProgressBar(position, duration);
+                }
             });
             
             player.addListener('initialization_error', ({ message }) => {
