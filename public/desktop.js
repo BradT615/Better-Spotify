@@ -205,11 +205,14 @@ document.querySelector('.progress-container').addEventListener('click', (e) => {
     const clickX = e.offsetX;
     const width = e.currentTarget.offsetWidth;
     const percentage = clickX / width;
-    const duration = player._options.initial_state.duration;
 
-    const seekPosition = duration * percentage;
-
-    player.seek(seekPosition);
+    // Use getCurrentState() to get the duration
+    player.getCurrentState().then(state => {
+        if (state) {
+            const seekPosition = state.duration * percentage;
+            player.seek(seekPosition);
+        }
+    });
 });
 
 function initializeLoggedInUser() {
