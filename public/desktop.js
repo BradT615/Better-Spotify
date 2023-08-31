@@ -75,6 +75,37 @@ document.getElementById('volumeLowIcon').addEventListener('click', muteOrRestore
 document.getElementById('volumeFullIcon').addEventListener('click', muteOrRestoreVolume);
 document.getElementById('volumeMuteIcon').addEventListener('click', muteOrRestoreVolume);
 
+
+function fetchAndDisplayPlaylistTracks(playlist) {
+    // Update the playlist container with the selected playlist's details
+    const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
+    document.getElementById('playlist-image').src = imageUrl;
+    document.getElementById('playlist-name').textContent = playlist.name;
+    document.getElementById('playlist-owner').textContent = playlist.owner.display_name;
+
+    // Fetch the tracks for the selected playlist
+    $.ajax({
+        url: `https://api.spotify.com/v1/playlists/${playlist.id}/tracks`,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        success: function(response) {
+            const tracksList = document.getElementById('playlist-tracks');
+            tracksList.innerHTML = ''; // Clear any existing tracks
+
+            response.items.forEach(item => {
+                const track = item.track;
+                const listItem = document.createElement('li');
+                listItem.textContent = `${track.name} by ${track.artists[0].name}`;
+                tracksList.appendChild(listItem);
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching playlist tracks:", errorThrown);
+        }
+    });
+}
+
 function fetchUserLibrary() {
     $.ajax({
         url: 'https://api.spotify.com/v1/me/playlists',
@@ -132,6 +163,9 @@ function displayUserLibrary(playlists) {
 
             selectedPlaylistDiv = playlistDiv;
             previousIcon = clickedIcon;
+
+            // Fetch and display the tracks and update the playlist details for the selected playlist
+            fetchAndDisplayPlaylistTracks(playlist);
         });
 
         libraryDiv.appendChild(playlistDiv);
@@ -177,7 +211,6 @@ function playSong(songUri) {
 let animationId;
 const currentTimeElement = document.querySelector('.current-time');
 const totalTimeElement = document.querySelector('.total-time');
-
 
 function updateProgressBar() {
     player.getCurrentState().then(state => {
@@ -339,9 +372,8 @@ function initializeLoggedInUser() {
                     }
                 });
                 
-                let repeatMode = 'off';  // initial state
+                let repeatMode = 'off';
 
-                // Named function for "repeat once" behavior
                 function handleRepeatOnce(state) {
                     if (state && state.position === 0 && state.paused && repeatMode === 'once') {
                         player.seek(0).then(function() {
