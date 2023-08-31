@@ -76,35 +76,99 @@ document.getElementById('volumeFullIcon').addEventListener('click', muteOrRestor
 document.getElementById('volumeMuteIcon').addEventListener('click', muteOrRestoreVolume);
 
 
-function fetchAndDisplayPlaylistTracks(playlist) {
-    // Update the playlist container with the selected playlist's details
-    const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
-    document.getElementById('playlist-image').src = imageUrl;
-    document.getElementById('playlist-name').textContent = playlist.name;
-    document.getElementById('playlist-owner').textContent = playlist.owner.display_name;
-
-    // Fetch the tracks for the selected playlist
+function populatePlaylistDetails(playlistId) {
     $.ajax({
-        url: `https://api.spotify.com/v1/playlists/${playlist.id}/tracks`,
+        url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
         headers: {
             'Authorization': `Bearer ${token}`
         },
         success: function(response) {
-            const tracksList = document.getElementById('playlist-tracks');
-            tracksList.innerHTML = ''; // Clear any existing tracks
+            // Update playlist image, name, and owner
+            const playlistContainer = document.querySelector('.playlist-container');
+            const playlistImage = playlistContainer.querySelector('#playlist-image');
+            const playlistName = playlistContainer.querySelector('#playlist-name');
+            const playlistOwner = playlistContainer.querySelector('#playlist-owner');
 
-            response.items.forEach(item => {
-                const track = item.track;
-                const listItem = document.createElement('li');
-                listItem.textContent = `${track.name} by ${track.artists[0].name}`;
-                tracksList.appendChild(listItem);
+            const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
+
+            playlistImage.src = imageUrl;
+            playlistName.textContent = playlist.name;
+            playlistOwner.textContent = playlist.owner.display_name;
+
+            // Create table and headers
+            let table = document.createElement('table');
+            let thead = document.createElement('thead');
+            let tr = document.createElement('tr');
+
+            ['#', 'Title', 'Album', 'Date added', 'Time'].forEach(header => {
+                let th = document.createElement('th');
+                th.textContent = header;
+                tr.appendChild(th);
+            });
+
+            thead.appendChild(tr);
+            table.appendChild(thead);
+            let tbody = document.createElement('tbody');
+
+            // Populate table rows with data
+            response.items.forEach((item, index) => {
+                let tr = document.createElement('tr');
+
+                // #
+                let tdNumber = document.createElement('td');
+                tdNumber.textContent = index + 1;
+                tr.appendChild(tdNumber);
+
+                // Title (image + name)
+                let tdTitle = document.createElement('td');
+                let img = document.createElement('img');
+                img.src = item.track.album.images.length > 0 ? item.track.album.images[0].url : 'assets/default-image.png';
+                img.alt = item.track.name;
+                img.style.width = '40px';
+                tdTitle.appendChild(img);
+                let span = document.createElement('span');
+                span.textContent = item.track.name;
+                tdTitle.appendChild(span);
+                tr.appendChild(tdTitle);
+
+                // Album
+                let tdAlbum = document.createElement('td');
+                tdAlbum.textContent = item.track.album.name;
+                tr.appendChild(tdAlbum);
+
+                // Date added
+                let tdDateAdded = document.createElement('td');
+                let dateAdded = new Date(item.added_at).toLocaleDateString();
+                tdDateAdded.textContent = dateAdded;
+                tr.appendChild(tdDateAdded);
+
+                // Time
+                let tdTime = document.createElement('td');
+                let time = Math.floor(item.track.duration_ms / 60000) + ':' + ((item.track.duration_ms % 60000) / 1000).toFixed(0);
+                tdTime.textContent = time;
+                tr.appendChild(tdTime);
+
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(tbody);
+            playlistContainer.appendChild(table);
+
+            // Apply some truncation styles
+            table.style.width = '100%';
+            table.style.tableLayout = 'fixed';
+            table.querySelectorAll('td, th').forEach(cell => {
+                cell.style.overflow = 'hidden';
+                cell.style.textOverflow = 'ellipsis';
+                cell.style.whiteSpace = 'nowrap';
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
-            console.error("Error fetching playlist tracks:", errorThrown);
+            console.error("Error fetching playlist details:", errorThrown);
         }
     });
 }
+
 
 function fetchUserLibrary() {
     $.ajax({
@@ -165,7 +229,7 @@ function displayUserLibrary(playlists) {
             previousIcon = clickedIcon;
 
             // Fetch and display the tracks and update the playlist details for the selected playlist
-            fetchAndDisplayPlaylistTracks(playlist);
+            populatePlaylistDetails(playlist);
         });
 
         libraryDiv.appendChild(playlistDiv);

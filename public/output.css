@@ -663,6 +663,10 @@ video {
   display: flex;
 }
 
+.table {
+  display: table;
+}
+
 .hidden {
   display: none;
 }
@@ -1141,25 +1145,23 @@ input[type="range"]:hover::-moz-range-thumb {
   border-radius: 5px;
 }
 
-/* When the #library and #playlist-tracks containers are hovered, show the scrollbar thumb */
+/* When the #library container is hovered, show the scrollbar thumb */
 
 #library:hover::-webkit-scrollbar-thumb,
-#playlist-tracks:hover::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb:active {
   background: #555;
 }
 
 /* For Firefox */
 
-#library, #playlist-tracks {
+#library {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
 
-#library:hover, #playlist-tracks:hover {
+#library:hover {
   scrollbar-color: #555 transparent;
 }
-
 
 .hover\:bg-blue-700:hover {
   --tw-bg-opacity: 1;
