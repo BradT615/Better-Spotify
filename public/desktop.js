@@ -229,7 +229,7 @@ function displayUserLibrary(playlists) {
             previousIcon = clickedIcon;
 
             // Fetch and display the tracks and update the playlist details for the selected playlist
-            populatePlaylistDetails(playlist);
+            populatePlaylistDetails(playlist.id);
         });
 
         libraryDiv.appendChild(playlistDiv);
