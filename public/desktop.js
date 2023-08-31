@@ -89,11 +89,11 @@ function populatePlaylistDetails(playlistId) {
             const playlistName = playlistContainer.querySelector('#playlist-name');
             const playlistOwner = playlistContainer.querySelector('#playlist-owner');
 
-            const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
-
+            const imageUrl = response.images && response.images.length > 0 ? response.images[0].url : 'assets/default-image.png';
             playlistImage.src = imageUrl;
-            playlistName.textContent = playlist.name;
-            playlistOwner.textContent = playlist.owner.display_name;
+            playlistName.textContent = response.name;
+            playlistOwner.textContent = response.owner.display_name;
+
 
             // Create table and headers
             let table = document.createElement('table');
