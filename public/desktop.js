@@ -102,6 +102,7 @@ function populatePlaylistDetails(playlistId) {
 
             // Create table and headers
             let table = document.createElement('table');
+            table.classList.add('text-left');
             let thead = document.createElement('thead');
             let tr = document.createElement('tr');
 
@@ -114,6 +115,10 @@ function populatePlaylistDetails(playlistId) {
             thead.appendChild(tr);
             table.appendChild(thead);
             let tbody = document.createElement('tbody');
+
+            // Set overflow behavior and max-height for the table
+            table.style.overflowY = 'auto';
+            table.style.maxHeight = '60vh';
 
             // Populate table rows with data
             response.items.forEach((item, index) => {
@@ -130,11 +135,13 @@ function populatePlaylistDetails(playlistId) {
                 img.src = item.track.album.images.length > 0 ? item.track.album.images[0].url : 'assets/default-image.png';
                 img.alt = item.track.name;
                 img.style.width = '40px';
+                img.style.marginRight = '10px';
                 tdTitle.appendChild(img);
                 let span = document.createElement('span');
                 span.textContent = item.track.name;
                 tdTitle.appendChild(span);
                 tr.appendChild(tdTitle);
+
 
                 // Album
                 let tdAlbum = document.createElement('td');
