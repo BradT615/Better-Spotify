@@ -17,11 +17,44 @@
             justify-content: center;
             align-items: center;
             background-color: #171717;
-            z-index: 50;
         }
-        #loading-screen img {
-            width: 64px;
-            height: 64px;
+
+        #loading-screen svg {
+            position: relative;
+            width: 100px;  /* Fixed width */
+            height: 100px;  /* Fixed height */
+            animation: rotate 2s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        #loading-screen svg circle {
+            fill: none;
+            stroke-width: 5;
+            stroke: #34fcff;
+            stroke-linecap: round;
+            stroke-dasharray: 282;
+            stroke-dashoffset: 282;
+            animation: animate 3s linear infinite;
+        }
+
+        @keyframes animate {
+            0%, 100% {
+                stroke-dashoffset: 282;
+            }
+            50% {
+                stroke-dashoffset: 0;
+            }
+            50.1% {
+                stroke-dashoffset: 564;
+            }
         }
     </style>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
@@ -33,8 +66,10 @@
 <body class="h-screen text-center text-white">
 
     <div id="loading-screen">
-        <img src="assets/loading.gif" alt="Loading..."/>
-    </div>
+        <svg viewbox="0 0 140 140">
+            <circle cx="70" cy="70" r="45"></circle>
+        </svg>
+    </div>       
 
     <div id="loggedin" class="max-h-screen bg-neutral-700" style="display: none;">
 
