@@ -116,10 +116,6 @@ function populatePlaylistDetails(playlistId) {
             table.appendChild(thead);
             let tbody = document.createElement('tbody');
 
-            // Set overflow behavior and max-height for the table
-            table.style.overflowY = 'auto';
-            table.style.maxHeight = '60vh';
-
             // Populate table rows with data
             response.items.forEach((item, index) => {
                 let tr = document.createElement('tr');
@@ -164,7 +160,9 @@ function populatePlaylistDetails(playlistId) {
             });
 
             table.appendChild(tbody);
-            playlistContainer.appendChild(table);
+            let playlistTracks = document.getElementById('playlist-tracks');
+            playlistTracks.innerHTML = '';  // Clear out existing content
+            playlistTracks.appendChild(table);
 
             // Apply some truncation styles
             table.style.width = '100%';
