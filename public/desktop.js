@@ -97,12 +97,12 @@ function populatePlaylistDetails(playlistId) {
             } else {
                 playlistOwner.textContent = "Unknown Owner";
             }
-            
-
 
             // Create table and headers
             let table = document.createElement('table');
-            table.classList.add('text-left');
+            table.classList.add('text-left', 'playlist-table');
+            table.style.tableLayout = 'auto';  // Set table layout to auto
+
             let thead = document.createElement('thead');
             let tr = document.createElement('tr');
 
@@ -138,7 +138,6 @@ function populatePlaylistDetails(playlistId) {
                 tdTitle.appendChild(span);
                 tr.appendChild(tdTitle);
 
-
                 // Album
                 let tdAlbum = document.createElement('td');
                 tdAlbum.textContent = item.track.album.name;
@@ -164,13 +163,17 @@ function populatePlaylistDetails(playlistId) {
             playlistTracks.innerHTML = '';  // Clear out existing content
             playlistTracks.appendChild(table);
 
-            // Apply some truncation styles
+            // Apply truncation styles
             table.style.width = '100%';
-            table.style.tableLayout = 'fixed';
             table.querySelectorAll('td, th').forEach(cell => {
                 cell.style.overflow = 'hidden';
                 cell.style.textOverflow = 'ellipsis';
                 cell.style.whiteSpace = 'nowrap';
+            });
+
+            // Apply max-width to other columns except the first one
+            table.querySelectorAll('th:not(:first-child), td:not(:first-child)').forEach(cell => {
+                cell.style.maxWidth = '200px';  // Adjust this value as per your requirements
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -178,7 +181,6 @@ function populatePlaylistDetails(playlistId) {
         }
     });
 }
-
 
 function fetchUserLibrary() {
     $.ajax({
