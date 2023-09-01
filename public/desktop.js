@@ -144,6 +144,7 @@ function populatePlaylistDetails(playlistId) {
                 span.style.overflow = 'hidden';
                 span.style.textOverflow = 'ellipsis';
                 span.style.whiteSpace = 'nowrap';
+                span.style.paddingRight = '10px';
 
                 wrapperDiv.appendChild(img);
                 wrapperDiv.appendChild(span);
@@ -182,6 +183,8 @@ function populatePlaylistDetails(playlistId) {
                 cell.style.overflow = 'hidden';
                 cell.style.textOverflow = 'ellipsis';
                 cell.style.whiteSpace = 'nowrap';
+                cell.style.paddingTop = '5px';
+                cell.style.paddingBottom = '5px';
             });
 
             // Apply max-width to other columns except the first one
