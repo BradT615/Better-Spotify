@@ -129,7 +129,8 @@ function populatePlaylistDetails(playlistId) {
                 let tdTitle = document.createElement('td');
                 let wrapperDiv = document.createElement('div');
                 wrapperDiv.style.display = 'flex';
-                wrapperDiv.style.alignItems = 'center';
+                wrapperDiv.style.alignItems = 'center'; 
+                wrapperDiv.style.width = '100%';
 
                 let img = document.createElement('img');
                 img.src = item.track.album.images.length > 0 ? item.track.album.images[0].url : 'assets/default-image.png';
@@ -139,6 +140,10 @@ function populatePlaylistDetails(playlistId) {
 
                 let span = document.createElement('span');
                 span.textContent = item.track.name;
+                span.style.flexGrow = '1';
+                span.style.overflow = 'hidden';
+                span.style.textOverflow = 'ellipsis';
+                span.style.whiteSpace = 'nowrap';
 
                 wrapperDiv.appendChild(img);
                 wrapperDiv.appendChild(span);
@@ -148,6 +153,7 @@ function populatePlaylistDetails(playlistId) {
                 // Album
                 let tdAlbum = document.createElement('td');
                 tdAlbum.textContent = item.track.album.name;
+                tdAlbum.style.paddingRight = '10px';
                 tr.appendChild(tdAlbum);
 
                 // Date added
