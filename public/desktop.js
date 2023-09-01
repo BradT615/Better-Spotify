@@ -86,14 +86,13 @@ function populatePlaylistDetails(playlistId) {
             // Update playlist image, name, and owner
             const playlistContainer = document.querySelector('.playlist-container');
             const playlistImage = playlistContainer.querySelector('#playlist-image');
-            const playlistName = playlistContainer.querySelector('#playlist-name');
+            const playlistNameElement = playlistContainer.querySelector('#playlist-name');
             const playlistOwner = playlistContainer.querySelector('#playlist-owner');
 
-            const imageUrl = response.images && response.images.length > 0 ? response.images[0].url : 'assets/default-image.png';
-            playlistImage.src = imageUrl;
-            playlistName.textContent = response.name;
-            if (response.owner && response.owner.display_name) {
-                playlistOwner.textContent = response.owner.display_name;
+            playlistImage.src = playlistImageURL;
+            playlistNameElement.textContent = playlistName;
+            if (playlistOwnerName) {
+                playlistOwner.textContent = playlistOwnerName;
             } else {
                 playlistOwner.textContent = "Unknown Owner";
             }
@@ -259,7 +258,7 @@ function displayUserLibrary(playlists) {
             previousIcon = clickedIcon;
 
             // Fetch and display the tracks and update the playlist details for the selected playlist
-            populatePlaylistDetails(playlist.id);
+            populatePlaylistDetails(playlist.id, playlist.name, imageUrl, playlist.owner.display_name);
         });
 
         libraryDiv.appendChild(playlistDiv);
