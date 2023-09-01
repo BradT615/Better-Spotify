@@ -76,7 +76,7 @@ document.getElementById('volumeFullIcon').addEventListener('click', muteOrRestor
 document.getElementById('volumeMuteIcon').addEventListener('click', muteOrRestoreVolume);
 
 
-function populatePlaylistDetails(playlistId) {
+function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, playlistOwnerName) {
     $.ajax({
         url: `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
         headers: {
