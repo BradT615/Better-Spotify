@@ -165,7 +165,9 @@ function populatePlaylistDetails(playlistId) {
 
                 // Time
                 let tdTime = document.createElement('td');
-                let time = Math.floor(item.track.duration_ms / 60000) + ':' + ((item.track.duration_ms % 60000) / 1000).toFixed(0);
+                let minutes = Math.floor(item.track.duration_ms / 60000);
+                let seconds = Math.floor((item.track.duration_ms % 60000) / 1000);
+                let time = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
                 tdTime.textContent = time;
                 tr.appendChild(tdTime);
 
