@@ -101,7 +101,7 @@ function populatePlaylistDetails(playlistId) {
             // Create table and headers
             let table = document.createElement('table');
             table.classList.add('text-left', 'playlist-table');
-            table.style.tableLayout = 'auto';  // Set table layout to auto
+            table.style.tableLayout = 'auto';
 
             let thead = document.createElement('thead');
             let tr = document.createElement('tr');
@@ -127,15 +127,22 @@ function populatePlaylistDetails(playlistId) {
 
                 // Title (image + name)
                 let tdTitle = document.createElement('td');
+                let wrapperDiv = document.createElement('div');
+                wrapperDiv.style.display = 'flex';
+                wrapperDiv.style.alignItems = 'center';
+
                 let img = document.createElement('img');
                 img.src = item.track.album.images.length > 0 ? item.track.album.images[0].url : 'assets/default-image.png';
                 img.alt = item.track.name;
                 img.style.width = '40px';
                 img.style.marginRight = '10px';
-                tdTitle.appendChild(img);
+
                 let span = document.createElement('span');
                 span.textContent = item.track.name;
-                tdTitle.appendChild(span);
+
+                wrapperDiv.appendChild(img);
+                wrapperDiv.appendChild(span);
+                tdTitle.appendChild(wrapperDiv);
                 tr.appendChild(tdTitle);
 
                 // Album
