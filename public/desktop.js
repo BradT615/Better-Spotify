@@ -248,24 +248,26 @@ function displayUserLibrary(playlists) {
             const clickedIcon = playlistDiv.querySelector('.playlist-icon');
             clickedIcon.classList.remove('hidden');
         
-                // If there was a previously selected playlist, remove the accent color from its name
-                if (selectedPlaylistDiv) {
-                    selectedPlaylistDiv.classList.remove('bg-active-custom', 'text-accent-cyan', 'hover:bg-active-hover-custom');
-                    const prevPlaylistName = selectedPlaylistDiv.querySelector('h1');
-                    prevPlaylistName.classList.remove('text-accent-cyan');
-                }
-
-                // Add the accent color to the current playlist's name
-                const currentPlaylistName = playlistDiv.querySelector('h1');
-                currentPlaylistName.classList.add('text-accent-cyan');
-                playlistDiv.classList.add('bg-active-custom', 'hover:bg-active-hover-custom');
+            // If there was a previously selected playlist, remove the accent color from its name and hover effects
+            if (selectedPlaylistDiv) {
+                selectedPlaylistDiv.classList.remove('bg-active-custom', 'text-accent-cyan', 'hover:bg-active-hover-custom');
+                selectedPlaylistDiv.classList.add('hover:bg-hover-custom');
+                const prevPlaylistName = selectedPlaylistDiv.querySelector('h1');
+                prevPlaylistName.classList.remove('text-accent-cyan');
+            }
+        
+            // Add the accent color to the current playlist's name and remove default hover
+            const currentPlaylistName = playlistDiv.querySelector('h1');
+            currentPlaylistName.classList.add('text-accent-cyan');
+            playlistDiv.classList.remove('hover:bg-hover-custom');
+            playlistDiv.classList.add('bg-active-custom', 'hover:bg-active-hover-custom');
         
             selectedPlaylistDiv = playlistDiv;
             previousIcon = clickedIcon;
         
             // Fetch and display the tracks and update the playlist details for the selected playlist
             populatePlaylistDetails(playlist.id, playlist.name, imageUrl, playlist.owner.display_name);
-        });        
+        });               
 
         libraryDiv.appendChild(playlistDiv);
     });
