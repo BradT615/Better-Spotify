@@ -221,7 +221,7 @@ function displayUserLibrary(playlists) {
     const libraryDiv = document.getElementById('library');
     playlists.forEach(playlist => {
         const playlistDiv = document.createElement('div');
-        playlistDiv.className = 'flex justify-between items-center text-left w-full gap-2 mt-2 p-2 hover:bg-neutral-700 cursor-pointer rounded'; 
+        playlistDiv.className = 'flex justify-between items-center text-left w-full gap-2 mt-2 p-2 hover:bg-hover-custom cursor-pointer rounded'; 
 
         const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
 
@@ -250,7 +250,7 @@ function displayUserLibrary(playlists) {
         
                 // If there was a previously selected playlist, remove the accent color from its name
                 if (selectedPlaylistDiv) {
-                    selectedPlaylistDiv.classList.remove('bg-neutral-800', 'text-accent-cyan', 'hover:bg-neutral-900');
+                    selectedPlaylistDiv.classList.remove('bg-active-custom', 'text-accent-cyan', 'hover:bg-active-hover-custom');
                     const prevPlaylistName = selectedPlaylistDiv.querySelector('h1');
                     prevPlaylistName.classList.remove('text-accent-cyan');
                 }
@@ -258,7 +258,7 @@ function displayUserLibrary(playlists) {
                 // Add the accent color to the current playlist's name
                 const currentPlaylistName = playlistDiv.querySelector('h1');
                 currentPlaylistName.classList.add('text-accent-cyan');
-                playlistDiv.classList.add('bg-neutral-800', 'hover:bg-neutral-900');
+                playlistDiv.classList.add('bg-active-custom', 'hover:bg-active-hover-custom');
         
             selectedPlaylistDiv = playlistDiv;
             previousIcon = clickedIcon;
