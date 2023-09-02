@@ -221,7 +221,7 @@ function displayUserLibrary(playlists) {
     const libraryDiv = document.getElementById('library');
     playlists.forEach(playlist => {
         const playlistDiv = document.createElement('div');
-        playlistDiv.className = 'flex justify-between items-center text-left w-full gap-2 mt-2 p-2 hover:bg-neutral-800 cursor-pointer rounded'; 
+        playlistDiv.className = 'flex justify-between items-center text-left w-full gap-2 mt-2 p-2 hover:bg-neutral-700 cursor-pointer rounded'; 
 
         const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
 
@@ -238,34 +238,34 @@ function displayUserLibrary(playlists) {
 
         playlistDiv.addEventListener('click', () => {
             playPlaylist(playlist.id);
-
+        
             // Hide all box-icons
             document.querySelectorAll('.playlist-icon').forEach(icon => {
                 icon.classList.add('hidden');
             });
-
+        
             // Show the box-icon for the clicked playlist
             const clickedIcon = playlistDiv.querySelector('.playlist-icon');
             clickedIcon.classList.remove('hidden');
+        
+                // If there was a previously selected playlist, remove the accent color from its name
+                if (selectedPlaylistDiv) {
+                    selectedPlaylistDiv.classList.remove('bg-neutral-800', 'text-accent-cyan', 'hover:bg-neutral-900');
+                    const prevPlaylistName = selectedPlaylistDiv.querySelector('h1');
+                    prevPlaylistName.classList.remove('text-accent-cyan');
+                }
 
-            if (selectedPlaylistDiv) {
-                selectedPlaylistDiv.classList.remove('bg-neutral-800');
-                const prevPlaylistName = selectedPlaylistDiv.querySelector('h1');
-                prevPlaylistName.classList.remove('text-accent-color');
-            }
-
-            // Add the accent color to the current playlist's name
-            const currentPlaylistName = playlistDiv.querySelector('h1');
-            currentPlaylistName.classList.add('text-accent-color');
-
-            playlistDiv.classList.add('bg-neutral-800');
-
+                // Add the accent color to the current playlist's name
+                const currentPlaylistName = playlistDiv.querySelector('h1');
+                currentPlaylistName.classList.add('text-accent-cyan');
+                playlistDiv.classList.add('bg-neutral-800', 'hover:bg-neutral-900');
+        
             selectedPlaylistDiv = playlistDiv;
             previousIcon = clickedIcon;
-
+        
             // Fetch and display the tracks and update the playlist details for the selected playlist
             populatePlaylistDetails(playlist.id, playlist.name, imageUrl, playlist.owner.display_name);
-        });
+        });        
 
         libraryDiv.appendChild(playlistDiv);
     });
