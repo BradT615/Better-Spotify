@@ -250,7 +250,13 @@ function displayUserLibrary(playlists) {
 
             if (selectedPlaylistDiv) {
                 selectedPlaylistDiv.classList.remove('bg-neutral-800');
+                const prevPlaylistName = selectedPlaylistDiv.querySelector('h1');
+                prevPlaylistName.classList.remove('text-accent-color');
             }
+
+            // Add the accent color to the current playlist's name
+            const currentPlaylistName = playlistDiv.querySelector('h1');
+            currentPlaylistName.classList.add('text-accent-color');
 
             playlistDiv.classList.add('bg-neutral-800');
 
@@ -264,6 +270,7 @@ function displayUserLibrary(playlists) {
         libraryDiv.appendChild(playlistDiv);
     });
 }
+
 
 function playPlaylist(playlistId) {
     $.ajax({
