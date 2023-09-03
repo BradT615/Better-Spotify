@@ -270,6 +270,7 @@ function displayUserLibrary(playlists) {
             populatePlaylistDetails(playlist.id, playlist.name, imageUrl, playlist.owner.display_name);
         });
         
+        console.log("Active Playlist: ", activePlaylistId);
         if (playlist.id === activePlaylistId) {
             const playlistIcon = playlistDiv.querySelector('.playlist-icon');
             playlistIcon.classList.remove('hidden');
