@@ -571,9 +571,9 @@ function initializeLoggedInUser() {
                 document.querySelector('.song-image').src = songImage;
 
                 // Extract the playlist ID if the song is playing from a playlist
-                if (state && state.context && state.context.uri.split(":")[1] === 'playlist') {
+                if (state && state.context && state.context.uri.startsWith('spotify:playlist:')) {
                     activePlaylistId = state.context.uri.split(":")[2];
-                }                
+                }                                
 
                 // Update the progress bar
                 if (state) {
