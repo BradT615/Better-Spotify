@@ -283,7 +283,7 @@ function displayUserLibrary(playlists) {
             selectedPlaylistDiv = playlistDiv;
             previousIcon = playlistIcon;
             
-            console.log("found active playlist");
+            console.log("Active Playlist: ", activePlaylistId);
         }
 
         libraryDiv.appendChild(playlistDiv);
