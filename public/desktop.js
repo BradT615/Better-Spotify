@@ -216,6 +216,7 @@ function fetchUserLibrary() {
 
 let selectedPlaylistDiv = null;
 let previousIcon = null;
+let activePlaylistId;
 
 function displayUserLibrary(playlists) {
     const libraryDiv = document.getElementById('library');
@@ -267,7 +268,21 @@ function displayUserLibrary(playlists) {
         
             // Fetch and display the tracks and update the playlist details for the selected playlist
             populatePlaylistDetails(playlist.id, playlist.name, imageUrl, playlist.owner.display_name);
-        });               
+        });
+        
+        if (playlist.id === activePlaylistId) {
+            const playlistIcon = playlistDiv.querySelector('.playlist-icon');
+            playlistIcon.classList.remove('hidden');
+
+            const playlistName = playlistDiv.querySelector('h1');
+            playlistName.classList.add('text-accent-cyan');
+            playlistDiv.classList.remove('hover:bg-hover-custom');
+            playlistDiv.classList.add('bg-active-custom', 'hover:bg-active-hover-custom');
+
+            // Update the selectedPlaylistDiv and previousIcon variables
+            selectedPlaylistDiv = playlistDiv;
+            previousIcon = playlistIcon;
+        }
 
         libraryDiv.appendChild(playlistDiv);
     });
@@ -551,6 +566,11 @@ function initializeLoggedInUser() {
                 document.querySelector('.song-name').textContent = songName;
                 document.querySelector('.song-artist').textContent = artistName;
                 document.querySelector('.song-image').src = songImage;
+
+                // Extract the playlist ID if the song is playing from a playlist
+                if (state && state.context && state.context.type === 'playlist') {
+                    activePlaylistId = state.context.uri.split(":")[2];
+                }
 
                 // Update the progress bar
                 if (state) {
