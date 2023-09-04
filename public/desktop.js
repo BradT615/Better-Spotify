@@ -106,7 +106,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
                 th.textContent = header;
-                th.classList.add('sticky', 'top-0', 'bg-table-header', 'z-10', 'border-b', 'custom-shadow');
+                th.classList.add('sticky', 'top-0', 'bg-table-header', 'z-10');
             
                 if (header === 'Date added') {
                     th.classList.add('hidden', 'lg:table-cell');
