@@ -101,12 +101,14 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.style.tableLayout = 'auto';
 
             let thead = document.createElement('thead');
+            thead.classList.add('bg-table-header');
+            
             let tr = document.createElement('tr');
 
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
                 th.textContent = header;
-                th.classList.add('sticky', 'top-0', 'bg-table-header', 'z-10');
+                th.classList.add('sticky', 'top-0', 'z-10');
             
                 if (header === 'Date added') {
                     th.classList.add('hidden', 'lg:table-cell');
