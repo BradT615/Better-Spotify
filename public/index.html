@@ -178,7 +178,7 @@
                         </div>
                     </div>                    
                 </div>
-                <div class="flex flex-col bg-bg-custom rounded-lg w-full playlist-container">
+                <div class="flex flex-col bg-bg-custom rounded-lg w-full playlist-container overflow-y-auto" style="max-height: 70vh;">
                     <div class="flex w-full p-8 gap-4">
                         <img id="playlist-image" src="assets/default-image.png" alt="Selected Playlist Image" class="w-1/5 rounded-md">
                         <div class="flex flex-col text-left">
@@ -186,8 +186,8 @@
                             <h1 id="playlist-owner" class="text-lg text-gray-500">Playlist Owner</h1>
                         </div>
                     </div>
-                    <div id="playlist-tracks" class="pl-6 mt-4 overflow-y-auto" style="max-height: 70vh;"></div>
-                </div>
+                    <div id="playlist-tracks" class="pl-6 mt-4"></div>
+                </div>                
             </div>
     
             <div class="flex flex-shrink-0 items-center justify-between px-4">
