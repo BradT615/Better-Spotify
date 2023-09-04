@@ -930,7 +930,8 @@ video {
 }
 
 .bg-table-header {
-  background-color: 1a1a1a;
+  --tw-bg-opacity: 1;
+  background-color: rgb(26 26 26 / var(--tw-bg-opacity));
 }
 
 .bg-gradient-to-t {

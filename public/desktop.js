@@ -100,9 +100,18 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.classList.add('text-left', 'playlist-table');
             table.style.tableLayout = 'auto';
 
-            let thead = document.createElement('thead');
-            thead.classList.add('bg-table-header');
-            
+            let thead = table.querySelector('thead');
+        
+            playlistContainer.addEventListener('scroll', function() {
+                if (playlistContainer.scrollTop > 0) {
+                    thead.classList.add('bg-table-header');
+                    thead.classList.add('custom-shadow');
+                } else {
+                    thead.classList.remove('bg-table-header');
+                    thead.classList.remove('custom-shadow');
+                }
+            });
+
             let tr = document.createElement('tr');
 
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
