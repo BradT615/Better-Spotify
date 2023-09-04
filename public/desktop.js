@@ -109,6 +109,9 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 if (header === 'Date added') {
                     th.classList.add('hidden', 'lg:table-cell');
                 }
+                if (header === 'Album') {
+                    th.classList.add('hidden', 'md:table-cell');
+                }
                 tr.appendChild(th);
             });            
 
@@ -155,6 +158,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 let tdAlbum = document.createElement('td');
                 tdAlbum.textContent = item.track.album.name;
                 tdAlbum.style.paddingRight = '10px';
+                tdAlbum.classList.add('hidden', 'md:table-cell');
                 tr.appendChild(tdAlbum);
 
                 // Date added
