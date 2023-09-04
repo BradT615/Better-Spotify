@@ -100,8 +100,27 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.classList.add('text-left', 'playlist-table');
             table.style.tableLayout = 'auto';
 
-            let thead = table.querySelector('thead');
-        
+            let thead = document.createElement('thead');
+            let tr = document.createElement('tr');
+
+            ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
+                let th = document.createElement('th');
+                th.textContent = header;
+                th.classList.add('sticky', 'top-0', 'z-10');
+                
+                if (header === 'Date added') {
+                    th.classList.add('hidden', 'lg:table-cell');
+                }
+                if (header === 'Album') {
+                    th.classList.add('hidden', 'md:table-cell');
+                }
+                
+                tr.appendChild(th);
+            });                       
+
+            thead.appendChild(tr);
+            table.appendChild(thead);
+
             playlistContainer.addEventListener('scroll', function() {
                 if (playlistContainer.scrollTop > 0) {
                     thead.classList.add('bg-table-header');
@@ -112,25 +131,6 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 }
             });
 
-            let tr = document.createElement('tr');
-
-            ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
-                let th = document.createElement('th');
-                th.textContent = header;
-                th.classList.add('sticky', 'top-0', 'z-10');
-            
-                if (header === 'Date added') {
-                    th.classList.add('hidden', 'lg:table-cell');
-                }
-                if (header === 'Album') {
-                    th.classList.add('hidden', 'md:table-cell');
-                }
-            
-                tr.appendChild(th);
-            });                       
-
-            thead.appendChild(tr);
-            table.appendChild(thead);
             let tbody = document.createElement('tbody');
 
             // Populate table rows with data
