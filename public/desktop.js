@@ -106,14 +106,17 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
                 th.textContent = header;
+                th.classList.add('sticky', 'top-0', 'bg-table-header', 'z-10', 'border-b', 'custom-shadow');
+            
                 if (header === 'Date added') {
                     th.classList.add('hidden', 'lg:table-cell');
                 }
                 if (header === 'Album') {
                     th.classList.add('hidden', 'md:table-cell');
                 }
+            
                 tr.appendChild(th);
-            });            
+            });                       
 
             thead.appendChild(tr);
             table.appendChild(thead);

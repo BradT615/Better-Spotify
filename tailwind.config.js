@@ -9,7 +9,8 @@ module.exports = {
         'bg-custom': '#121212',
         'hover-custom': '#1a1a1a',
         'active-custom': '#232323',
-        'active-hover-custom': '#393939'
+        'active-hover-custom': '#393939',
+        'table-header': '1a1a1a'
       },
     },
   },
