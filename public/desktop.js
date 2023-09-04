@@ -103,11 +103,14 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             let thead = document.createElement('thead');
             let tr = document.createElement('tr');
 
-            ['#', 'Title', 'Album', 'Date added', 'Time'].forEach(header => {
+            ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
                 th.textContent = header;
+                if (header === 'Date added') {
+                    th.classList.add('hidden', 'lg:table-cell');
+                }
                 tr.appendChild(th);
-            });
+            });            
 
             thead.appendChild(tr);
             table.appendChild(thead);
@@ -158,6 +161,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 let tdDateAdded = document.createElement('td');
                 let dateAdded = new Date(item.added_at).toLocaleDateString();
                 tdDateAdded.textContent = dateAdded;
+                tdDateAdded.classList.add('hidden', 'lg:table-cell');
                 tr.appendChild(tdDateAdded);
 
                 // Time

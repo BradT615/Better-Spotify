@@ -1138,3 +1138,9 @@ input[type="range"]:hover::-moz-range-thumb {
     display: none;
   }
 }
+
+@media (min-width: 1024px) {
+  .lg\:table-cell {
+    display: table-cell;
+  }
+}
