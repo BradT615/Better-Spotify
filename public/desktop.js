@@ -6,8 +6,6 @@ document.getElementById("loggedin").style.display = "flex";
 let token;
 let isPlayerReady = false;
 
-
-
 function updateProfile(data) {
     let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
     document.getElementById('user-name').textContent = data.display_name;
@@ -220,9 +218,19 @@ let activePlaylistId;
 
 function displayUserLibrary(playlists) {
     const libraryDiv = document.getElementById('library');
+    const libraryHeader = document.getElementById('library-header');
+
+    libraryDiv.addEventListener('scroll', function() {
+        if (libraryDiv.scrollTop > 0) {
+            libraryHeader.classList.add('custom-shadow');
+        } else {
+            libraryHeader.classList.remove('custom-shadow');
+        }
+    });
+
     playlists.forEach(playlist => {
         const playlistDiv = document.createElement('div');
-        playlistDiv.className = 'flex justify-between items-center text-left w-full gap-2 mt-2 p-2 hover:bg-hover-custom cursor-pointer rounded'; 
+        playlistDiv.className = 'flex justify-between items-center text-left w-full p-2 py-3 hover:bg-hover-custom cursor-pointer rounded-lg'; 
 
         const imageUrl = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
 
@@ -270,27 +278,9 @@ function displayUserLibrary(playlists) {
             populatePlaylistDetails(playlist.id, playlist.name, imageUrl, playlist.owner.display_name);
         });
         
-        console.log("Active Playlist: ", activePlaylistId);
-        if (playlist.id === activePlaylistId) {
-            const playlistIcon = playlistDiv.querySelector('.playlist-icon');
-            playlistIcon.classList.remove('hidden');
-
-            const playlistName = playlistDiv.querySelector('h1');
-            playlistName.classList.add('text-accent-cyan');
-            playlistDiv.classList.remove('hover:bg-hover-custom');
-            playlistDiv.classList.add('bg-active-custom', 'hover:bg-active-hover-custom');
-
-            // Update the selectedPlaylistDiv and previousIcon variables
-            selectedPlaylistDiv = playlistDiv;
-            previousIcon = playlistIcon;
-            
-            console.log("Active Playlist: ", activePlaylistId);
-        }
-
         libraryDiv.appendChild(playlistDiv);
     });
 }
-
 
 function playPlaylist(playlistId) {
     $.ajax({
@@ -568,12 +558,7 @@ function initializeLoggedInUser() {
             
                 document.querySelector('.song-name').textContent = songName;
                 document.querySelector('.song-artist').textContent = artistName;
-                document.querySelector('.song-image').src = songImage;
-
-                // Extract the playlist ID if the song is playing from a playlist
-                if (state && state.context && state.context.uri.startsWith('spotify:playlist:')) {
-                    activePlaylistId = state.context.uri.split(":")[2];
-                }                                
+                document.querySelector('.song-image').src = songImage;                              
 
                 // Update the progress bar
                 if (state) {
@@ -621,3 +606,69 @@ if (document.readyState === "loading") {
 } else {  // DOM is already loaded
     initializeLoggedInUser();
 }
+
+
+const mockPlaylists = [
+    {
+        name: "Ed's Hits",
+        owner: { display_name: "John Doe" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d0000485182b243023b937fd579a35533" }]
+    },
+    {
+        name: "Billie's Ballads",
+        owner: { display_name: "Jane Smith" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d0000485197b3b4d69a0e254c3f3f1466" }]
+    },
+    {
+        name: "Weekend Vibes",
+        owner: { display_name: "Alice" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851e727b4e450ba24cc5163de4e" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Heartbreak Anthems fnjsdflsdn",
+        owner: { display_name: "Charlie" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f4631e319f6f7e1f7b65a8e0" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Heartbreak Anthems",
+        owner: { display_name: "Charlie" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f4631e319f6f7e1f7b65a8e0" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+    {
+        name: "Retro Tunes",
+        owner: { display_name: "Bob" },
+        images: [{ url: "https://i.scdn.co/image/ab67616d00004851f7db43292a6a99b21b51d5b4" }]
+    },
+];
+
+displayUserLibrary(mockPlaylists);

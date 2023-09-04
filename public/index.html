@@ -58,7 +58,7 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="auth.js"></script>
+    <!-- <script src="auth.js"></script> -->
     <link rel="stylesheet" href="output.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js" defer></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js" defer></script>
@@ -168,15 +168,15 @@
                         </div>
                     </div>
     
-                    <div class="bg-bg-custom rounded-lg pt-4 flex-grow flex flex-col overflow-hidden">
-                        <div class="flex gap-2 pb-2 pl-4">
+                    <div class="bg-bg-custom rounded-lg flex-grow flex flex-col overflow-hidden">
+                        <div id="library-header" class="flex gap-2 p-4">
                             <box-icon name='library' color='#ffffff'></box-icon>
                             <p class="font-bold">Library</p>
                         </div>
                         <div id="library" class="flex flex-col px-2 w-full overflow-y-auto flex-grow">
                             <!-- Library -->
                         </div>
-                    </div>
+                    </div>                    
                 </div>
                 <div class="flex flex-col bg-bg-custom rounded-lg w-full playlist-container">
                     <div class="flex w-full p-8 gap-4">
@@ -191,7 +191,7 @@
             </div>
     
             <div class="flex flex-shrink-0 items-center justify-between px-4">
-                <div class="col flex items-center w-1/3 pl-2">
+                <div class="col flex items-center w-1/3">
                     <img class="song-image w-16 h-16 m-1 rounded-md" src="assets/default-image.png">
                     <div class="flex flex-col gap-1 ml-2 text-left w-full">
                         <h1 class="song-name row text-lg w-10/12 truncate">Song Name</h1>
@@ -199,7 +199,7 @@
                     </div>
                 </div>
             
-                <div class="col flex flex-col w-1/3 py-2">
+                <div class="col flex flex-col w-1/3 py-2 min-w-fit">
                     <div class="row flex gap-4 items-center justify-center">
                         <img id="shuffleButton" src="assets/shuffle.png" alt="shuffle Button" class="p-1">
                         <img id="backButton" src="assets/back.png" alt="Back Button" class="p-1">
@@ -228,6 +228,6 @@
     </div>
 
     <!-- <script src="mobile.js"></script> -->
-    <!-- <script src="desktop.js"></script> -->
+    <script src="desktop.js"></script>
 </body>
 </html>
