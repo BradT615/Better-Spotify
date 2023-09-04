@@ -101,35 +101,38 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.style.tableLayout = 'auto';
 
             let thead = document.createElement('thead');
+            thead.classList.add('sticky', 'top-0', 'z-10');
+
             let tr = document.createElement('tr');
 
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
                 th.textContent = header;
-                th.classList.add('sticky', 'top-0', 'z-10');
-                
+
                 if (header === 'Date added') {
                     th.classList.add('hidden', 'lg:table-cell');
                 }
                 if (header === 'Album') {
                     th.classList.add('hidden', 'md:table-cell');
                 }
-                
+
                 tr.appendChild(th);
             });                       
 
             thead.appendChild(tr);
             table.appendChild(thead);
 
+            let theadOffsetTop = thead.offsetTop;
+
             playlistContainer.addEventListener('scroll', function() {
-                if (playlistContainer.scrollTop > 0) {
+                if (playlistContainer.scrollTop >= theadOffsetTop) {
                     thead.classList.add('bg-table-header');
                     thead.classList.add('custom-shadow');
                 } else {
                     thead.classList.remove('bg-table-header');
                     thead.classList.remove('custom-shadow');
                 }
-            });
+            });           
 
             let tbody = document.createElement('tbody');
 
