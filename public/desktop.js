@@ -102,11 +102,14 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
             let thead = document.createElement('thead');
             thead.classList.add('sticky', 'top-0', 'z-10');
+            thead.style.margin = '0';
 
             let tr = document.createElement('tr');
+            tr.style.margin = '0';
 
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
+                th.style.margin = '0';
                 th.textContent = header;
 
                 if (header === 'Date added') {
