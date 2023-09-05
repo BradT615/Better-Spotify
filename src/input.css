@@ -3,76 +3,45 @@
 @tailwind utilities;
 
 /* Hide the slider thumb by default */
-input[type="range"]::-webkit-slider-thumb {
-  opacity: 0;
-}
-
-input[type="range"]::-moz-range-thumb {
-  opacity: 0;
-}
-
-/* Show the slider thumb when the slider is hovered */
-input[type="range"]:hover::-webkit-slider-thumb {
-  opacity: 1;
-}
-
-input[type="range"]:hover::-moz-range-thumb {
-  opacity: 1;
-}
-
-/* Scrollbar and container styles for playlist-container */
-.playlist-container {
-  scrollbar-width: thin;
-  scrollbar-color: rgba(155, 155, 155, 0.7) transparent;
-  overflow: auto;
-  margin-right: -10px;
-  padding-right: 10px;
-}
-
-.playlist-container::-webkit-scrollbar {
-  width: 8px;
-}
-
-.playlist-container::-webkit-scrollbar-thumb {
-  background-color: rgba(155, 155, 155, 0.7);
-  border-radius: 10px;
-}
-
-.playlist-container::-webkit-scrollbar-track {
-  background: transparent;
-}
-
+input[type="range"]::-webkit-slider-thumb,
 .playlist-container::-webkit-slider-thumb {
   opacity: 0;
 }
 
-.playlist-container:hover::-webkit-slider-thumb {
-  opacity: 1;
-}
-
+input[type="range"]::-moz-range-thumb,
 .playlist-container::-moz-range-thumb {
   opacity: 0;
 }
 
+/* Show the slider thumb when the slider is hovered */
+input[type="range"]:hover::-webkit-slider-thumb,
+.playlist-container:hover::-webkit-slider-thumb {
+  opacity: 1;
+}
+
+input[type="range"]:hover::-moz-range-thumb,
 .playlist-container:hover::-moz-range-thumb {
   opacity: 1;
 }
 
-/* Scrollbar styles for Webkit browsers */
-::-webkit-scrollbar {
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar,
+.playlist-container::-webkit-scrollbar {
   width: 10px;
 }
 
-::-webkit-scrollbar-track {
+::-webkit-scrollbar-track,
+.playlist-container::-webkit-scrollbar-track {
   background: none;
 }
 
-::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb,
+.playlist-container::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0); /* Make it transparent by default */
   border-radius: 5px;
 }
 
-/* Show the scrollbar thumb when hovered or active */
+/* When the #library container is hovered, show the scrollbar thumb */
 #library:hover::-webkit-scrollbar-thumb,
 .playlist-container:hover::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb:active,
@@ -80,7 +49,7 @@ input[type="range"]:hover::-moz-range-thumb {
   background: #555; /* Show it with a solid color on hover or active state */
 }
 
-/* Scrollbar styles for Firefox */
+/* For Firefox */
 #library,
 .playlist-container {
   scrollbar-width: thin;
@@ -93,5 +62,5 @@ input[type="range"]:hover::-moz-range-thumb {
 }
 
 .custom-shadow {
-  box-shadow: 0px 5px 10px 0px #000;
+    box-shadow: 0px 5px 10px 0px #000;
 }
