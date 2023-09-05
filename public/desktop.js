@@ -83,6 +83,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
         success: function(response) {
             // Update playlist image, name, and owner
             const playlistContainer = document.querySelector('.playlist-container');
+            playlistContainer.style.overflowY = 'overlay';
             const playlistImage = playlistContainer.querySelector('#playlist-image');
             const playlistNameElement = playlistContainer.querySelector('#playlist-name');
             const playlistOwner = playlistContainer.querySelector('#playlist-owner');
@@ -98,8 +99,8 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             // Create table and headers
             let table = document.createElement('table');
             table.classList.add('text-left', 'playlist-table');
-            table.style.tableLayout = 'auto';
-            table.style.minWidth = '100%';
+            table.style.width = '100%';
+            table.style.marginRight = '-10px';
             table.style.boxSizing = 'border-box';
 
             let thead = document.createElement('thead');
@@ -150,6 +151,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 // #
                 let tdNumber = document.createElement('td');
                 tdNumber.textContent = index + 1;
+                tdNumber.classList.add('pl-6');
                 tr.appendChild(tdNumber);
 
                 // Title (image + name)
