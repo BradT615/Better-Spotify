@@ -99,10 +99,13 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             let table = document.createElement('table');
             table.classList.add('text-left', 'playlist-table');
             table.style.tableLayout = 'auto';
+            table.style.minWidth = '100%';
+            table.style.boxSizing = 'border-box';
 
             let thead = document.createElement('thead');
             thead.classList.add('sticky', 'top-0', 'z-10');
-            thead.style.margin = '0';
+            thead.style.minWidth = '100%';
+            thead.style.boxSizing = 'border-box';
 
             let tr = document.createElement('tr');
             tr.style.margin = '0';
@@ -206,7 +209,6 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             playlistTracks.innerHTML = '';  // Clear out existing content
             playlistTracks.appendChild(table);
 
-            // Apply truncation styles
             table.style.width = '100%';
             table.querySelectorAll('td, th').forEach(cell => {
                 cell.style.overflow = 'hidden';
@@ -214,6 +216,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 cell.style.whiteSpace = 'nowrap';
                 cell.style.paddingTop = '5px';
                 cell.style.paddingBottom = '5px';
+                cell.style.boxSizing = 'border-box';
             });
 
             // Apply max-width to other columns except the first one
