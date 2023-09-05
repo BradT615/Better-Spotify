@@ -1071,42 +1071,35 @@ video {
 
 /* Hide the slider thumb by default */
 
-input[type="range"]::-webkit-slider-thumb,
-.playlist-container::-webkit-slider-thumb {
+input[type="range"]::-webkit-slider-thumb {
   opacity: 0;
 }
 
-input[type="range"]::-moz-range-thumb,
-.playlist-container::-moz-range-thumb {
+input[type="range"]::-moz-range-thumb {
   opacity: 0;
 }
 
 /* Show the slider thumb when the slider is hovered */
 
-input[type="range"]:hover::-webkit-slider-thumb,
-.playlist-container:hover::-webkit-slider-thumb {
+input[type="range"]:hover::-webkit-slider-thumb {
   opacity: 1;
 }
 
-input[type="range"]:hover::-moz-range-thumb,
-.playlist-container:hover::-moz-range-thumb {
+input[type="range"]:hover::-moz-range-thumb {
   opacity: 1;
 }
 
 /* For Webkit browsers (Chrome, Safari) */
 
-::-webkit-scrollbar,
-.playlist-container::-webkit-scrollbar {
+::-webkit-scrollbar {
   width: 10px;
 }
 
-::-webkit-scrollbar-track,
-.playlist-container::-webkit-scrollbar-track {
+::-webkit-scrollbar-track {
   background: none;
 }
 
-::-webkit-scrollbar-thumb,
-.playlist-container::-webkit-scrollbar-thumb {
+::-webkit-scrollbar-thumb {
   background-color: rgba(0, 0, 0, 0);
   /* Make it transparent by default */
   border-radius: 5px;
@@ -1115,26 +1108,52 @@ input[type="range"]:hover::-moz-range-thumb,
 /* When the #library container is hovered, show the scrollbar thumb */
 
 #library:hover::-webkit-scrollbar-thumb,
-.playlist-container:hover::-webkit-scrollbar-thumb,
-::-webkit-scrollbar-thumb:active,
-.playlist-container::-webkit-scrollbar-thumb:active {
+::-webkit-scrollbar-thumb:active {
   background: #555;
   /* Show it with a solid color on hover or active state */
 }
 
 /* For Firefox */
 
-#library,
-.playlist-container {
+#library {
   scrollbar-width: thin;
   scrollbar-color: rgba(0, 0, 0, 0) transparent;
   /* Make it transparent by default */
 }
 
-#library:hover,
-.playlist-container:hover {
+#library:hover {
   scrollbar-color: #555 transparent;
   /* Show it with a solid color on hover */
+}
+
+.playlist-container {
+  scrollbar-width: thin;
+  /* For Firefox */
+  scrollbar-color: rgba(0, 0, 0, 0) transparent;
+  /* For Firefox, same as #library */
+  margin-right: -17px;
+  padding-right: 17px;
+}
+
+.playlist-container::-webkit-scrollbar {
+  width: 10px;
+  /* For Chrome, Safari, and Opera */
+}
+
+.playlist-container::-webkit-scrollbar-track {
+  background: none;
+  /* For Chrome, Safari, and Opera */
+}
+
+.playlist-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0);
+  /* For Chrome, Safari, and Opera, same as #library */
+}
+
+.playlist-container::-webkit-scrollbar-thumb:active,
+.playlist-container:hover::-webkit-scrollbar-thumb {
+  background: #555;
+  /* For Chrome, Safari, and Opera, same as #library */
 }
 
 .custom-shadow {
