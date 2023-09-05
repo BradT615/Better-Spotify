@@ -98,7 +98,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
             // Create table and headers
             let table = document.createElement('table');
-            table.classList.add('text-left', 'playlist-table', '-mr-3');
+            table.classList.add('text-left', 'playlist-table');
             table.style.width = '100%';
             table.style.boxSizing = 'border-box';
 

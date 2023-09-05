@@ -15,7 +15,6 @@ input[type="range"]::-moz-range-thumb,
 }
 
 /* Show the slider thumb when the slider is hovered */
-
 input[type="range"]:hover::-webkit-slider-thumb,
 .playlist-container:hover::-webkit-slider-thumb {
   opacity: 1;
@@ -27,7 +26,6 @@ input[type="range"]:hover::-moz-range-thumb,
 }
 
 /* For Webkit browsers (Chrome, Safari) */
-
 ::-webkit-scrollbar,
 .playlist-container::-webkit-scrollbar {
   width: 10px;
@@ -40,30 +38,28 @@ input[type="range"]:hover::-moz-range-thumb,
 
 ::-webkit-scrollbar-thumb,
 .playlist-container::-webkit-scrollbar-thumb {
-  background: transparent;
+  background-color: rgba(0, 0, 0, 0); /* Make it transparent by default */
   border-radius: 5px;
 }
 
 /* When the #library container is hovered, show the scrollbar thumb */
-
 #library:hover::-webkit-scrollbar-thumb,
 .playlist-container:hover::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb:active,
 .playlist-container::-webkit-scrollbar-thumb:active {
-  background: #555;
+  background: #555; /* Show it with a solid color on hover or active state */
 }
 
 /* For Firefox */
-
 #library,
 .playlist-container {
   scrollbar-width: thin;
-  scrollbar-color: transparent transparent;
+  scrollbar-color: rgba(0, 0, 0, 0) transparent; /* Make it transparent by default */
 }
 
 #library:hover,
 .playlist-container:hover {
-  scrollbar-color: #555 transparent;
+  scrollbar-color: #555 transparent; /* Show it with a solid color on hover */
 }
 
 .custom-shadow {
