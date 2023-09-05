@@ -97,17 +97,22 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
             // Create table and headers
             let table = document.createElement('table');
-            table.classList.add('text-left', 'playlist-table', 'w-full', 'table-auto', 'border-collapse');
+            table.classList.add('text-left', 'playlist-table');
+            table.style.tableLayout = 'auto';
+            table.style.minWidth = '100%';
+            table.style.boxSizing = 'border-box';
 
             let thead = document.createElement('thead');
-            thead.classList.add('sticky', 'top-0', 'z-10', 'w-full', 'box-border');
+            thead.classList.add('sticky', 'top-0', 'z-10', 'border-2');
+            thead.style.minWidth = '100%';
+            thead.style.boxSizing = 'border-box';
 
             let tr = document.createElement('tr');
-            tr.classList.add('m-0');
+            tr.style.margin = '0';
 
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
-                th.classList.add('m-0');
+                th.style.margin = '0';
                 th.textContent = header;
 
                 if (header === 'Date added') {
@@ -135,7 +140,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                     thead.classList.remove('custom-shadow');
                 }
             });
-                      
+
             let tbody = document.createElement('tbody');
 
             // Populate table rows with data
@@ -200,7 +205,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
             table.appendChild(tbody);
             let playlistTracks = document.getElementById('playlist-tracks');
-            playlistTracks.innerHTML = '';
+            playlistTracks.innerHTML = '';  // Clear out existing content
             playlistTracks.appendChild(table);
 
             table.style.width = '100%';
@@ -215,7 +220,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
             // Apply max-width to other columns except the first one
             table.querySelectorAll('th:not(:first-child), td:not(:first-child)').forEach(cell => {
-                cell.classList.add('max-w-xs'); // Adjust this value as per your requirements
+                cell.style.maxWidth = '200px';  // Adjust this value as per your requirements
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
