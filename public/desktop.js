@@ -135,7 +135,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.appendChild(thead);
 
             let scrollbarCover = document.querySelector('.scrollbar-cover');
-            
+    
             playlistContainer.addEventListener('scroll', function() {
                 let theadRect = thead.getBoundingClientRect();
                 let containerRect = playlistContainer.getBoundingClientRect();
