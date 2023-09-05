@@ -114,16 +114,22 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 let th = document.createElement('th');
                 th.style.margin = '0';
                 th.textContent = header;
-
+            
+                if (header === '#') {
+                    th.classList.add('pl-6');
+                }
                 if (header === 'Date added') {
                     th.classList.add('hidden', 'lg:table-cell');
                 }
                 if (header === 'Album') {
                     th.classList.add('hidden', 'md:table-cell');
                 }
-
+                if (header === 'Time') {
+                    th.classList.add('-mr-3');
+                }
+            
                 tr.appendChild(th);
-            });                       
+            });            
 
             thead.appendChild(tr);
             table.appendChild(thead);
