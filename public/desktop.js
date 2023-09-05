@@ -134,16 +134,23 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             thead.appendChild(tr);
             table.appendChild(thead);
 
+            let scrollbarCover = document.querySelector('.scrollbar-cover');
+            
             playlistContainer.addEventListener('scroll', function() {
                 let theadRect = thead.getBoundingClientRect();
                 let containerRect = playlistContainer.getBoundingClientRect();
-            
+                
                 if (theadRect.top <= containerRect.top) {
                     thead.classList.add('bg-table-header');
                     thead.classList.add('custom-shadow');
+                    scrollbarCover.style.display = 'block';
+                    scrollbarCover.style.height = `${thead.offsetHeight}px`;
+                    scrollbarCover.classList.add('custom-shadow');
                 } else {
                     thead.classList.remove('bg-table-header');
                     thead.classList.remove('custom-shadow');
+                    scrollbarCover.style.display = 'none';
+                    scrollbarCover.classList.remove('custom-shadow');
                 }
             });
 

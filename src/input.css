@@ -61,10 +61,19 @@ input[type="range"]:hover::-moz-range-thumb,
   scrollbar-color: #555 transparent; /* Show it with a solid color on hover */
 }
 
-.playlist-container {
-  overflow-y: overlay;
+.scrollbar-cover {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 10px;
+  height: 100%;
+  background-color: #1a1a1a;
+  z-index: 1000;
+  display: none;
 }
 
+
+
 .custom-shadow {
-    box-shadow: 0px 5px 10px 0px #000;
+  box-shadow: 0px 5px 10px 0px #000;
 }
