@@ -103,7 +103,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.style.boxSizing = 'border-box';
 
             let thead = document.createElement('thead');
-            thead.classList.add('sticky', 'top-0', 'z-10');
+            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom');
             thead.style.minWidth = '100%';
             thead.style.boxSizing = 'border-box';
 
@@ -133,27 +133,6 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
             thead.appendChild(tr);
             table.appendChild(thead);
-
-            let scrollbarCover = document.querySelector('.scrollbar-cover');
-    
-            playlistContainer.addEventListener('scroll', function() {
-                let theadRect = thead.getBoundingClientRect();
-                let containerRect = playlistContainer.getBoundingClientRect();
-                
-                if (theadRect.top <= containerRect.top) {
-                    thead.classList.add('bg-table-header');
-                    thead.classList.add('custom-shadow');
-                    scrollbarCover.style.display = 'block';
-                    scrollbarCover.style.height = `${thead.offsetHeight}px`;
-                    scrollbarCover.classList.add('custom-shadow');
-                } else {
-                    thead.classList.remove('bg-table-header');
-                    thead.classList.remove('custom-shadow');
-                    scrollbarCover.style.display = 'none';
-                    scrollbarCover.classList.remove('custom-shadow');
-                }
-            });
-            
 
             let tbody = document.createElement('tbody');
 
