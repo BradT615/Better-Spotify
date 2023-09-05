@@ -153,6 +153,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                     scrollbarCover.classList.remove('custom-shadow');
                 }
             });
+            
 
             let tbody = document.createElement('tbody');
 
