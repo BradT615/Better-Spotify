@@ -238,6 +238,11 @@ function fetchUserLibrary() {
     });
 }
 
+function showHomeScreen() {
+    document.getElementById('home-screen').classList.remove('hidden');
+    document.getElementById('playlist-details').classList.add('hidden');
+}
+
 let selectedPlaylistDiv = null;
 let previousIcon = null;
 let activePlaylistId;
@@ -273,6 +278,10 @@ function displayUserLibrary(playlists) {
 
         playlistDiv.addEventListener('click', () => {
             playPlaylist(playlist.id);
+
+            // Hide home screen and show playlist details
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('playlist-details').classList.remove('hidden');
         
             // Hide all box-icons
             document.querySelectorAll('.playlist-icon').forEach(icon => {
@@ -519,6 +528,8 @@ function initializeLoggedInUser() {
                         });
                     }
                 }
+
+                document.getElementById('home-button').addEventListener('click', showHomeScreen);
 
                 document.getElementById('RepeatButton').addEventListener('click', function() {
                     // Cycle through the repeat modes

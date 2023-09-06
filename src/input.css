@@ -61,6 +61,16 @@ input[type="range"]:hover::-moz-range-thumb,
   scrollbar-color: #555 transparent; /* Show it with a solid color on hover */
 }
 
+#home-button box-icon,
+#search-button box-icon {
+    fill: #b3b3b3;
+}
+
+#home-button:hover box-icon,
+#search-button:hover box-icon {
+    fill: #ffffff;
+}
+
 .custom-shadow {
   box-shadow: 0px 5px 10px 0px #000;
 }

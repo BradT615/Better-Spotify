@@ -10,7 +10,8 @@ module.exports = {
         'hover-custom': '#1a1a1a',
         'active-custom': '#232323',
         'active-hover-custom': '#393939',
-        'table-header': '#1a1a1a'
+        'table-header': '#1a1a1a',
+        'gray-custom': '#b3b3b3'
       },
     },
   },

@@ -58,7 +58,7 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="auth.js"></script>
+    <!-- <script src="auth.js"></script> -->
     <link rel="stylesheet" href="output.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js" defer></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js" defer></script>
@@ -69,7 +69,7 @@
         <svg viewbox="0 0 140 140">
             <circle cx="70" cy="70" r="45"></circle>
         </svg>
-    </div>       
+    </div>
 
     <div id="loggedin" class="max-h-screen bg-bg-custom" style="display: none;">
 
@@ -158,15 +158,15 @@
             <div class="flex gap-2 mx-2 grow overflow-y-auto">
                 <div class="flex gap-2 flex-col w-1/4 flex-grow-0 flex-shrink-0">
                     <div class="bg-bg-custom rounded-lg p-2">
-                        <div class="flex items-center gap-2 p-2">
-                            <box-icon type='solid' name='home' color='#ffffff'></box-icon>
-                            <p class="font-bold ">Home</p>
+                        <div id="home-button" class="flex items-center gap-2 p-2 text-gray-custom hover:text-white">
+                            <box-icon type='solid' name='home'></box-icon>
+                            <p class="font-bold">Home</p>
                         </div>
-                        <div class="flex items-center gap-2 p-2">
-                            <box-icon name='search' color='#ffffff'></box-icon>
+                        <div id="search-button" class="flex items-center gap-2 p-2 text-gray-custom hover:text-white">
+                            <box-icon name='search'></box-icon>
                             <p class="font-bold">Search</p>
                         </div>
-                    </div>
+                    </div>                    
     
                     <div class="bg-bg-custom rounded-lg flex-grow flex flex-col overflow-hidden">
                         <div id="library-header" class="flex gap-2 p-4 z-50">
@@ -179,14 +179,22 @@
                     </div>
                 </div>
                 <div class="flex flex-col bg-bg-custom rounded-lg w-full playlist-container relative" style="max-height: 100vh; overflow-y: auto;">
-                    <div class="flex w-full p-8 gap-4">
-                        <img id="playlist-image" src="assets/default-image.png" alt="Selected Playlist Image" class="w-1/5 rounded-md">
-                        <div class="flex flex-col text-left">
-                            <h1 id="playlist-name" class="text-3xl">Playlist Name</h1>
-                            <h1 id="playlist-owner" class="text-lg text-gray-500">Playlist Owner</h1>
-                        </div>
+                    <!-- Home Screen -->
+                    <div id="home-screen" class="p-8">
+                        
                     </div>
-                    <div id="playlist-tracks" class="pt-4"></div>
+                
+                    <!-- Playlist Details (hidden initially) -->
+                    <div id="playlist-details" class="hidden">
+                        <div class="flex w-full p-8 gap-4">
+                            <img id="playlist-image" src="assets/default-image.png" alt="Selected Playlist Image" class="w-1/5 rounded-md">
+                            <div class="flex flex-col text-left">
+                                <h1 id="playlist-name" class="text-3xl"></h1>
+                                <h1 id="playlist-owner" class="text-lg text-gray-500"></h1>
+                            </div>
+                        </div>
+                        <div id="playlist-tracks" class="pt-4"></div>
+                    </div>
                 </div>
             </div>
     
@@ -228,6 +236,6 @@
     </div>
 
     <!-- <script src="mobile.js"></script> -->
-    <!-- <script src="desktop.js"></script> -->
+    <script src="desktop.js"></script>
 </body>
 </html>
