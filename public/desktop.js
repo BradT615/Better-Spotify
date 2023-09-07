@@ -126,14 +126,8 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 }
                 if (header === 'Time') {
                     th.classList.add('relative', 'pr-3', 'bg-table-header');
-                    let overlay = document.createElement('div');
-                    overlay.style.position = 'absolute';
-                    overlay.style.right = '-20px';
-                    overlay.style.width = '20px';
-                    overlay.style.top = '0';
-                    overlay.style.bottom = '0';
-                    overlay.classList.add('bg-table-header');
-                    overlay.style.zIndex = '10';
+                    overlay.classList.add('absolute', 'top-0', 'bottom-0', 'w-2.5','bg-table-header', 'z-10');
+                    overlay.style.right = '-10px';
                     th.appendChild(overlay);
                 }
             
