@@ -103,7 +103,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.style.boxSizing = 'border-box';
 
             let thead = document.createElement('thead');
-            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', '-mr-3');
+            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', '-mr-5');
             thead.style.minWidth = '100%';
             thead.style.boxSizing = 'border-box';
 
@@ -125,11 +125,11 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                     th.classList.add('hidden', 'md:table-cell');
                 }
                 if (header === 'Time') {
-                    th.classList.add('-mr-3');
+                    th.classList.add('pl-3', 'pr-3', '-mr-5', 'z-10', 'bg-table-header');
                 }
             
                 tr.appendChild(th);
-            });            
+            });             
 
             thead.appendChild(tr);
             table.appendChild(thead);
