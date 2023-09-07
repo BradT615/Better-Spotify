@@ -126,6 +126,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 }
                 if (header === 'Time') {
                     th.classList.add('relative', 'pr-3', 'bg-table-header');
+                    let overlay = document.createElement('div');
                     overlay.classList.add('absolute', 'top-0', 'bottom-0', 'w-2.5','bg-table-header', 'z-10');
                     overlay.style.right = '-10px';
                     th.appendChild(overlay);
