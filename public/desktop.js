@@ -103,7 +103,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.style.boxSizing = 'border-box';
 
             let thead = document.createElement('thead');
-            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', '-mr-5');
+            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header');
             thead.style.minWidth = '100%';
             thead.style.boxSizing = 'border-box';
 
@@ -125,11 +125,20 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                     th.classList.add('hidden', 'md:table-cell');
                 }
                 if (header === 'Time') {
-                    th.classList.add('pl-3', 'pr-3', '-mr-5', 'z-10', 'bg-table-header');
+                    th.classList.add('relative', 'pr-3', 'bg-table-header');
+                    let overlay = document.createElement('div');
+                    overlay.style.position = 'absolute';
+                    overlay.style.right = '0';
+                    overlay.style.width = '10px';
+                    overlay.style.top = '0';
+                    overlay.style.bottom = '0';
+                    overlay.style.backgroundColor = 'bg-table-header';
+                    overlay.style.zIndex = '10';
+                    th.appendChild(overlay);
                 }
             
                 tr.appendChild(th);
-            });             
+            });            
 
             thead.appendChild(tr);
             table.appendChild(thead);
