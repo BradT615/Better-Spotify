@@ -103,7 +103,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             table.style.boxSizing = 'border-box';
 
             let thead = document.createElement('thead');
-            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom');
+            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', '-mr-3');
             thead.style.minWidth = '100%';
             thead.style.boxSizing = 'border-box';
 
