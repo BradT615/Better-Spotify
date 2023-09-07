@@ -128,11 +128,11 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                     th.classList.add('relative', 'pr-3', 'bg-table-header');
                     let overlay = document.createElement('div');
                     overlay.style.position = 'absolute';
-                    overlay.style.right = '0';
-                    overlay.style.width = '10px';
+                    overlay.style.right = '-20px';
+                    overlay.style.width = '20px';
                     overlay.style.top = '0';
                     overlay.style.bottom = '0';
-                    overlay.style.backgroundColor = 'bg-table-header';
+                    overlay.classList.add('bg-table-header');
                     overlay.style.zIndex = '10';
                     th.appendChild(overlay);
                 }
