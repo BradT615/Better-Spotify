@@ -246,17 +246,28 @@ function fetchUserLibrary() {
             // Populate the top-playlists section with the top 6 playlists
             topPlaylists.forEach(playlist => {
                 const playlistDiv = document.createElement('div');
-                playlistDiv.className = 'playlist-item';
-
-                const playlistName = document.createElement('h2');
-                playlistName.textContent = playlist.name;
-                playlistDiv.appendChild(playlistName);
-
+                playlistDiv.className = 'playlist-item bg-white shadow rounded-lg flex p-4';
+        
+                const playlistImageContainer = document.createElement('div');
+                playlistImageContainer.className = 'w-1/3';
+        
                 const playlistImage = document.createElement('img');
                 playlistImage.src = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
                 playlistImage.alt = `${playlist.name} cover image`;
-                playlistDiv.appendChild(playlistImage);
-
+                playlistImage.className = 'rounded-lg';  // To make the image corners rounded
+                playlistImageContainer.appendChild(playlistImage);
+        
+                const playlistTextContainer = document.createElement('div');
+                playlistTextContainer.className = 'w-2/3 flex items-center';
+        
+                const playlistName = document.createElement('h2');
+                playlistName.textContent = playlist.name;
+                playlistName.className = 'ml-4 text-lg';  // Add some margin to the left of the text
+                playlistTextContainer.appendChild(playlistName);
+        
+                playlistDiv.appendChild(playlistImageContainer);
+                playlistDiv.appendChild(playlistTextContainer);
+        
                 topPlaylistsContainer.appendChild(playlistDiv);
             });
         },
