@@ -246,7 +246,7 @@ function fetchUserLibrary() {
             // Populate the top-playlists section with the top 6 playlists
             topPlaylists.forEach(playlist => {
                 const playlistDiv = document.createElement('div');
-                playlistDiv.className = 'playlist-item bg-white shadow rounded-lg flex p-4';
+                playlistDiv.className = 'playlist-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex';
         
                 const playlistImageContainer = document.createElement('div');
                 playlistImageContainer.className = 'w-1/3';
@@ -254,7 +254,7 @@ function fetchUserLibrary() {
                 const playlistImage = document.createElement('img');
                 playlistImage.src = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
                 playlistImage.alt = `${playlist.name} cover image`;
-                playlistImage.className = 'rounded-lg';  // To make the image corners rounded
+                playlistImage.className = 'rounded-l-lg w-20 h-20 object-cover';
                 playlistImageContainer.appendChild(playlistImage);
         
                 const playlistTextContainer = document.createElement('div');
@@ -262,7 +262,7 @@ function fetchUserLibrary() {
         
                 const playlistName = document.createElement('h2');
                 playlistName.textContent = playlist.name;
-                playlistName.className = 'ml-4 text-lg';  // Add some margin to the left of the text
+                playlistName.className = 'text-lg text-left p-2';
                 playlistTextContainer.appendChild(playlistName);
         
                 playlistDiv.appendChild(playlistImageContainer);
@@ -276,6 +276,73 @@ function fetchUserLibrary() {
         }
     });
 }
+
+// function fetchUserLibrary() {
+//     // Mock data representing the response from the Spotify API
+//     const mockResponse = {
+//         items: [
+//             {
+//                 name: "Chill Vibes",
+//                 images: [{ url: "assets/default-image.png" }]
+//             },
+//             {
+//                 name: "Workout Playlist",
+//                 images: [{ url: "assets/default-image.png" }]
+//             },
+//             {
+//                 name: "Top Hits",
+//                 images: [{ url: "assets/default-image.png" }]
+//             },
+//             {
+//                 name: "Morning Motivation",
+//                 images: [{ url: "assets/default-image.png" }]
+//             },
+//             {
+//                 name: "Rainy Day",
+//                 images: [{ url: "assets/rainy-day.png" }]
+//             },
+//             {
+//                 name: "Sleep Sounds",
+//                 images: [{ url: "assets/sleep-sounds.png" }]
+//             }
+//         ]
+//     };
+
+//     // Extract the top 6 playlists (or less if there are fewer than 6)
+//     const topPlaylists = mockResponse.items.slice(0, 6);
+
+//     // Get the top-playlists container
+//     const topPlaylistsContainer = document.querySelector('.top-playlists');
+//     topPlaylistsContainer.innerHTML = ''; // Clear existing content
+
+//     // Populate the top-playlists section with the top 6 playlists
+//     topPlaylists.forEach(playlist => {
+//         const playlistDiv = document.createElement('div');
+//         playlistDiv.className = 'playlist-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex';
+
+//         const playlistImageContainer = document.createElement('div');
+//         playlistImageContainer.className = 'w-1/3';
+
+//         const playlistImage = document.createElement('img');
+//         playlistImage.src = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
+//         playlistImage.alt = `${playlist.name} cover image`;
+//         playlistImage.className = 'rounded-l-lg w-20 h-20 object-cover';
+//         playlistImageContainer.appendChild(playlistImage);
+
+//         const playlistTextContainer = document.createElement('div');
+//         playlistTextContainer.className = 'w-2/3 flex items-center';
+
+//         const playlistName = document.createElement('h2');
+//         playlistName.textContent = playlist.name;
+//         playlistName.className = 'text-lg text-left p-2';
+//         playlistTextContainer.appendChild(playlistName);
+
+//         playlistDiv.appendChild(playlistImageContainer);
+//         playlistDiv.appendChild(playlistTextContainer);
+
+//         topPlaylistsContainer.appendChild(playlistDiv);
+//     });
+// }
 
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
@@ -678,6 +745,7 @@ function initializeLoggedInUser() {
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function() {
         initializeLoggedInUser();
+        // fetchUserLibrary();
     });
 } else {  // DOM is already loaded
     initializeLoggedInUser();
