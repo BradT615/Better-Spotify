@@ -235,6 +235,30 @@ function fetchUserLibrary() {
         },
         success: function(response) {
             displayUserLibrary(response.items);
+
+            // Extract the top 6 playlists
+            const topPlaylists = response.items.slice(0, 6);
+
+            // Get the top-playlists container
+            const topPlaylistsContainer = document.querySelector('.top-playlists');
+            topPlaylistsContainer.innerHTML = ''; // Clear existing content
+
+            // Populate the top-playlists section with the top 6 playlists
+            topPlaylists.forEach(playlist => {
+                const playlistDiv = document.createElement('div');
+                playlistDiv.className = 'playlist-item';
+
+                const playlistName = document.createElement('h2');
+                playlistName.textContent = playlist.name;
+                playlistDiv.appendChild(playlistName);
+
+                const playlistImage = document.createElement('img');
+                playlistImage.src = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
+                playlistImage.alt = `${playlist.name} cover image`;
+                playlistDiv.appendChild(playlistImage);
+
+                topPlaylistsContainer.appendChild(playlistDiv);
+            });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Error fetching user playlists:", errorThrown);
