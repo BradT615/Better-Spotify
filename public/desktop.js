@@ -258,11 +258,11 @@ function fetchUserLibrary() {
                 playlistImageContainer.appendChild(playlistImage);
         
                 const playlistTextContainer = document.createElement('div');
-                playlistTextContainer.className = 'w-2/3 flex items-center';
+                playlistTextContainer.className = 'w-full flex items-center';
         
                 const playlistName = document.createElement('h2');
                 playlistName.textContent = playlist.name;
-                playlistName.className = 'text-lg text-left p-2';
+                playlistName.className = 'text-lg font-bold text-left p-2';
                 playlistTextContainer.appendChild(playlistName);
         
                 playlistDiv.appendChild(playlistImageContainer);
@@ -330,11 +330,11 @@ function fetchUserLibrary() {
 //         playlistImageContainer.appendChild(playlistImage);
 
 //         const playlistTextContainer = document.createElement('div');
-//         playlistTextContainer.className = 'w-2/3 flex items-center';
+//         playlistTextContainer.className = 'w-full flex items-center';
 
 //         const playlistName = document.createElement('h2');
 //         playlistName.textContent = playlist.name;
-//         playlistName.className = 'text-lg text-left p-2';
+//         playlistName.className = 'text-lg font-bold text-left p-2';
 //         playlistTextContainer.appendChild(playlistName);
 
 //         playlistDiv.appendChild(playlistImageContainer);
