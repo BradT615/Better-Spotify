@@ -249,7 +249,7 @@ function fetchUserLibrary() {
                 playlistDiv.className = 'playlist-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex';
         
                 const playlistImageContainer = document.createElement('div');
-                playlistImageContainer.className = 'w-1/3';
+                playlistImageContainer.className = 'w-28';
         
                 const playlistImage = document.createElement('img');
                 playlistImage.src = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
@@ -294,16 +294,16 @@ function fetchUserLibrary() {
 //                 images: [{ url: "assets/default-image.png" }]
 //             },
 //             {
-//                 name: "Morning Motivation",
+//                 name: "Morning Motivation long name test",
 //                 images: [{ url: "assets/default-image.png" }]
 //             },
 //             {
 //                 name: "Rainy Day",
-//                 images: [{ url: "assets/rainy-day.png" }]
+//                 images: [{ url: "assets/default-image.png" }]
 //             },
 //             {
 //                 name: "Sleep Sounds",
-//                 images: [{ url: "assets/sleep-sounds.png" }]
+//                 images: [{ url: "assets/default-image.png" }]
 //             }
 //         ]
 //     };
@@ -321,7 +321,7 @@ function fetchUserLibrary() {
 //         playlistDiv.className = 'playlist-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex';
 
 //         const playlistImageContainer = document.createElement('div');
-//         playlistImageContainer.className = 'w-1/3';
+//         playlistImageContainer.className = 'w-28';
 
 //         const playlistImage = document.createElement('img');
 //         playlistImage.src = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
