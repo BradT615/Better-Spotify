@@ -239,12 +239,12 @@ function fetchUserLibrary() {
             // Extract the top 6 playlists and pass to displayTopPlaylists function
             const topPlaylists = response.items.slice(0, 6);
             displayTopPlaylists(topPlaylists);
-            fetchTopSongs();
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Error fetching user playlists:", errorThrown);
         }
     });
+    fetchTopSongs();
 }
 
 function displayTopPlaylists(topPlaylists) {
