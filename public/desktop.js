@@ -344,6 +344,56 @@ function fetchUserLibrary() {
 //     });
 // }
 
+function fetchTopSongs() {
+    $.ajax({
+        url: 'https://api.spotify.com/v1/me/top/tracks?limit=5',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        success: function(response) {
+            // Get the top-songs container
+            const topSongsContainer = document.querySelector('.top-songs');
+            topSongsContainer.innerHTML = ''; // Clear existing content
+
+            // Populate the top-songs section with the top songs
+            response.items.forEach(song => {
+                const songDiv = document.createElement('div');
+                songDiv.className = 'song-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex';
+
+                const songImageContainer = document.createElement('div');
+                songImageContainer.className = 'w-28';
+
+                const songImage = document.createElement('img');
+                songImage.src = song.album.images.length > 0 ? song.album.images[0].url : 'assets/default-image.png';
+                songImage.alt = `${song.name} cover image`;
+                songImage.className = 'rounded-l-lg w-20 h-20 object-cover';
+                songImageContainer.appendChild(songImage);
+
+                const songTextContainer = document.createElement('div');
+                songTextContainer.className = 'w-full flex items-center';
+
+                const songName = document.createElement('h2');
+                songName.textContent = song.name;
+                songName.className = 'text-lg font-bold text-left p-2';
+                songTextContainer.appendChild(songName);
+
+                const songArtist = document.createElement('p');
+                songArtist.textContent = song.artists.map(artist => artist.name).join(', ');
+                songArtist.className = 'text-sm text-gray-500 p-2';
+                songTextContainer.appendChild(songArtist);
+
+                songDiv.appendChild(songImageContainer);
+                songDiv.appendChild(songTextContainer);
+
+                topSongsContainer.appendChild(songDiv);
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching top songs:", errorThrown);
+        }
+    });
+}
+
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
     document.getElementById('playlist-details').classList.add('hidden');
