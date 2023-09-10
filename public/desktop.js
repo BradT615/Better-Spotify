@@ -796,6 +796,8 @@ if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function() {
         initializeLoggedInUser();
         // fetchUserLibrary();
+        fetchTopSongs();
+        
     });
 } else {  // DOM is already loaded
     initializeLoggedInUser();
