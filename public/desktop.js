@@ -288,6 +288,7 @@ function fetchTopSongs() {
             'Authorization': `Bearer ${token}`
         },
         success: function(response) {
+            console.log(response);
             // Get the top-songs container
             const topSongsContainer = document.querySelector('.top-songs');
             topSongsContainer.innerHTML = ''; // Clear existing content
