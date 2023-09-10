@@ -288,19 +288,9 @@ function fetchTopSongs() {
             'Authorization': `Bearer ${token}`
         },
         success: function(response) {
-            console.log(response);
 
-            // Step 1: Check the structure of the first item in the response
-            console.log(response.items[0]);
-
-            // Get the top-songs container
-            const topSongsContainer = document.querySelector('.top-songs');
+            const topSongsContainer = document.querySelector('#top-songs');
             topSongsContainer.innerHTML = ''; // Clear existing content
-
-            // Step 3: Manually add a test div to the container
-            const testDiv = document.createElement('div');
-            testDiv.textContent = "Test";
-            topSongsContainer.appendChild(testDiv);
 
             // Populate the top-songs section with the top songs
             response.items.forEach(song => {
@@ -331,9 +321,6 @@ function fetchTopSongs() {
 
                 songDiv.appendChild(songImageContainer);
                 songDiv.appendChild(songTextContainer);
-
-                // Step 2: Log the created songDiv to the console before appending it
-                console.log(songDiv);
 
                 topSongsContainer.appendChild(songDiv);
             });
