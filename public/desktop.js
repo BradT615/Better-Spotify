@@ -282,6 +282,8 @@ function displayTopPlaylists(topPlaylists) {
         // Adding click event listener to play the playlist when the item is clicked
         playlistDiv.addEventListener('click', () => {
             playPlaylist(playlist.id);
+            document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('playlist-details').classList.remove('hidden');
         });
     });
 }
