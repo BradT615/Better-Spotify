@@ -284,6 +284,12 @@ function displayTopPlaylists(topPlaylists) {
         playButtonDiv.addEventListener('click', (event) => {
             event.stopPropagation(); // Prevents triggering the playlistDiv click event
             playPlaylist(playlist.id);
+            // Toggle the play button image
+            if (playButtonImage.src.endsWith('playCircle.png')) {
+                playButtonImage.src = 'assets/pauseCircle.png';
+            } else {
+                playButtonImage.src = 'assets/playCircle.png';
+            }
         });
 
         playlistDiv.appendChild(playButtonDiv);
