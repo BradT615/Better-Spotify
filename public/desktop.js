@@ -278,6 +278,11 @@ function displayTopPlaylists(topPlaylists) {
         playlistDiv.appendChild(playlistTextContainer);
 
         topPlaylistsContainer.appendChild(playlistDiv);
+
+        // Adding click event listener to play the playlist when the item is clicked
+        playlistDiv.addEventListener('click', () => {
+            playPlaylist(playlist.id);
+        });
     });
 }
 
@@ -331,7 +336,6 @@ function fetchTopSongs() {
         }
     });
 }
-
 
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
