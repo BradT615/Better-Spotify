@@ -283,45 +283,41 @@ function displayTopPlaylists(topPlaylists) {
 
 function fetchTopSongs() {
     $.ajax({
-        url: 'https://api.spotify.com/v1/me/top/tracks?limit=6',
+        url: 'https://api.spotify.com/v1/me/top/tracks?limit=4',
         headers: {
             'Authorization': `Bearer ${token}`
         },
         success: function(response) {
-
             const topSongsContainer = document.querySelector('#top-songs');
             topSongsContainer.innerHTML = ''; // Clear existing content
 
             // Populate the top-songs section with the top songs
-            response.items.forEach(song => {
+            response.items.forEach((song, index) => {
                 const songDiv = document.createElement('div');
-                songDiv.className = 'song-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex';
+                songDiv.className = 'song-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex' +
+                                    (index === 2 ? ' max-lg:hidden' : '') +
+                                    (index === 3 ? ' max-xl:hidden' : '');
 
-                const songImageContainer = document.createElement('div');
-                songImageContainer.className = 'w-28';
+                const songDetailContainer = document.createElement('div');
+                songDetailContainer.className = 'w-full flex flex-col p-4 gap-4';
 
                 const songImage = document.createElement('img');
                 songImage.src = song.album.images.length > 0 ? song.album.images[0].url : 'assets/default-image.png';
                 songImage.alt = `${song.name} cover image`;
-                songImage.className = 'rounded-l-lg w-20 h-20 object-cover';
-                songImageContainer.appendChild(songImage);
-
-                const songTextContainer = document.createElement('div');
-                songTextContainer.className = 'w-full flex items-center';
+                songImage.className = 'w-38 rounded-md';
+                songDetailContainer.appendChild(songImage);
 
                 const songName = document.createElement('h2');
                 songName.textContent = song.name;
-                songName.className = 'text-lg font-bold text-left p-2';
-                songTextContainer.appendChild(songName);
+                songName.className = 'text-xl font-bold text-left truncate pr-1';
+                songDetailContainer.appendChild(songName);
 
                 const songArtist = document.createElement('p');
                 songArtist.textContent = song.artists.map(artist => artist.name).join(', ');
-                songArtist.className = 'text-sm text-gray-500 p-2';
-                songTextContainer.appendChild(songArtist);
+                songArtist.className = 'text-md text-gray-500 text-left truncate pr-1';
+                songDetailContainer.appendChild(songArtist);
 
-                songDiv.appendChild(songImageContainer);
-                songDiv.appendChild(songTextContainer);
-
+                songDiv.appendChild(songDetailContainer);
                 topSongsContainer.appendChild(songDiv);
             });
         },
@@ -330,6 +326,7 @@ function fetchTopSongs() {
         }
     });
 }
+
 
 
 function showHomeScreen() {
@@ -733,7 +730,6 @@ function initializeLoggedInUser() {
 if (document.readyState === "loading") {
     document.addEventListener("DOMContentLoaded", function() {
         initializeLoggedInUser();
-        // fetchUserLibrary();
     });
 } else {  // DOM is already loaded
     initializeLoggedInUser();
