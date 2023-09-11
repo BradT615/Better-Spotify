@@ -592,10 +592,6 @@ video {
   left: 0px;
 }
 
-.right-1 {
-  right: 0.25rem;
-}
-
 .right-2 {
   right: 0.5rem;
 }
@@ -801,10 +797,6 @@ video {
 
 .w-24 {
   width: 6rem;
-}
-
-.w-28 {
-  width: 7rem;
 }
 
 .w-4\/5 {
@@ -1275,14 +1267,6 @@ input[type="range"]:hover::-moz-range-thumb,
 
 .custom-shadow {
   box-shadow: 0px 5px 10px 0px #000;
-}
-
-.hover\:h-16:hover {
-  height: 4rem;
-}
-
-.hover\:w-16:hover {
-  width: 4rem;
 }
 
 .hover\:scale-110:hover {
