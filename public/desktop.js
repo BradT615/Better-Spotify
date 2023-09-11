@@ -249,7 +249,7 @@ function fetchUserLibrary() {
 
 function displayTopPlaylists(topPlaylists) {
     // Get the top-playlists container
-    const topPlaylistsContainer = document.querySelector('.top-playlists');
+    const topPlaylistsContainer = document.querySelector('#top-playlists');
     topPlaylistsContainer.innerHTML = ''; // Clear existing content
 
     // Populate the top-playlists section with the top 6 playlists
