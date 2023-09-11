@@ -312,7 +312,7 @@ function displayTopPlaylists(topPlaylists) {
 
 function fetchTopSongs() {
     $.ajax({
-        url: 'https://api.spotify.com/v1/me/top/tracks?limit=4',
+        url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=4',
         headers: {
             'Authorization': `Bearer ${token}`
         },
