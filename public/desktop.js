@@ -249,15 +249,17 @@ function fetchUserLibrary() {
 
 function displayTopPlaylists(topPlaylists) {
     // Get the top-playlists container
-    const topPlaylistsContainer = document.querySelector('#top-playlists');
+    const topPlaylistsContainer = document.querySelector('.top-playlists');
     topPlaylistsContainer.innerHTML = ''; // Clear existing content
 
     // Populate the top-playlists section with the top 6 playlists
     topPlaylists.forEach(playlist => {
         const playlistDiv = document.createElement('div');
-        playlistDiv.className = 'playlist-item group bg-hover-custom hover:bg-active-custom shadow rounded-md flex items-center relative';
+        playlistDiv.className = 'playlist-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex';
 
         const playlistImageContainer = document.createElement('div');
+        playlistImageContainer.className = 'w-28';
+
         const playlistImage = document.createElement('img');
         playlistImage.src = playlist.images.length > 0 ? playlist.images[0].url : 'assets/default-image.png';
         playlistImage.alt = `${playlist.name} cover image`;
@@ -265,34 +267,17 @@ function displayTopPlaylists(topPlaylists) {
         playlistImageContainer.appendChild(playlistImage);
 
         const playlistTextContainer = document.createElement('div');
-        playlistTextContainer.className = 'w-1/2';
+        playlistTextContainer.className = 'w-full flex items-center';
+
         const playlistName = document.createElement('h2');
         playlistName.textContent = playlist.name;
         playlistName.className = 'text-lg font-bold text-left p-2';
         playlistTextContainer.appendChild(playlistName);
 
-        // Creating play button div and image element
-        const playButtonDiv = document.createElement('div');
-        playButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2 hidden group-hover:block';
-        const playButtonImage = document.createElement('img');
-        playButtonImage.src = 'assets/playCircle.png';
-        playButtonImage.className = 'w-14 transition-transform transform origin-center hover:scale-110';
-        playButtonImage.alt = 'play/pause';
-        playButtonDiv.appendChild(playButtonImage);
+        playlistDiv.appendChild(playlistImageContainer);
+        playlistDiv.appendChild(playlistTextContainer);
 
-        // Adding click event listener to the play button
-        // playButtonDiv.addEventListener('click', (event) => {
-        //     event.stopPropagation(); // Prevents triggering the playlistDiv click event
-        //     playPlaylist(playlist.id);
-        //     // Toggle the play button image
-        //     if (playButtonImage.src.endsWith('playCircle.png')) {
-        //         playButtonImage.src = 'assets/pauseCircle.png';
-        //     } else {
-        //         playButtonImage.src = 'assets/playCircle.png';
-        //     }
-        // });
-
-        playlistDiv.appendChild(playButtonDiv);
+        topPlaylistsContainer.appendChild(playlistDiv);
 
         // Adding click event listener to play the playlist and populate details when the item is clicked
         playlistDiv.addEventListener('click', () => {
