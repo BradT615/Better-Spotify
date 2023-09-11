@@ -279,11 +279,14 @@ function displayTopPlaylists(topPlaylists) {
 
         topPlaylistsContainer.appendChild(playlistDiv);
 
-        // Adding click event listener to play the playlist when the item is clicked
+        // Adding click event listener to play the playlist and populate details when the item is clicked
         playlistDiv.addEventListener('click', () => {
             playPlaylist(playlist.id);
             document.getElementById('home-screen').classList.add('hidden');
             document.getElementById('playlist-details').classList.remove('hidden');
+
+            // Calling populatePlaylistDetails function with necessary parameters
+            populatePlaylistDetails(playlist.id, playlist.name, playlist.images[0]?.url, playlist.owner.display_name);
         });
     });
 }
