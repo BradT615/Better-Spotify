@@ -272,27 +272,31 @@ function displayTopPlaylists(topPlaylists) {
         playlistTextContainer.appendChild(playlistName);
 
         // Creating play button div and image element
-        // const playButtonDiv = document.createElement('div');
-        // playButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2 hidden group-hover:block';
-        // const playButtonImage = document.createElement('img');
-        // playButtonImage.src = 'assets/playCircle.png';
-        // playButtonImage.className = 'w-14 transition-transform transform origin-center hover:scale-110';
-        // playButtonImage.alt = 'play/pause';
-        // playButtonDiv.appendChild(playButtonImage);
+        const playButtonDiv = document.createElement('div');
+        playButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2 hidden group-hover:block';
+        const playButtonImage = document.createElement('img');
+        playButtonImage.src = 'assets/playCircle.png';
+        playButtonImage.className = 'w-14 transition-transform transform origin-center hover:scale-110';
+        playButtonImage.alt = 'play/pause';
+        playButtonDiv.appendChild(playButtonImage);
 
-        // // Adding click event listener to the play button
-        // playButtonDiv.addEventListener('click', (event) => {
-        //     event.stopPropagation(); // Prevents triggering the playlistDiv click event
-        //     playPlaylist(playlist.id);
-        //     // Toggle the play button image
-        //     if (playButtonImage.src.endsWith('playCircle.png')) {
-        //         playButtonImage.src = 'assets/pauseCircle.png';
-        //     } else {
-        //         playButtonImage.src = 'assets/playCircle.png';
-        //     }
-        // });
+        playlistDiv.appendChild(playlistImageContainer);
+        playlistDiv.appendChild(playlistTextContainer);
+        playlistDiv.appendChild(playButtonDiv);
 
-        // playlistDiv.appendChild(playButtonDiv);
+        topPlaylistsContainer.appendChild(playlistDiv);
+
+        // Adding click event listener to the play button
+        playButtonDiv.addEventListener('click', (event) => {
+            event.stopPropagation(); // Prevents triggering the playlistDiv click event
+            playPlaylist(playlist.id);
+            // Toggle the play button image
+            if (playButtonImage.src.endsWith('playCircle.png')) {
+                playButtonImage.src = 'assets/pauseCircle.png';
+            } else {
+                playButtonImage.src = 'assets/playCircle.png';
+            }
+        });
 
         // Adding click event listener to play the playlist and populate details when the item is clicked
         playlistDiv.addEventListener('click', () => {
