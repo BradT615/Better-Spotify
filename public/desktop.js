@@ -325,8 +325,7 @@ function fetchTopSongs() {
             response.items.forEach((song, index) => {
                 const songDiv = document.createElement('div');
                 songDiv.className = 'song-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex' +
-                                    (index === 2 ? ' max-lg:hidden' : '') +
-                                    (index === 3 ? ' max-xl:hidden' : '');
+                (index === 3 ? ' lg:hidden xl:block' : '');
 
                 const songDetailContainer = document.createElement('div');
                 songDetailContainer.className = 'w-full flex flex-col p-4 gap-4';
@@ -376,8 +375,7 @@ function fetchTopArtists() {
             response.items.forEach((artist, index) => {
                 const artistDiv = document.createElement('div');
                 artistDiv.className = 'artist-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex' +
-                                    (index === 2 ? ' max-lg:hidden' : '') +
-                                    (index === 3 ? ' max-xl:hidden' : '');
+                (index === 3 ? ' lg:hidden xl:block' : '');
 
                 const artistDetailContainer = document.createElement('div');
                 artistDetailContainer.className = 'w-full flex flex-col p-4 gap-4';
@@ -402,7 +400,6 @@ function fetchTopArtists() {
         }
     });
 }
-
 
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
