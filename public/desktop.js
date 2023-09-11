@@ -319,6 +319,11 @@ function fetchTopSongs() {
 
                 songDiv.appendChild(songDetailContainer);
                 topSongsContainer.appendChild(songDiv);
+
+                // Adding click event listener to play the song when the item is clicked
+                songDiv.addEventListener('click', () => {
+                    playSong(`spotify:track:${song.id}`);
+                });
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -326,7 +331,6 @@ function fetchTopSongs() {
         }
     });
 }
-
 
 
 function showHomeScreen() {
