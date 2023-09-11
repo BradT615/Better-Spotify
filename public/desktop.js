@@ -245,6 +245,7 @@ function fetchUserLibrary() {
         }
     });
     fetchTopSongs();
+    fetchTopArtists();
 }
 
 function displayTopPlaylists(topPlaylists) {
@@ -360,6 +361,48 @@ function fetchTopSongs() {
         }
     });
 }
+
+function fetchTopArtists() {
+    $.ajax({
+        url: 'https://api.spotify.com/v1/me/top/artists?time_range=short_term&limit=4',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        success: function(response) {
+            const topArtistsContainer = document.querySelector('#top-artists');
+            topArtistsContainer.innerHTML = ''; // Clear existing content
+
+            // Populate the top-artists section with the top artists
+            response.items.forEach((artist, index) => {
+                const artistDiv = document.createElement('div');
+                artistDiv.className = 'artist-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex' +
+                                    (index === 2 ? ' max-lg:hidden' : '') +
+                                    (index === 3 ? ' max-xl:hidden' : '');
+
+                const artistDetailContainer = document.createElement('div');
+                artistDetailContainer.className = 'w-full flex flex-col p-4 gap-4';
+
+                const artistImage = document.createElement('img');
+                artistImage.src = artist.images.length > 0 ? artist.images[0].url : 'assets/default-image.png';
+                artistImage.alt = `${artist.name} cover image`;
+                artistImage.className = 'w-38 rounded-md';
+                artistDetailContainer.appendChild(artistImage);
+
+                const artistName = document.createElement('h2');
+                artistName.textContent = artist.name;
+                artistName.className = 'text-xl font-bold text-left truncate pr-1';
+                artistDetailContainer.appendChild(artistName);
+
+                artistDiv.appendChild(artistDetailContainer);
+                topArtistsContainer.appendChild(artistDiv);
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching top artists:", errorThrown);
+        }
+    });
+}
+
 
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
