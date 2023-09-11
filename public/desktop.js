@@ -281,17 +281,16 @@ function displayTopPlaylists(topPlaylists) {
         playButtonDiv.appendChild(playButtonImage);
 
         // Adding click event listener to the play button
-        playButtonDiv.addEventListener('click', async (event) => {
-            event.stopPropagation(); // Prevents triggering the playlistDiv click event
-            await playPlaylist(playlist.id);
-        
-            // Toggle the play button image
-            if (playButtonImage.src.endsWith('playCircle.png')) {
-                playButtonImage.src = 'assets/pauseCircle.png';
-            } else {
-                playButtonImage.src = 'assets/playCircle.png';
-            }
-        });        
+        // playButtonDiv.addEventListener('click', (event) => {
+        //     event.stopPropagation(); // Prevents triggering the playlistDiv click event
+        //     playPlaylist(playlist.id);
+        //     // Toggle the play button image
+        //     if (playButtonImage.src.endsWith('playCircle.png')) {
+        //         playButtonImage.src = 'assets/pauseCircle.png';
+        //     } else {
+        //         playButtonImage.src = 'assets/playCircle.png';
+        //     }
+        // });
 
         playlistDiv.appendChild(playButtonDiv);
 
