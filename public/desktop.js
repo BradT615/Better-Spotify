@@ -303,6 +303,7 @@ function displayTopPlaylists(topPlaylists) {
         playlistDiv.addEventListener('click', () => {
             playPlaylist(playlist.id);
             document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('artist-details').classList.add('hidden');
             document.getElementById('playlist-details').classList.remove('hidden');
 
             // Calling populatePlaylistDetails function with necessary parameters
@@ -408,6 +409,7 @@ function fetchTopArtists() {
 
 function fetchAndDisplayArtistDetails(artist) {
     document.getElementById('home-screen').classList.add('hidden');
+    document.getElementById('playlist-details').classList.add('hidden');
     document.getElementById('artist-details').classList.remove('hidden');
     
     // Populate artist details section with data from clicked artist
@@ -487,6 +489,7 @@ function displayUserLibrary(playlists) {
 
             // Hide home screen and show playlist details
             document.getElementById('home-screen').classList.add('hidden');
+            document.getElementById('artist-details').classList.add('hidden');
             document.getElementById('playlist-details').classList.remove('hidden');
         
             // Hide all box-icons
