@@ -71,7 +71,7 @@
         </svg>
     </div>
 
-    <div id="loggedin" class="max-h-screen bg-bg-custom" style="display: none;">
+    <div id="loggedin" class="max-h-screen select-none bg-bg-custom" style="display: none;">
 
         <div id="mobile" class="sm:hidden flex flex-col h-screen">
             <div id="user-profile" class="flex items-center justify-between px-4 py-2 fixed w-full">
@@ -149,7 +149,7 @@
                     <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
                     <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
                 </div>
-                <div class="flex items-center bg-bg-custom rounded-full relative" onclick="toggleDropdown()" id="userImage">
+                <div class="flex items-center bg-bg-custom rounded-full relative transition-transform transform origin-center hover:scale-105" onclick="toggleDropdown()" id="userImage">
                     <p id="user-name" class="text-lg font-bold pl-3 pr-2">Test Username</p>
                     <img class="user-image w-10 h-10 rounded-full m-1 cursor-pointer" src="assets/default-image.png">
                     
