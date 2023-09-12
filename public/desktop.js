@@ -623,6 +623,7 @@ document.getElementById('userImage').addEventListener('click', (event) => {
 });
 
 document.getElementById('logout-button').addEventListener('click', (event) => {
+    console.log('Logout button clicked');
     event.stopPropagation();
     if (player) {
         player.disconnect();
