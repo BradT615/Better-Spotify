@@ -622,7 +622,7 @@ document.getElementById('userImage').addEventListener('click', (event) => {
     toggleDropdown();
 });
 
-document.getElementById('logout-button').addEventListener('click', function(event) {
+document.getElementById('logout-button').addEventListener('click', (event) => {
     event.stopPropagation();
     if (player) {
         player.disconnect();
