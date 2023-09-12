@@ -415,7 +415,6 @@ function fetchAndDisplayArtistDetails(artist) {
     // Populate artist details section with data from clicked artist
     document.getElementById('artist-image').src = artist.images.length > 0 ? artist.images[0].url : 'assets/default-image.png';
     document.getElementById('artist-name').textContent = artist.name;
-    document.getElementById('artist-followers').textContent = `Followers: ${artist.followers.total}`;
 
     // Fetch and display the top songs of the artist
     $.ajax({
