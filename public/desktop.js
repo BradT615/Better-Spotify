@@ -622,14 +622,13 @@ document.getElementById('userImage').addEventListener('click', (event) => {
     toggleDropdown();
 });
 
-document.getElementById('logout-button').addEventListener('click', (event) => {
-    console.log('Logout button clicked');
-    event.stopPropagation();
+function handleLogoutClick() {
+    console.log('Inline logout handler called');
     if (player) {
         player.disconnect();
     }
     deleteUser();
-});
+}
 
 function initializeLoggedInUser() {
 
