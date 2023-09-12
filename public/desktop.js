@@ -618,21 +618,29 @@ function initializeLoggedInUser() {
 
             function toggleDropdown() {
                 document.getElementById('dropdownMenu').classList.toggle('hidden');
-              }
+            }
             
-              document.addEventListener('click', (event) => {
-                const dropdownMenu = document.getElementById('dropdownMenu');
-                const userImage = document.getElementById('userImage');
+            document.addEventListener('click', (event) => {
+            const dropdownMenu = document.getElementById('dropdownMenu');
+            const userImage = document.getElementById('userImage');
+        
+            if (!userImage.contains(event.target)) {
+                dropdownMenu.classList.add('hidden');
+            }
+            });
+        
+            document.getElementById('userImage').addEventListener('click', (event) => {
+            event.stopPropagation();
+            toggleDropdown();
+            });
+
+            document.getElementById('logout-button').addEventListener('click', function() {
+            if (player) {
+                player.disconnect();
+            }
+            deleteUser();
+        });
             
-                if (!userImage.contains(event.target)) {
-                  dropdownMenu.classList.add('hidden');
-                }
-              });
-            
-              document.getElementById('userImage').addEventListener('click', (event) => {
-                event.stopPropagation();
-                toggleDropdown();
-              });
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Error fetching user profile:", errorThrown);
