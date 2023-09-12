@@ -58,7 +58,7 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="auth.js"></script>
+    <!-- <script src="auth.js"></script> -->
     <link rel="stylesheet" href="output.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js" defer></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js" defer></script>
@@ -149,10 +149,24 @@
                     <img class="w-8 h-8" src="assets/logo-removebg.png" alt="logo">
                     <p class="text-2xl font-bold mx-4 spotify-text">Better Spotify</p>
                 </div>
-                <div class="flex items-center bg-bg-custom rounded-full">
-                    <p id="user-name" class="text-lg font-bold ml-3 mr-2 hidden sm:block">Test_Username</p>
-                    <img class="user-image w-10 h-10 rounded-full m-1" src="assets/default-image.png">
+                <div class="flex items-center bg-bg-custom rounded-full relative" onclick="toggleDropdown()" id="userImage">
+                    <p id="user-name" class="text-lg font-bold pl-3 pr-2">Test Username</p>
+                    <img class="user-image w-10 h-10 rounded-full m-1 cursor-pointer" src="assets/default-image.png">
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="dropdown-menu absolute hidden bg-table-header z-10 w-48 rounded-md top-full mt-4" id="dropdownMenu">
+                        <div role="menu" class="m-1">
+                            <a href="#" id="profileLink" class="block px-4 py-2 text-sm hover:bg-active-custom hover:rounded-md text-left" role="menuitem">Profile</a>
+                            <a href="#" class="block px-4 py-2 text-sm hover:bg-active-custom hover:rounded-md text-left" role="menuitem">Logout</a>
+                        </div>
+                    </div>
                 </div>
+                  
+                  <script>
+                    function toggleDropdown() {
+                      document.getElementById('dropdownMenu').classList.toggle('hidden');
+                    }
+                  </script>
             </header>
             
             <div class="flex gap-2 mx-2 grow overflow-y-auto">
@@ -261,6 +275,6 @@
     </div>
 
     <!-- <script src="mobile.js"></script> -->
-    <!-- <script src="desktop.js"></script> -->
+    <script src="desktop.js"></script>
 </body>
 </html>

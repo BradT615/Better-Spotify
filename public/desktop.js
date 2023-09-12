@@ -10,6 +10,9 @@ function updateProfile(data) {
     let imageUrl = data.images.length > 0 ? data.images[0].url : 'assets/default-image.png';
     document.getElementById('user-name').textContent = data.display_name;
     document.querySelectorAll('.user-image').forEach(img => img.src = imageUrl);
+    if (data.id) {
+        document.getElementById('profileLink').href = `https://open.spotify.com/user/${data.id}`;
+    }
 }
 
 function updateVolumeIcon(volumeValue) {
