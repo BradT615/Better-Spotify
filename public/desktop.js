@@ -393,6 +393,11 @@ function fetchTopArtists() {
 
                 artistDiv.appendChild(artistDetailContainer);
                 topArtistsContainer.appendChild(artistDiv);
+
+                // Adding click event listener to show artist details when the item is clicked
+                artistDiv.addEventListener('click', () => {
+                    fetchAndDisplayArtistDetails(artist);
+                });
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -401,9 +406,47 @@ function fetchTopArtists() {
     });
 }
 
+function fetchAndDisplayArtistDetails(artist) {
+    document.getElementById('home-screen').classList.add('hidden');
+    document.getElementById('artist-details').classList.remove('hidden');
+    
+    // Populate artist details section with data from clicked artist
+    document.getElementById('artist-image').src = artist.images.length > 0 ? artist.images[0].url : 'assets/default-image.png';
+    document.getElementById('artist-name').textContent = artist.name;
+    document.getElementById('artist-genres').textContent = artist.genres.join(', ');
+
+    // Fetch and display the top songs of the artist
+    $.ajax({
+        url: `https://api.spotify.com/v1/artists/${artist.id}/top-tracks?market=US`,
+        headers: {
+            'Authorization': `Bearer ${token}`
+        },
+        success: function(response) {
+            const artistSongsContainer = document.getElementById('artist-albums');
+            artistSongsContainer.innerHTML = ''; // Clear existing content
+
+            response.tracks.forEach((track, index) => {
+                const trackDiv = document.createElement('div');
+                trackDiv.className = 'track-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex p-4 gap-4';
+                
+                const trackName = document.createElement('h2');
+                trackName.textContent = track.name;
+                trackName.className = 'text-xl font-bold text-left truncate pr-1';
+                trackDiv.appendChild(trackName);
+
+                artistSongsContainer.appendChild(trackDiv);
+            });
+        },
+        error: function(jqXHR, textStatus, errorThrown) {
+            console.error("Error fetching top songs of the artist:", errorThrown);
+        }
+    });
+}
+
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
     document.getElementById('playlist-details').classList.add('hidden');
+    document.getElementById('artist-details').classList.add('hidden');
 }
 
 let selectedPlaylistDiv = null;
