@@ -604,6 +604,31 @@ document.querySelector('.progress-container').addEventListener('click', (e) => {
     });
 });
 
+function toggleDropdown() {
+    document.getElementById('dropdownMenu').classList.toggle('hidden');
+}
+
+document.addEventListener('click', (event) => {
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const userImage = document.getElementById('userImage');
+
+    if (!userImage.contains(event.target)) {
+        dropdownMenu.classList.add('hidden');
+    }
+});
+
+document.getElementById('userImage').addEventListener('click', (event) => {
+    event.stopPropagation();
+    toggleDropdown();
+});
+
+document.getElementById('logout-button').addEventListener('click', function() {
+    if (player) {
+        player.disconnect();
+    }
+    deleteUser();
+});
+
 function initializeLoggedInUser() {
 
     // Fetch user profile and update display
@@ -615,32 +640,6 @@ function initializeLoggedInUser() {
         success: function(response) {
             const data = typeof response === 'string' ? JSON.parse(response) : response;
             updateProfile(data);
-
-            function toggleDropdown() {
-                document.getElementById('dropdownMenu').classList.toggle('hidden');
-            }
-            
-            document.addEventListener('click', (event) => {
-            const dropdownMenu = document.getElementById('dropdownMenu');
-            const userImage = document.getElementById('userImage');
-        
-            if (!userImage.contains(event.target)) {
-                dropdownMenu.classList.add('hidden');
-            }
-            });
-        
-            document.getElementById('userImage').addEventListener('click', (event) => {
-            event.stopPropagation();
-            toggleDropdown();
-            });
-
-            document.getElementById('logout-button').addEventListener('click', function() {
-            if (player) {
-                player.disconnect();
-            }
-            deleteUser();
-        });
-            
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.error("Error fetching user profile:", errorThrown);
