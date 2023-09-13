@@ -335,7 +335,7 @@ function fetchTopSongs() {
                 const songImage = document.createElement('img');
                 songImage.src = song.album.images.length > 0 ? song.album.images[0].url : 'assets/default-image.png';
                 songImage.alt = `${song.name} cover image`;
-                songImage.className = 'w-38 rounded-md';
+                songImage.className = 'w-38 rounded-md shadow-md';
                 songDetailContainer.appendChild(songImage);
 
                 const songName = document.createElement('h2');
@@ -385,7 +385,7 @@ function fetchTopArtists() {
                 const artistImage = document.createElement('img');
                 artistImage.src = artist.images.length > 0 ? artist.images[0].url : 'assets/default-image.png';
                 artistImage.alt = `${artist.name} cover image`;
-                artistImage.className = 'w-38 rounded-md';
+                artistImage.className = 'w-38 rounded-full shadow-md';
                 artistDetailContainer.appendChild(artistImage);
 
                 const artistName = document.createElement('h2');
