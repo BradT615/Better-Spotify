@@ -275,18 +275,18 @@ function displayTopPlaylists(topPlaylists) {
 
         // Creating play button div and image element
         const playButtonDiv = document.createElement('div');
-        playButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2 group-hover:block';
+        playButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2 hidden group-hover:block';
         const playButtonImage = document.createElement('img');
-        playButtonImage.src = 'assets/bluePlay.png';
+        playButtonImage.src = 'assets/playCircle.png';
         playButtonImage.className = 'w-14 transition-transform transform origin-center hover:scale-110';
         playButtonImage.alt = 'play button';
         playButtonDiv.appendChild(playButtonImage);
 
         // Creating pause button div and image element
         const pauseButtonDiv = document.createElement('div');
-        pauseButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2 hidden';
+        pauseButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2';
         const pauseButtonImage = document.createElement('img');
-        pauseButtonImage.src = 'assets/bluePause.png';
+        pauseButtonImage.src = 'assets/pauseCircle.png';
         pauseButtonImage.className = 'w-14 transition-transform transform origin-center hover:scale-110';
         pauseButtonImage.alt = 'pause button';
         pauseButtonDiv.appendChild(pauseButtonImage);
