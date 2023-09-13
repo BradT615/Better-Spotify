@@ -84,7 +84,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
         success: function(response) {
             // Update playlist image, name, and owner
             const playlistContainer = document.querySelector('.playlist-container');
-            playlistContainer.style.overflowY = 'overlay';
+            playlistContainer.classList.add('overflow-y-auto');
             const playlistImage = playlistContainer.querySelector('#playlist-image');
             const playlistNameElement = playlistContainer.querySelector('#playlist-name');
             const playlistOwner = playlistContainer.querySelector('#playlist-owner');
@@ -99,21 +99,17 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
             // Create table and headers
             let table = document.createElement('table');
-            table.classList.add('text-left', 'playlist-table');
-            table.style.width = '100%';
-            table.style.boxSizing = 'border-box';
-
+            table.classList.add('text-left', 'playlist-table', 'w-full', 'box-border');
+            
             let thead = document.createElement('thead');
-            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header');
-            thead.style.minWidth = '100%';
-            thead.style.boxSizing = 'border-box';
+            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
 
             let tr = document.createElement('tr');
-            tr.style.margin = '0';
+            tr.classList.add('m-0');
 
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
-                th.style.margin = '0';
+                th.classList.add('m-0');
                 th.textContent = header;
             
                 if (header === '#') {
@@ -128,7 +124,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 if (header === 'Time') {
                     th.classList.add('relative', 'pr-3', 'bg-table-header');
                     let overlay = document.createElement('div');
-                    overlay.classList.add('absolute', 'top-0', 'bottom-0', 'w-2.5','bg-table-header', 'z-10');
+                    overlay.classList.add('absolute', 'top-0', 'bottom-0', 'w-2.5', 'bg-table-header', 'z-10');
                     overlay.style.right = '-10px';
                     th.appendChild(overlay);
                 }
@@ -154,23 +150,16 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 // Title (image + name)
                 let tdTitle = document.createElement('td');
                 let wrapperDiv = document.createElement('div');
-                wrapperDiv.style.display = 'flex';
-                wrapperDiv.style.alignItems = 'center'; 
-                wrapperDiv.style.width = '100%';
+                wrapperDiv.classList.add('flex', 'items-center', 'w-full');
 
                 let img = document.createElement('img');
                 img.src = item.track.album.images.length > 0 ? item.track.album.images[0].url : 'assets/default-image.png';
                 img.alt = item.track.name;
-                img.style.width = '40px';
-                img.style.marginRight = '10px';
+                img.classList.add('w-10', 'mr-2.5');
 
                 let span = document.createElement('span');
                 span.textContent = item.track.name;
-                span.style.flexGrow = '1';
-                span.style.overflow = 'hidden';
-                span.style.textOverflow = 'ellipsis';
-                span.style.whiteSpace = 'nowrap';
-                span.style.paddingRight = '10px';
+                span.classList.add('flex-grow', 'overflow-hidden', 'whitespace-nowrap', 'truncate', 'pr-2.5');
 
                 wrapperDiv.appendChild(img);
                 wrapperDiv.appendChild(span);
@@ -180,8 +169,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 // Album
                 let tdAlbum = document.createElement('td');
                 tdAlbum.textContent = item.track.album.name;
-                tdAlbum.style.paddingRight = '10px';
-                tdAlbum.classList.add('hidden', 'md:table-cell');
+                tdAlbum.classList.add('pr-2.5', 'hidden', 'md:table-cell');
                 tr.appendChild(tdAlbum);
 
                 // Date added
@@ -207,19 +195,14 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             playlistTracks.innerHTML = '';  // Clear out existing content
             playlistTracks.appendChild(table);
 
-            table.style.width = '100%';
+            table.classList.add('w-full');
             table.querySelectorAll('td, th').forEach(cell => {
-                cell.style.overflow = 'hidden';
-                cell.style.textOverflow = 'ellipsis';
-                cell.style.whiteSpace = 'nowrap';
-                cell.style.paddingTop = '5px';
-                cell.style.paddingBottom = '5px';
-                cell.style.boxSizing = 'border-box';
+                cell.classList.add('overflow-hidden', 'truncate', 'whitespace-nowrap', 'py-1.5', 'box-border');
             });
 
             // Apply max-width to other columns except the first one
             table.querySelectorAll('th:not(:first-child), td:not(:first-child)').forEach(cell => {
-                cell.style.maxWidth = '200px';  // Adjust this value as per your requirements
+                cell.classList.add('max-w-[200px]');
             });
         },
         error: function(jqXHR, textStatus, errorThrown) {
@@ -227,6 +210,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
         }
     });
 }
+
 
 function fetchUserLibrary() {
     $.ajax({
