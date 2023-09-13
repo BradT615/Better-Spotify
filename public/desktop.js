@@ -249,6 +249,8 @@ function fetchUserLibrary() {
     fetchTopArtists();
 }
 
+let previousPlayButtonImage = null;
+
 function displayTopPlaylists(topPlaylists) {
     // Get the top-playlists container
     const topPlaylistsContainer = document.querySelector('#top-playlists');
@@ -292,13 +294,26 @@ function displayTopPlaylists(topPlaylists) {
         playButtonDiv.addEventListener('click', (event) => {
             event.stopPropagation(); // Prevents triggering the playlistDiv click event
             playPlaylist(playlist.id);
+            
+            // Revert the previous play button to a play button if exists
+            if (previousPlayButtonImage && previousPlayButtonImage !== playButtonImage) {
+                previousPlayButtonImage.src = 'assets/bluePlay.png';
+                previousPlayButtonImage.parentElement.classList.add('hidden', 'group-hover:block');
+            }
+
             // Toggle the play button image
             if (playButtonImage.src.endsWith('bluePlay.png')) {
                 playButtonImage.src = 'assets/bluePause.png';
                 playButtonDiv.classList.remove('hidden', 'group-hover:block');
+                previousPlayButtonImage = playButtonImage; // Set this as the previous play button
             } else {
+                player.togglePlay().catch(error => {
+                    console.error("Error toggling playback:", error);
+                });
+                
                 playButtonImage.src = 'assets/bluePlay.png';
                 playButtonDiv.classList.add('hidden', 'group-hover:block');
+                previousPlayButtonImage = null; // Reset the previous play button
             }
         });
 
