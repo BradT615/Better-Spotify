@@ -277,24 +277,14 @@ function displayTopPlaylists(topPlaylists) {
         const playButtonDiv = document.createElement('div');
         playButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2 hidden group-hover:block';
         const playButtonImage = document.createElement('img');
-        playButtonImage.src = 'assets/playCircle.png';
+        playButtonImage.src = 'assets/bluePlay.png';
         playButtonImage.className = 'w-14 transition-transform transform origin-center hover:scale-110';
-        playButtonImage.alt = 'play button';
+        playButtonImage.alt = 'play/pause';
         playButtonDiv.appendChild(playButtonImage);
-
-        // Creating pause button div and image element
-        const pauseButtonDiv = document.createElement('div');
-        pauseButtonDiv.className = 'absolute top-1/2 right-2 transform -translate-y-1/2';
-        const pauseButtonImage = document.createElement('img');
-        pauseButtonImage.src = 'assets/pauseCircle.png';
-        pauseButtonImage.className = 'w-14 transition-transform transform origin-center hover:scale-110';
-        pauseButtonImage.alt = 'pause button';
-        pauseButtonDiv.appendChild(pauseButtonImage);
 
         playlistDiv.appendChild(playlistImageContainer);
         playlistDiv.appendChild(playlistTextContainer);
         playlistDiv.appendChild(playButtonDiv);
-        playlistDiv.appendChild(pauseButtonDiv);
 
         topPlaylistsContainer.appendChild(playlistDiv);
 
@@ -302,16 +292,14 @@ function displayTopPlaylists(topPlaylists) {
         playButtonDiv.addEventListener('click', (event) => {
             event.stopPropagation(); // Prevents triggering the playlistDiv click event
             playPlaylist(playlist.id);
-            playButtonDiv.classList.add('hidden');
-            pauseButtonDiv.classList.remove('hidden');
-        });
-
-        // Adding click event listener to the pause button
-        pauseButtonDiv.addEventListener('click', (event) => {
-            event.stopPropagation(); // Prevents triggering the playlistDiv click event
-            playPlaylist(playlist.id);
-            pauseButtonDiv.classList.add('hidden');
-            playButtonDiv.classList.remove('hidden');
+            // Toggle the play button image
+            if (playButtonImage.src.endsWith('bluePlay.png')) {
+                playButtonImage.src = 'assets/bluePause.png';
+                playButtonDiv.classList.remove('hidden', 'group-hover:block');
+            } else {
+                playButtonImage.src = 'assets/bluePlay.png';
+                playButtonDiv.classList.add('hidden', 'group-hover:block');
+            }
         });
 
         // Adding click event listener to play the playlist and populate details when the item is clicked
@@ -326,7 +314,6 @@ function displayTopPlaylists(topPlaylists) {
         });
     });
 }
-
 
 function fetchTopSongs() {
     $.ajax({
