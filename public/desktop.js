@@ -474,7 +474,6 @@ function handleSearchQuery(event) {
     }
 }
 
-
 function displaySearchResults(response) {
     const resultsContent = document.getElementById('search-results-content');
     resultsContent.innerHTML = ''; // Clear any previous results
@@ -592,7 +591,6 @@ document.getElementById('search-button').addEventListener('click', function() {
     document.getElementById('search-input').focus();
 });
 
-document.getElementById('home-button').addEventListener('click', showHomeScreen);
 
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
