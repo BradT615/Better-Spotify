@@ -232,13 +232,16 @@
                     <!-- Search Results (hidden initially) -->
                     <div id="search-results" class="hidden">
                         <div class="w-full p-8">
-                            <input type="text" id="search-input" placeholder="Search..." class="p-2 rounded-full bg-bg-custom border mb-4">
+                            <div class="relative">
+                                <box-icon name='search' class="absolute left-3 top-1/2 transform -translate-y-1/2"></box-icon>
+                                <input type="text" id="search-input" placeholder="What do you want to listen to?" class="p-2 pl-10 rounded-full bg-active-custom border mb-4 text-lg w-full h-16">
+                            </div>
                             <h1 class="text-2xl font-bold text-left ml-4 mb-6">Search Results</h1>
                             <div id="search-results-content" class="pt-4">
                                 <!-- Search results will be displayed here -->
                             </div>
                         </div>
-                    </div>                    
+                    </div>                                      
 
                 </div>
             </div>
