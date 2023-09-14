@@ -479,6 +479,11 @@ function displaySearchResults(results) {
     const resultsContent = document.getElementById('search-results-content');
     resultsContent.innerHTML = ''; // Clear any previous results
 
+    if (!Array.isArray(results)) {
+        console.error('Results is not an array:', results);
+        return;
+    }
+
     // Create table and headers
     let table = document.createElement('table');
     table.classList.add('text-left', 'w-full', 'box-border');

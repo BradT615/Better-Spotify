@@ -647,6 +647,10 @@ video {
   margin-bottom: 2rem;
 }
 
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
 .mb-6 {
   margin-bottom: 1.5rem;
 }
@@ -991,6 +995,10 @@ video {
 .rounded-l-lg {
   border-top-left-radius: 0.5rem;
   border-bottom-left-radius: 0.5rem;
+}
+
+.border {
+  border-width: 1px;
 }
 
 .bg-accent-cyan {
