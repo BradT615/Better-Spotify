@@ -582,7 +582,12 @@ function displaySearchResults(response) {
     });
 }
 
-document.getElementById('home-button').addEventListener('click', showHomeScreen());
+document.getElementById('home-button').addEventListener('click', function() {
+    document.getElementById('home-screen').classList.remove('hidden');
+    document.getElementById('artist-details').classList.add('hidden');
+    document.getElementById('playlist-details').classList.add('hidden');
+    document.getElementById('search-results').classList.add('hidden');
+});
 
 document.getElementById('search-button').addEventListener('click', function() {
     document.getElementById('home-screen').classList.add('hidden');
@@ -592,14 +597,6 @@ document.getElementById('search-button').addEventListener('click', function() {
     // Set focus to the search input
     document.getElementById('search-input').focus();
 });
-
-
-function showHomeScreen() {
-    document.getElementById('home-screen').classList.remove('hidden');
-    document.getElementById('artist-details').classList.add('hidden');
-    document.getElementById('playlist-details').classList.add('hidden');
-    document.getElementById('search-results').classList.add('hidden');
-}
 
 let selectedPlaylistDiv = null;
 let previousIcon = null;
