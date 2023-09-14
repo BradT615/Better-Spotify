@@ -479,6 +479,8 @@ function displaySearchResults(results) {
     const resultsContent = document.getElementById('search-results-content');
     resultsContent.innerHTML = ''; // Clear any previous results
 
+    const results = response.tracks.items;
+
     if (!Array.isArray(results)) {
         console.error('Results is not an array:', results);
         return;
