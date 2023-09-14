@@ -588,7 +588,7 @@ document.getElementById('search-button').addEventListener('click', function() {
     document.getElementById('playlist-details').classList.add('hidden');
     document.getElementById('search-results').classList.remove('hidden');
     // Set focus to the search input
-    // document.getElementById('search-input').focus();
+    document.getElementById('search-input').focus();
 });
 
 
