@@ -475,7 +475,7 @@ function handleSearchQuery(event) {
 }
 
 
-function displaySearchResults(results) {
+function displaySearchResults(response) {
     const resultsContent = document.getElementById('search-results-content');
     resultsContent.innerHTML = ''; // Clear any previous results
 
