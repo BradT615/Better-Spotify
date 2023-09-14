@@ -479,12 +479,100 @@ function displaySearchResults(results) {
     const resultsContent = document.getElementById('search-results-content');
     resultsContent.innerHTML = ''; // Clear any previous results
 
-    // Here, you would add code to populate the resultsContent with the search results
-    // This is just a basic example and you might need to adjust it based on the structure of the results object
-    results.tracks.items.forEach(track => {
-        const trackElement = document.createElement('div');
-        trackElement.textContent = track.name;
-        resultsContent.appendChild(trackElement);
+    // Create table and headers
+    let table = document.createElement('table');
+    table.classList.add('text-left', 'w-full', 'box-border');
+    
+    let thead = document.createElement('thead');
+    thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
+
+    let tr = document.createElement('tr');
+    tr.classList.add('m-0');
+
+    ['#', 'Title', 'Album', 'Time'].forEach((header, index) => {
+        let th = document.createElement('th');
+        th.classList.add('m-0');
+        th.textContent = header;
+    
+        if (header === '#') {
+            th.classList.add('pl-6');
+        }
+        if (header === 'Album') {
+            th.classList.add('hidden', 'md:table-cell');
+        }
+        if (header === 'Time') {
+            th.classList.add('relative', 'pr-3', 'bg-table-header');
+            let overlay = document.createElement('div');
+            overlay.classList.add('absolute', 'top-0', 'bottom-0', 'w-2.5', 'bg-table-header', 'z-10');
+            overlay.style.right = '-10px';
+            th.appendChild(overlay);
+        }
+    
+        tr.appendChild(th);
+    });            
+
+    thead.appendChild(tr);
+    table.appendChild(thead);
+
+    let tbody = document.createElement('tbody');
+
+    // Populate table rows with data
+    results.forEach((item, index) => {
+        let tr = document.createElement('tr');
+
+        // #
+        let tdNumber = document.createElement('td');
+        tdNumber.textContent = index + 1;
+        tdNumber.classList.add('pl-6');
+        tr.appendChild(tdNumber);
+
+        // Title (image + name)
+        let tdTitle = document.createElement('td');
+        let wrapperDiv = document.createElement('div');
+        wrapperDiv.classList.add('flex', 'items-center', 'w-full');
+
+        let img = document.createElement('img');
+        img.src = item.album.images.length > 0 ? item.album.images[0].url : 'assets/default-image.png';
+        img.alt = item.name;
+        img.classList.add('w-10', 'mr-2.5');
+
+        let span = document.createElement('span');
+        span.textContent = item.name;
+        span.classList.add('flex-grow', 'overflow-hidden', 'whitespace-nowrap', 'truncate', 'pr-2.5');
+
+        wrapperDiv.appendChild(img);
+        wrapperDiv.appendChild(span);
+        tdTitle.appendChild(wrapperDiv);
+        tr.appendChild(tdTitle);
+
+        // Album
+        let tdAlbum = document.createElement('td');
+        tdAlbum.textContent = item.album.name;
+        tdAlbum.classList.add('pr-2.5', 'hidden', 'md:table-cell');
+        tr.appendChild(tdAlbum);
+
+        // Time
+        let tdTime = document.createElement('td');
+        let minutes = Math.floor(item.duration_ms / 60000);
+        let seconds = Math.floor((item.duration_ms % 60000) / 1000);
+        let time = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+        tdTime.textContent = time;
+        tr.appendChild(tdTime);
+
+        tbody.appendChild(tr);
+    });
+
+    table.appendChild(tbody);
+    resultsContent.appendChild(table);
+
+    table.classList.add('w-full');
+    table.querySelectorAll('td, th').forEach(cell => {
+        cell.classList.add('overflow-hidden', 'truncate', 'whitespace-nowrap', 'py-1.5', 'box-border');
+    });
+
+    // Apply max-width to other columns except the first one
+    table.querySelectorAll('th:not(:first-child), td:not(:first-child)').forEach(cell => {
+        cell.classList.add('max-w-[200px]');
     });
 }
 
