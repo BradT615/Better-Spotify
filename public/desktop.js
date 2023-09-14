@@ -592,6 +592,8 @@ document.getElementById('search-button').addEventListener('click', function() {
     document.getElementById('search-input').focus();
 });
 
+document.getElementById('home-button').addEventListener('click', showHomeScreen);
+
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
     document.getElementById('artist-details').classList.add('hidden');
@@ -912,8 +914,6 @@ function initializeLoggedInUser() {
                         });
                     }
                 }
-
-                document.getElementById('home-button').addEventListener('click', showHomeScreen);
 
                 document.getElementById('RepeatButton').addEventListener('click', function() {
                     // Cycle through the repeat modes
