@@ -58,7 +58,7 @@
         }
     </style>
     <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
-    <script src="auth.js"></script>
+    <!-- <script src="auth.js"></script> -->
     <link rel="stylesheet" href="output.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js" defer></script>
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js" defer></script>
@@ -232,16 +232,16 @@
                     <!-- Search Results (hidden initially) -->
                     <div id="search-results" class="hidden">
                         <div class="w-full p-8">
-                            <div class="relative">
-                                <box-icon name='search' class="absolute left-3 top-1/2 transform -translate-y-1/2"></box-icon>
-                                <input type="text" id="search-input" placeholder="What do you want to listen to?" class="p-2 pl-10 rounded-full bg-active-custom border mb-4 text-lg w-80 h-16">
+                            <div class="flex relative text-gray-custo">
+                                <box-icon name='search' color='#b3b3b3' class="absolute left-3 translate-y-3"></box-icon>
+                                <input type="text" id="search-input" placeholder="What do you want to listen to?" class="p-2 pl-10 rounded-full bg-active-custom hover:bg-active-hover-custom border border-gray-custom mb-4 text-lg w-80 h-12" autocomplete="off">
                             </div>
                             <h1 class="text-2xl font-bold text-left ml-4 mb-6">Search Results</h1>
                             <div id="search-results-content" class="pt-4">
                                 <!-- Search results will be displayed here -->
                             </div>
                         </div>
-                    </div>                                      
+                    </div>                    
 
                 </div>
             </div>
@@ -284,6 +284,6 @@
     </div>
 
     <!-- <script src="mobile.js"></script> -->
-    <!-- <script src="desktop.js"></script> -->
+    <script src="desktop.js"></script>
 </body>
 </html>
