@@ -306,6 +306,7 @@ function displayTopPlaylists(topPlaylists) {
             playPlaylist(playlist.id);
             document.getElementById('home-screen').classList.add('hidden');
             document.getElementById('artist-details').classList.add('hidden');
+            document.getElementById('search-results').classList.add('hidden');
             document.getElementById('playlist-details').classList.remove('hidden');
 
             // Calling populatePlaylistDetails function with necessary parameters
@@ -412,6 +413,7 @@ function fetchTopArtists() {
 function fetchAndDisplayArtistDetails(artist) {
     document.getElementById('home-screen').classList.add('hidden');
     document.getElementById('playlist-details').classList.add('hidden');
+    document.getElementById('search-results').classList.add('hidden');
     document.getElementById('artist-details').classList.remove('hidden');
     
     // Populate artist details section with data from clicked artist
@@ -446,10 +448,58 @@ function fetchAndDisplayArtistDetails(artist) {
     });
 }
 
+document.getElementById('search-input').addEventListener('input', handleSearchQuery);
+
+function handleSearchQuery(event) {
+    const query = event.target.value;
+
+    if (query.length > 0) {
+        // Call the Spotify API to get the search results
+        $.ajax({
+            url: `https://api.spotify.com/v1/search?q=${encodeURIComponent(query)}&type=track`,
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+            success: function(response) {
+                // Call displaySearchResults function with the response
+                displaySearchResults(response);
+            },
+            error: function(error) {
+                console.error("Error fetching search results:", error);
+            }
+        });
+    } else {
+        // If the query is empty, clear the search results
+        document.getElementById('search-results-content').innerHTML = '';
+    }
+}
+
+
+function displaySearchResults(results) {
+    const resultsContent = document.getElementById('search-results-content');
+    resultsContent.innerHTML = ''; // Clear any previous results
+
+    // Here, you would add code to populate the resultsContent with the search results
+    // This is just a basic example and you might need to adjust it based on the structure of the results object
+    results.tracks.items.forEach(track => {
+        const trackElement = document.createElement('div');
+        trackElement.textContent = track.name;
+        resultsContent.appendChild(trackElement);
+    });
+}
+
+document.getElementById('search-button').addEventListener('click', function() {
+    document.getElementById('home-screen').classList.add('hidden');
+    document.getElementById('artist-details').classList.add('hidden');
+    document.getElementById('playlist-details').classList.add('hidden');
+    document.getElementById('search-results').classList.remove('hidden');
+});
+
 function showHomeScreen() {
     document.getElementById('home-screen').classList.remove('hidden');
-    document.getElementById('playlist-details').classList.add('hidden');
     document.getElementById('artist-details').classList.add('hidden');
+    document.getElementById('playlist-details').classList.add('hidden');
+    document.getElementById('search-results').classList.add('hidden');
 }
 
 let selectedPlaylistDiv = null;
@@ -491,6 +541,7 @@ function displayUserLibrary(playlists) {
             // Hide home screen and show playlist details
             document.getElementById('home-screen').classList.add('hidden');
             document.getElementById('artist-details').classList.add('hidden');
+            document.getElementById('search-results').classList.add('hidden');
             document.getElementById('playlist-details').classList.remove('hidden');
         
             // Hide all box-icons
