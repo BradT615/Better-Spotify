@@ -582,6 +582,8 @@ function displaySearchResults(response) {
     });
 }
 
+document.getElementById('home-button').addEventListener('click', showHomeScreen());
+
 document.getElementById('search-button').addEventListener('click', function() {
     document.getElementById('home-screen').classList.add('hidden');
     document.getElementById('artist-details').classList.add('hidden');
@@ -900,8 +902,6 @@ function initializeLoggedInUser() {
                         });
                     }
                 });
-
-                document.getElementById('home-button').addEventListener('click', showHomeScreen());
                 
                 let repeatMode = 'off';
 
