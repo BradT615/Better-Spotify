@@ -608,12 +608,12 @@ video {
   top: 50%;
 }
 
-.top-full {
-  top: 100%;
-}
-
 .top-\[200px\] {
   top: 200px;
+}
+
+.top-full {
+  top: 100%;
 }
 
 .z-10 {

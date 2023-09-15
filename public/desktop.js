@@ -492,10 +492,10 @@ function displaySearchResults(response) {
 
     // Create table and headers
     let table = document.createElement('table');
-    table.classList.add('text-left', 'w-full', 'top-[200px]', 'box-border');
+    table.classList.add('text-left', 'w-full', 'mt-52', 'box-border');
     
     let thead = document.createElement('thead');
-    thead.classList.add('sticky', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
+    thead.classList.add('sticky', 'top-[200px]', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
 
     let tr = document.createElement('tr');
 
