@@ -261,7 +261,7 @@ function displayTopPlaylists(topPlaylists) {
         playlistTextContainer.className = 'w-1/2';
         const playlistName = document.createElement('h2');
         playlistName.textContent = playlist.name;
-        playlistName.className = 'text-lg font-bold text-left p-2';
+        playlistName.className = 'text-lg font-bold text-left p-2 line-clamp-2 overflow-hidden';
         playlistTextContainer.appendChild(playlistName);
 
         // Creating play button div and image element
