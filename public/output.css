@@ -1010,10 +1010,6 @@ video {
   border-bottom-left-radius: 0.5rem;
 }
 
-.border-4 {
-  border-width: 4px;
-}
-
 .border {
   border-width: 1px;
 }
@@ -1387,10 +1383,6 @@ input[type="range"]:hover::-moz-range-thumb,
 
 .hover\:rounded-md:hover {
   border-radius: 0.375rem;
-}
-
-.hover\:border:hover {
-  border-width: 1px;
 }
 
 .hover\:bg-active-custom:hover {
