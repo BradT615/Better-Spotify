@@ -105,12 +105,6 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
 
             let tr = document.createElement('tr');
-            tr.classList.add('m-0', 'hover:bg-hover-custom');
-
-            // Adding click event listener to play the song when the row is clicked
-            tr.addEventListener('click', () => {
-                playSong(`spotify:track:${item.track.id}`);
-            });
 
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
@@ -145,6 +139,12 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             // Populate table rows with data
             response.items.forEach((item, index) => {
                 let tr = document.createElement('tr');
+                tr.classList.add('m-0', 'hover:bg-hover-custom');
+
+                // Adding click event listener to play the song when the row is clicked
+                tr.addEventListener('click', () => {
+                    playSong(`spotify:track:${item.id}`);
+                });
 
                 // #
                 let tdNumber = document.createElement('td');
@@ -498,12 +498,6 @@ function displaySearchResults(response) {
     thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
 
     let tr = document.createElement('tr');
-    tr.classList.add('m-0', 'hover:bg-hover-custom');
-
-    // Adding click event listener to play the song when the row is clicked
-    tr.addEventListener('click', () => {
-        playSong(`spotify:track:${item.id}`);
-    });
 
     ['#', 'Title', 'Album', 'Time'].forEach((header, index) => {
         let th = document.createElement('th');
@@ -535,6 +529,12 @@ function displaySearchResults(response) {
     // Populate table rows with data
     results.forEach((item, index) => {
         let tr = document.createElement('tr');
+        tr.classList.add('m-0', 'hover:bg-hover-custom');
+
+        // Adding click event listener to play the song when the row is clicked
+        tr.addEventListener('click', () => {
+            playSong(`spotify:track:${item.id}`);
+        });
 
         // #
         let tdNumber = document.createElement('td');
