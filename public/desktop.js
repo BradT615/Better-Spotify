@@ -495,7 +495,7 @@ function displaySearchResults(response) {
     table.classList.add('text-left', 'w-full', 'box-border');
     
     let thead = document.createElement('thead');
-    thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
+    thead.classList.add('sticky', 'top-[200px]', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
 
     let tr = document.createElement('tr');
 
