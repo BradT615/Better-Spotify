@@ -143,8 +143,9 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
                 // Adding click event listener to play the song when the row is clicked
                 tr.addEventListener('click', () => {
-                    playSong(`spotify:track:${item.id}`);
+                    playSong(`spotify:track:${item.track.id}`);
                 });
+
 
                 // #
                 let tdNumber = document.createElement('td');
