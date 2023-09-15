@@ -217,7 +217,6 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
     });
 }
 
-
 function fetchUserLibrary() {
     $.ajax({
         url: 'https://api.spotify.com/v1/me/playlists',
@@ -530,7 +529,7 @@ function displaySearchResults(response) {
     // Populate table rows with data
     results.forEach((item, index) => {
         let tr = document.createElement('tr');
-        tr.classList.add('m-0', 'hover:bg-hover-custom');
+        tr.classList.add('m-0', "rounded-md", 'hover:bg-hover-custom');
 
         // Adding click event listener to play the song when the row is clicked
         tr.addEventListener('click', () => {

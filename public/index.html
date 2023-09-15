@@ -216,7 +216,6 @@
                         <div id="artist-albums" class="pt-4"></div>
                     </div>                    
                 
-                
                     <!-- Playlist Details (hidden initially) -->
                     <div id="playlist-details" class="hidden">
                         <div class="flex w-full p-8 gap-4">
@@ -232,11 +231,11 @@
                     <!-- Search Results (hidden initially) -->
                     <div id="search-results" class="hidden">
                         <div class="w-full p-8">
-                            <div class="flex relative text-gray-custo">
+                            <div class="flex flex-col sticky text-gray-custo">
                                 <box-icon name='search' color='#b3b3b3' class="absolute left-3 translate-y-3"></box-icon>
                                 <input type="text" id="search-input" placeholder="What do you want to listen to?" class="p-2 pl-10 rounded-full bg-active-custom hover:bg-active-hover-custom border border-gray-custom mb-4 text-lg w-80 h-12" autocomplete="off">
+                                <h1 class="text-2xl font-bold text-left ml-4 mb-6">Search Results</h1>
                             </div>
-                            <h1 class="text-2xl font-bold text-left ml-4 mb-6">Search Results</h1>
                             <div id="search-results-content" class="pt-4">
                                 <!-- Search results will be displayed here -->
                             </div>
