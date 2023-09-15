@@ -105,7 +105,12 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
 
             let tr = document.createElement('tr');
-            tr.classList.add('m-0');
+            tr.classList.add('m-0', 'hover:bg-hover-custom');
+
+            // Adding click event listener to play the song when the row is clicked
+            tr.addEventListener('click', () => {
+                playSong(`spotify:track:${item.track.id}`);
+            });
 
             ['#', 'Title', 'Album', 'Date added', 'Time'].forEach((header, index) => {
                 let th = document.createElement('th');
@@ -493,7 +498,12 @@ function displaySearchResults(response) {
     thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
 
     let tr = document.createElement('tr');
-    tr.classList.add('m-0');
+    tr.classList.add('m-0', 'hover:bg-hover-custom');
+
+    // Adding click event listener to play the song when the row is clicked
+    tr.addEventListener('click', () => {
+        playSong(`spotify:track:${item.id}`);
+    });
 
     ['#', 'Title', 'Album', 'Time'].forEach((header, index) => {
         let th = document.createElement('th');
@@ -582,13 +592,6 @@ function displaySearchResults(response) {
     });
 }
 
-document.getElementById('home-button').addEventListener('click', function() {
-    document.getElementById('home-screen').classList.remove('hidden');
-    document.getElementById('artist-details').classList.add('hidden');
-    document.getElementById('playlist-details').classList.add('hidden');
-    document.getElementById('search-results').classList.add('hidden');
-});
-
 document.getElementById('search-button').addEventListener('click', function() {
     document.getElementById('home-screen').classList.add('hidden');
     document.getElementById('artist-details').classList.add('hidden');
@@ -596,6 +599,13 @@ document.getElementById('search-button').addEventListener('click', function() {
     document.getElementById('search-results').classList.remove('hidden');
     // Set focus to the search input
     document.getElementById('search-input').focus();
+});
+
+document.getElementById('home-button').addEventListener('click', function() {
+    document.getElementById('home-screen').classList.remove('hidden');
+    document.getElementById('artist-details').classList.add('hidden');
+    document.getElementById('playlist-details').classList.add('hidden');
+    document.getElementById('search-results').classList.add('hidden');
 });
 
 let selectedPlaylistDiv = null;
