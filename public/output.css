@@ -1036,6 +1036,11 @@ video {
   background-color: rgb(35 35 35 / var(--tw-bg-opacity));
 }
 
+.bg-active-hover-custom {
+  --tw-bg-opacity: 1;
+  background-color: rgb(57 57 57 / var(--tw-bg-opacity));
+}
+
 .bg-bg-custom {
   --tw-bg-opacity: 1;
   background-color: rgb(18 18 18 / var(--tw-bg-opacity));

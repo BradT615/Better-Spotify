@@ -74,6 +74,7 @@ document.getElementById('volumeLowIcon').addEventListener('click', muteOrRestore
 document.getElementById('volumeFullIcon').addEventListener('click', muteOrRestoreVolume);
 document.getElementById('volumeMuteIcon').addEventListener('click', muteOrRestoreVolume);
 
+let selectedRow;
 
 function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, playlistOwnerName) {
     $.ajax({
@@ -144,6 +145,21 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 // Adding click event listener to play the song when the row is clicked
                 tr.addEventListener('click', () => {
                     playSong(`spotify:track:${item.track.id}`);
+        
+                    // If there is a previously selected row, remove the active styles from it
+                    if (selectedRow) {
+                        selectedRow.classList.remove('bg-active-hover-custom', 'text-accent-cyan');
+                        const prevSongName = selectedRow.querySelector('span');
+                        prevSongName.classList.remove('text-accent-cyan');
+                    }
+        
+                    // Add the active styles to the clicked row
+                    tr.classList.add('bg-active-hover-custom', 'text-accent-cyan');
+                    const currentSongName = tr.querySelector('span');
+                    currentSongName.classList.add('text-accent-cyan');
+        
+                    // Update the selectedRow variable to reference the clicked row
+                    selectedRow = tr;
                 });
 
 
