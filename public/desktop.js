@@ -145,19 +145,19 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
                 // Adding click event listener to play the song when the row is clicked
                 tr.addEventListener('click', () => {
                     playSong(`spotify:track:${item.track.id}`);
-        
+                
                     // If there is a previously selected row, remove the active styles from it
                     if (selectedRow) {
-                        selectedRow.classList.remove('bg-active-hover-custom', 'text-accent-cyan');
+                        selectedRow.classList.remove('bg-active-hover-custom');
                         const prevSongName = selectedRow.querySelector('span');
                         prevSongName.classList.remove('text-accent-cyan');
                     }
-        
+                
                     // Add the active styles to the clicked row
-                    tr.classList.add('bg-active-hover-custom', 'text-accent-cyan');
+                    tr.classList.add('bg-active-hover-custom');
                     const currentSongName = tr.querySelector('span');
                     currentSongName.classList.add('text-accent-cyan');
-        
+                
                     // Update the selectedRow variable to reference the clicked row
                     selectedRow = tr;
                 });
@@ -495,6 +495,8 @@ function handleSearchQuery(event) {
     }
 }
 
+let selectedSearchRow;
+
 function displaySearchResults(response) {
     const resultsContent = document.getElementById('search-results-content');
     resultsContent.innerHTML = ''; // Clear any previous results
@@ -550,6 +552,21 @@ function displaySearchResults(response) {
         // Adding click event listener to play the song when the row is clicked
         tr.addEventListener('click', () => {
             playSong(`spotify:track:${item.id}`);
+
+            // If there is a previously selected row, remove the active styles from it
+            if (selectedSearchRow) {
+                selectedSearchRow.classList.remove('bg-active-hover-custom');
+                const prevSongName = selectedSearchRow.querySelector('span');
+                prevSongName.classList.remove('text-accent-cyan');
+            }
+
+            // Add the active styles to the clicked row
+            tr.classList.add('bg-active-hover-custom');
+            const currentSongName = tr.querySelector('span');
+            currentSongName.classList.add('text-accent-cyan');
+
+            // Update the selectedSearchRow variable to reference the clicked row
+            selectedSearchRow = tr;
         });
 
         // #
