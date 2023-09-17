@@ -886,42 +886,11 @@ function initializeLoggedInUser() {
                     },
                     success: function(response) {
                         console.log("Web app is now the active Spotify playback device!");
-
-                        // Get the current playback state to initialize shuffle and repeat states
-                        $.ajax({
-                            url: 'https://api.spotify.com/v1/me/player',
-                            headers: {
-                                'Authorization': `Bearer ${token}`
-                            },
-                            success: function(response) {
-                                updateShuffleState(response.shuffle_state);
-                                updateRepeatState(response.repeat_state);
-                            },
-                            error: function(error) {
-                                console.error("Error fetching playback state:", error);
-                            }
-                        });
                     },
                     error: function(error) {
                         console.error("Error setting web app as active device:", error);
                     }
-                });
-
-
-
-                function updateShuffleState(isShuffled) {
-                    document.getElementById('shuffleButton').src = isShuffled ? 'assets/shuffleActive.png' : 'assets/shuffle.png';
-                }
-                
-                function updateRepeatState(repeatMode) {
-                    if (repeatMode === 'off') {
-                        document.getElementById('RepeatButton').src = 'assets/repeat.png';
-                    } else if (repeatMode === 'track') {
-                        document.getElementById('RepeatButton').src = 'assets/repeatOne.png';
-                    } else {
-                        document.getElementById('RepeatButton').src = 'assets/repeatActive.png';
-                    }
-                }                
+                });              
 
                 let isShuffled = false;
 
