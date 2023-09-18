@@ -74,3 +74,17 @@ input[type="range"]:hover::-moz-range-thumb,
 .custom-shadow {
   box-shadow: 0px 5px 10px 0px #000;
 }
+
+.progress-container {
+  position: relative;
+}
+
+.progress-container::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  bottom: -8px;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+}
