@@ -530,7 +530,7 @@ function fetchAndDisplayArtistDetails(artist) {
                 let img = document.createElement('img');
                 img.src = item.album.images.length > 0 ? item.album.images[0].url : 'assets/default-image.png';
                 img.alt = item.name;
-                img.classList.add('w-10', 'mr-2.5');
+                img.classList.add('w-14', 'mr-2.5');
 
                 let span = document.createElement('span');
                 span.textContent = item.name;
