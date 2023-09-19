@@ -438,7 +438,7 @@ function fetchAndDisplayArtistDetails(artist) {
     document.getElementById('playlist-details').classList.add('hidden');
     document.getElementById('search-results').classList.add('hidden');
     document.getElementById('artist-details').classList.remove('hidden');
-    
+
     // Populate artist details section with data from clicked artist
     document.getElementById('artist-image').src = artist.images.length > 0 ? artist.images[0].url : 'assets/default-image.png';
     document.getElementById('artist-name').textContent = artist.name;
@@ -449,23 +449,129 @@ function fetchAndDisplayArtistDetails(artist) {
         headers: {
             'Authorization': `Bearer ${token}`
         },
-        success: function(response) {
+        success: function (response) {
             const artistSongsContainer = document.getElementById('artist-albums');
             artistSongsContainer.innerHTML = ''; // Clear existing content
 
-            response.tracks.forEach((track, index) => {
-                const trackDiv = document.createElement('div');
-                trackDiv.className = 'track-item bg-hover-custom hover:bg-active-custom shadow rounded-md flex p-4 gap-4';
-                
-                const trackName = document.createElement('h2');
-                trackName.textContent = track.name;
-                trackName.className = 'text-xl font-bold text-left truncate pr-1';
-                trackDiv.appendChild(trackName);
+            // Create table and headers
+            let table = document.createElement('table');
+            table.classList.add('text-left', 'w-full', 'box-border');
 
-                artistSongsContainer.appendChild(trackDiv);
+            let thead = document.createElement('thead');
+            thead.classList.add('sticky', 'top-0', 'z-10', 'bg-bg-custom', 'bg-table-header', 'min-w-full', 'box-border');
+
+            let tr = document.createElement('tr');
+
+            ['#', 'Title', 'Album', 'Time'].forEach((header, index) => {
+                let th = document.createElement('th');
+                th.classList.add('m-0');
+                th.textContent = header;
+
+                if (header === '#') {
+                    th.classList.add('pl-6');
+                }
+                if (header === 'Album') {
+                    th.classList.add('hidden', 'md:table-cell');
+                }
+                if (header === 'Time') {
+                    th.classList.add('relative', 'pr-3', 'bg-table-header');
+                    let overlay = document.createElement('div');
+                    overlay.classList.add('absolute', 'top-0', 'bottom-0', 'w-2.5', 'bg-table-header', 'z-10');
+                    overlay.style.right = '-10px';
+                    th.appendChild(overlay);
+                }
+
+                tr.appendChild(th);
+            });
+
+            thead.appendChild(tr);
+            table.appendChild(thead);
+
+            let tbody = document.createElement('tbody');
+
+            // Populate table rows with data
+            response.tracks.forEach((item, index) => {
+                let tr = document.createElement('tr');
+                tr.classList.add('m-0', "rounded-md", 'hover:bg-hover-custom');
+
+                // Adding click event listener to play the song when the row is clicked
+                tr.addEventListener('click', () => {
+                    playSong(`spotify:track:${item.id}`);
+
+                    // previously selected row
+                    if (selectedSearchRow) {
+                        selectedSearchRow.classList.remove('bg-active-hover-custom');
+                        selectedSearchRow.classList.add('hover:bg-hover-custom');
+                        const prevSongName = selectedSearchRow.querySelector('span');
+                        prevSongName.classList.remove('text-accent-cyan');
+                    }
+
+                    // Add the active styles to the clicked row
+                    tr.classList.add('bg-active-hover-custom');
+                    tr.classList.remove('hover:bg-hover-custom');
+                    const currentSongName = tr.querySelector('span');
+                    currentSongName.classList.add('text-accent-cyan');
+
+                    // Update the selectedSearchRow
+                    selectedSearchRow = tr;
+                });
+
+                // #
+                let tdNumber = document.createElement('td');
+                tdNumber.textContent = index + 1;
+                tdNumber.classList.add('pl-6');
+                tr.appendChild(tdNumber);
+
+                // Title (image + name)
+                let tdTitle = document.createElement('td');
+                let wrapperDiv = document.createElement('div');
+                wrapperDiv.classList.add('flex', 'items-center', 'w-full');
+
+                let img = document.createElement('img');
+                img.src = item.album.images.length > 0 ? item.album.images[0].url : 'assets/default-image.png';
+                img.alt = item.name;
+                img.classList.add('w-10', 'mr-2.5');
+
+                let span = document.createElement('span');
+                span.textContent = item.name;
+                span.classList.add('flex-grow', 'overflow-hidden', 'whitespace-nowrap', 'truncate', 'pr-2.5');
+
+                wrapperDiv.appendChild(img);
+                wrapperDiv.appendChild(span);
+                tdTitle.appendChild(wrapperDiv);
+                tr.appendChild(tdTitle);
+
+                // Album
+                let tdAlbum = document.createElement('td');
+                tdAlbum.textContent = item.album.name;
+                tdAlbum.classList.add('pr-2.5', 'hidden', 'md:table-cell');
+                tr.appendChild(tdAlbum);
+
+                // Time
+                let tdTime = document.createElement('td');
+                let minutes = Math.floor(item.duration_ms / 60000);
+                let seconds = Math.floor((item.duration_ms % 60000) / 1000);
+                let time = minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
+                tdTime.textContent = time;
+                tr.appendChild(tdTime);
+
+                tbody.appendChild(tr);
+            });
+
+            table.appendChild(tbody);
+            artistSongsContainer.appendChild(table);
+
+            table.classList.add('w-full');
+            table.querySelectorAll('td, th').forEach(cell => {
+                cell.classList.add('overflow-hidden', 'truncate', 'whitespace-nowrap', 'py-1.5', 'box-border');
+            });
+
+            // Apply max-width to other columns except the first one
+            table.querySelectorAll('th:not(:first-child), td:not(:first-child)').forEach(cell => {
+                cell.classList.add('max-w-[200px]');
             });
         },
-        error: function(jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown) {
             console.error("Error fetching top songs of the artist:", errorThrown);
         }
     });
