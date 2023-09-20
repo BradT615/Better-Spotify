@@ -183,7 +183,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
 
                 let span = document.createElement('span');
                 span.textContent = item.track.name;
-                span.classList.add('flex-grow', 'overflow-hidden', 'whitespace-nowrap', 'truncate', 'pr-2.5');
+                span.classList.add('flex-grow', 'overflow-hidden', 'whitespace-nowrap', 'truncate', 'font-bold', 'pr-2.5');
 
                 wrapperDiv.appendChild(img);
                 wrapperDiv.appendChild(span);
@@ -530,7 +530,7 @@ function fetchAndDisplayArtistDetails(artist) {
                 let img = document.createElement('img');
                 img.src = item.album.images.length > 0 ? item.album.images[0].url : 'assets/default-image.png';
                 img.alt = item.name;
-                img.classList.add('w-14', 'mr-2.5');
+                img.classList.add('w-14', 'mr-2.5', 'font-bold');
 
                 let span = document.createElement('span');
                 span.textContent = item.name;
@@ -697,7 +697,7 @@ function displaySearchResults(response) {
 
         let span = document.createElement('span');
         span.textContent = item.name;
-        span.classList.add('flex-grow', 'overflow-hidden', 'whitespace-nowrap', 'truncate', 'pr-2.5');
+        span.classList.add('flex-grow', 'overflow-hidden', 'whitespace-nowrap', 'truncate', 'font-bold', 'pr-2.5');
 
         wrapperDiv.appendChild(img);
         wrapperDiv.appendChild(span);
