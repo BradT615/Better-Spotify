@@ -140,7 +140,7 @@ function populatePlaylistDetails(playlistId, playlistName, playlistImageURL, pla
             // Populate table rows with data
             response.items.forEach((item, index) => {
                 let tr = document.createElement('tr');
-                tr.classList.add('m-0', 'hover:bg-hover-custom');
+                tr.classList.add('m-0', 'hover:bg-hover-custom', 'rounded-md');
 
                 // Adding click event listener to play the song when the row is clicked
                 tr.addEventListener('click', () => {
