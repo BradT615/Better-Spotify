@@ -735,22 +735,6 @@ function displaySearchResults(response) {
     });
 }
 
-document.getElementById('search-button').addEventListener('click', function() {
-    document.getElementById('home-screen').classList.add('hidden');
-    document.getElementById('artist-details').classList.add('hidden');
-    document.getElementById('playlist-details').classList.add('hidden');
-    document.getElementById('search-results').classList.remove('hidden');
-    // Set focus to the search input
-    document.getElementById('search-input').focus();
-});
-
-document.getElementById('home-button').addEventListener('click', function() {
-    document.getElementById('home-screen').classList.remove('hidden');
-    document.getElementById('artist-details').classList.add('hidden');
-    document.getElementById('playlist-details').classList.add('hidden');
-    document.getElementById('search-results').classList.add('hidden');
-});
-
 let selectedPlaylistDiv = null;
 let previousIcon = null;
 let activePlaylistId;
@@ -891,6 +875,43 @@ function formatTime(ms) {
     return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
 }
 
+function toggleDropdown() {
+    document.getElementById('dropdownMenu').classList.toggle('hidden');
+}
+
+function handleLogoutClick() {
+    console.log('Inline logout handler called');
+    if (player) {
+        player.disconnect();
+    }
+    deleteUser();
+}
+
+document.addEventListener('click', (event) => {
+    const dropdownMenu = document.getElementById('dropdownMenu');
+    const userImage = document.getElementById('userImage');
+
+    if (!userImage.contains(event.target)) {
+        dropdownMenu.classList.add('hidden');
+    }
+});
+
+document.getElementById('search-button').addEventListener('click', function() {
+    document.getElementById('home-screen').classList.add('hidden');
+    document.getElementById('artist-details').classList.add('hidden');
+    document.getElementById('playlist-details').classList.add('hidden');
+    document.getElementById('search-results').classList.remove('hidden');
+    // Set focus to the search input
+    document.getElementById('search-input').focus();
+});
+
+document.getElementById('home-button').addEventListener('click', function() {
+    document.getElementById('home-screen').classList.remove('hidden');
+    document.getElementById('artist-details').classList.add('hidden');
+    document.getElementById('playlist-details').classList.add('hidden');
+    document.getElementById('search-results').classList.add('hidden');
+});
+
 document.querySelector('.progress-container').addEventListener('click', (e) => {
     const clickX = e.offsetX;
     const width = e.currentTarget.offsetWidth;
@@ -905,31 +926,10 @@ document.querySelector('.progress-container').addEventListener('click', (e) => {
     });
 });
 
-function toggleDropdown() {
-    document.getElementById('dropdownMenu').classList.toggle('hidden');
-}
-
-document.addEventListener('click', (event) => {
-    const dropdownMenu = document.getElementById('dropdownMenu');
-    const userImage = document.getElementById('userImage');
-
-    if (!userImage.contains(event.target)) {
-        dropdownMenu.classList.add('hidden');
-    }
-});
-
 document.getElementById('userImage').addEventListener('click', (event) => {
     event.stopPropagation();
     toggleDropdown();
 });
-
-function handleLogoutClick() {
-    console.log('Inline logout handler called');
-    if (player) {
-        player.disconnect();
-    }
-    deleteUser();
-}
 
 function initializeLoggedInUser() {
 
