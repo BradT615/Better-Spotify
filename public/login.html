@@ -1,19 +1,29 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Spotify Clone Login</title>
-    <link rel="stylesheet" href="output.css">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Spotify Clone Login</title>
+  <link rel="stylesheet" href="output.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+  <style>
+    body {
+      background-image: url('assets/bg.svg');
+      background-size: cover;
+      background-position: center;
+    }
+  </style>
 </head>
-<body class="h-screen text-center text-white">
-
-    <div class="flex items-center justify-center h-full bg-bg-custom">
-        <div class="rounded shadow-lg bg-table-header p-4">
-            <h1 class="text-2xl text-gray-custom">Spotify Clone</h1>
-            <button id="login-button" class="bg-accent-cyan text-active-custom p-4 mx-4 my-8 font-bold rounded-full">Log in with Spotify</button>
-            <h1 class="text-lg text-gray-custom">Must have Spotify Premium</h1>
+<body class="h-screen text-center text-white flex items-center justify-center bg-bg-custom">
+    <div class="bg-[#232323] bg-opacity-40 backdrop-blur-md rounded-lg shadow-lg flex flex-col justify-between w-full max-w-sm h-[60vh] min-h-96 py-20 sm:p-20 m-4">
+        <div>
+            <img src="assets/logo-removebg.png" alt="Logo" class="w-24 mx-auto mb-4">
+            <h1 class="text-3xl mb-2 text-white">Spotify Clone</h1>
+            <h1 class="text-base text-gray-400">By: Bradley Titus</h1>
+        </div>
+        <div>
+            <button id="login-button" class="bg-green-600 hover:bg-green-500 text-white px-4 sm:px-8 py-3 rounded-full shadow-lg texl-base sm:text-lg transition duration-300 mb-6">Log in with Spotify</button>
+            <p class="text-sm sm:text-lg text-red-400">Must have Spotify Premium</p>
         </div>
     </div>
 
@@ -21,7 +31,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.0.5/handlebars.min.js"></script>
     <script>
         document.getElementById('login-button').addEventListener('click', function() {
-            window.location = '/.netlify/functions/login';
+        window.location = '/.netlify/functions/login';
         });
     </script>
 </body>

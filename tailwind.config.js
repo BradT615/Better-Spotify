@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        searchBar: '#242424',
+        'searchBar' : '#242424',
         'accent-cyan': '#34fcff',
         'bg-custom': '#121212',
         'hover-custom': '#1a1a1a',
