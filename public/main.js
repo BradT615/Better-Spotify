@@ -1,7 +1,6 @@
-let player;  // Global reference to the Spotify player
+let player;
 
 document.addEventListener("DOMContentLoaded", function() {
-
   let token;
   let deviceId;
 
@@ -135,7 +134,6 @@ document.addEventListener("DOMContentLoaded", function() {
     });
   }
 
-
   document.getElementById('dropdownTrigger').addEventListener('click', function() {
     const playlistsList = document.getElementById('playlistsList');
     if (playlistsList.classList.contains('hidden')) {
@@ -144,7 +142,6 @@ document.addEventListener("DOMContentLoaded", function() {
       playlistsList.classList.add('hidden');
     }
   });
-
 
   function playPlaylist(playlistId) {
     $.ajax({
